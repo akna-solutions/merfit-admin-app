@@ -1,38 +1,337 @@
-.App {
-  text-align: center;
+/* Merfit Admin Panel — layout & component skin.
+   Ant Design tokens (theme/themeTokens.js) handle color/radius at the
+   component-prop level; this file handles structural layout, spacing,
+   and the handful of visual details tokens can't reach. */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* ---------- Shell ---------- */
+.merfit-admin-shell {
+  min-height: 100vh;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.merfit-admin-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.merfit-admin-content {
+  padding: 24px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+@media (max-width: 576px) {
+  .merfit-admin-content {
+    padding: 16px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ---------- Sidebar ---------- */
+.merfit-sidebar-desktop {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  border-right: 1px solid rgba(16, 24, 40, 0.06);
+}
+[data-theme="dark"] .merfit-sidebar-desktop {
+  border-right-color: rgba(255, 255, 255, 0.06);
+}
+@media (max-width: 991px) {
+  .merfit-sidebar-desktop {
+    display: none;
+  }
+}
+.merfit-sidebar-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.merfit-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 68px;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.merfit-sidebar-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #2f6fed, #5b8def);
+  color: #fff;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.merfit-sidebar-brand-text {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.4px;
+}
+.merfit-sidebar-menu-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 4px;
+}
+.merfit-sidebar-menu.ant-menu {
+  border-inline-end: none !important;
+  background: transparent;
+}
+.merfit-sidebar-menu .ant-menu-item,
+.merfit-sidebar-menu .ant-menu-submenu-title {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.merfit-sidebar-footer {
+  flex-shrink: 0;
+  border-top: 1px solid rgba(16, 24, 40, 0.06);
+  padding: 8px 0 12px;
+}
+[data-theme="dark"] .merfit-sidebar-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+.merfit-sidebar-signout .ant-menu-item {
+  color: #98a2b3;
+}
+.merfit-sidebar-drawer .ant-drawer-body {
+  padding: 0;
+}
+
+/* ---------- Header ---------- */
+.merfit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-inline: 24px !important;
+  border-bottom: 1px solid rgba(16, 24, 40, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+[data-theme="dark"] .merfit-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+.merfit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.merfit-header-title {
+  margin: 0 !important;
+  white-space: nowrap;
+}
+.merfit-header-menu-btn {
+  display: none;
+}
+@media (max-width: 991px) {
+  .merfit-header-menu-btn {
+    display: inline-flex;
+  }
+}
+.merfit-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.merfit-header-range {
+  display: inline-flex;
+}
+@media (max-width: 768px) {
+  .merfit-header-range {
+    display: none;
+  }
+}
+.merfit-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.merfit-theme-toggle-icon {
+  font-size: 14px;
+  color: #98a2b3;
+}
+.merfit-header-icon-btn {
+  font-size: 17px;
+}
+.merfit-header-profile {
+  cursor: pointer;
+  padding: 4px 8px 4px 4px;
+  border-radius: 999px;
+  transition: background-color 0.15s ease;
+}
+.merfit-header-profile:hover {
+  background: rgba(16, 24, 40, 0.04);
+}
+[data-theme="dark"] .merfit-header-profile:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.merfit-header-profile-name {
+  font-weight: 500;
+  font-size: 14px;
+}
+@media (max-width: 480px) {
+  .merfit-header-profile-name {
+    display: none;
+  }
+}
+
+/* ---------- Dashboard grid ---------- */
+.merfit-dashboard-row {
+  margin-bottom: 20px;
+}
+.merfit-dashboard-row:last-child {
+  margin-bottom: 0;
+}
+.merfit-dashboard-row .ant-col {
+  margin-bottom: 0;
+}
+@media (max-width: 991px) {
+  .merfit-dashboard-row {
+    row-gap: 20px !important;
+  }
+}
+
+/* ---------- KPI cards ---------- */
+.merfit-kpi-card {
+  height: 100%;
+}
+.merfit-kpi-card .ant-card-body {
+  padding: 20px;
+}
+.merfit-kpi-card-skeleton {
+  height: 128px;
+  border-radius: 16px;
+  background: rgba(16, 24, 40, 0.04);
+}
+[data-theme="dark"] .merfit-kpi-card-skeleton {
+  background: rgba(255, 255, 255, 0.04);
+}
+.merfit-kpi-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.merfit-kpi-card-title {
+  font-size: 13px;
+  color: #667085;
+}
+[data-theme="dark"] .merfit-kpi-card-title {
+  color: #93a0b4;
+}
+.merfit-kpi-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(47, 111, 237, 0.1);
+  color: #2f6fed;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.merfit-kpi-card-value .ant-statistic-content {
+  font-size: 24px;
+  font-weight: 700;
+}
+.merfit-kpi-card-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.merfit-kpi-card-trend.is-positive {
+  color: #22c55e;
+}
+.merfit-kpi-card-trend.is-negative {
+  color: #ef4444;
+}
+.merfit-kpi-card-trend-label {
+  font-weight: 400;
+  margin-left: 2px;
+  font-size: 12px;
+}
+
+/* ---------- Chart / table cards ---------- */
+.merfit-chart-card,
+.merfit-table-card,
+.merfit-quickstats-card {
+  height: 100%;
+}
+.merfit-chart-card .ant-card-head,
+.merfit-table-card .ant-card-head,
+.merfit-quickstats-card .ant-card-head {
+  border-bottom: none;
+  padding: 20px 20px 0;
+  min-height: unset;
+}
+.merfit-chart-card .ant-card-head-title,
+.merfit-table-card .ant-card-head-title,
+.merfit-quickstats-card .ant-card-head-title {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0;
+}
+.merfit-chart-card .ant-card-body,
+.merfit-table-card .ant-card-body,
+.merfit-quickstats-card .ant-card-body {
+  padding: 16px 20px 20px;
+}
+.merfit-donut-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.merfit-donut-legend {
+  width: 100%;
+  margin-top: 4px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.merfit-donut-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.merfit-donut-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.merfit-donut-legend-label {
+  flex: 1;
+}
+.merfit-donut-legend-pct {
+  font-weight: 600;
+}
+.merfit-quickstat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.merfit-table-card .ant-table-thead > tr > th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 600;
 }
