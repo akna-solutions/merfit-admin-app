@@ -16,34 +16,65 @@ import {
   MenuOutlined,
   SunOutlined,
   MoonOutlined,
-  UserOutlined,
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useThemeMode } from "../../theme/ThemeContext";
+import { navigationItems } from "../../routes/navigationConfig";
+import { useAuth } from "../../features/auth/context/AuthContext";
 
 const { Header } = Layout;
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 
-const profileMenuItems = [
-  { key: "profile", icon: <UserOutlined />, label: "Profile" },
-  { key: "settings", icon: <SettingOutlined />, label: "Settings" },
-  { type: "divider" },
-  {
-    key: "sign-out",
-    icon: <LogoutOutlined />,
-    label: "Sign Out",
-    danger: true,
-  },
-];
+// Resolves the current page title from the central nav config using the
+// same longest-prefix-match logic as the sidebar, so header + sidebar
+// never disagree about which section is active (spec §34).
+function usePageTitle() {
+  const { pathname } = useLocation();
+  const exact = navigationItems.find((item) => item.path === pathname);
+  if (exact) return exact.label;
+  const prefixMatches = navigationItems
+    .filter(
+      (item) => item.path !== "/admin" && pathname.startsWith(`${item.path}/`),
+    )
+    .sort((a, b) => b.path.length - a.path.length);
+  return prefixMatches.length ? prefixMatches[0].label : "Dashboard";
+}
+
+function buildProfileMenuItems(navigate) {
+  return [
+    { key: "settings", icon: <SettingOutlined />, label: "Settings", onClick: () => navigate("/admin/settings") },
+    { type: "divider" },
+    {
+      key: "sign-out",
+      icon: <LogoutOutlined />,
+      label: "Sign Out",
+      danger: true,
+    },
+  ];
+}
 
 export default function AdminHeader({
   onOpenMobileSidebar,
   onDateRangeChange,
 }) {
   const { mode, toggleMode } = useThemeMode();
+  const pageTitle = usePageTitle();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleMenuClick = ({ key }) => {
+    if (key === "sign-out") {
+      logout();
+      navigate("/login", { replace: true });
+    }
+  };
+
+  const displayName = user?.name ?? user?.email ?? "Admin";
+  const avatarInitial = displayName.charAt(0).toUpperCase();
 
   // Reusable default range; wired so the RangePicker is ready to be
   // connected to real API `from`/`to` params later (see spec §12).
@@ -60,7 +91,7 @@ export default function AdminHeader({
           onClick={onOpenMobileSidebar}
         />
         <Title level={4} className="merfit-header-title">
-          Dashboard
+          {pageTitle}
         </Title>
       </div>
 
@@ -102,15 +133,15 @@ export default function AdminHeader({
         </Tooltip>
 
         <Dropdown
-          menu={{ items: profileMenuItems }}
+          menu={{ items: buildProfileMenuItems(navigate), onClick: handleMenuClick }}
           trigger={["click"]}
           placement="bottomRight"
         >
           <Space className="merfit-header-profile" size={8}>
             <Avatar size={36} style={{ backgroundColor: "#2F6FED" }}>
-              A
+              {avatarInitial}
             </Avatar>
-            <span className="merfit-header-profile-name">Admin</span>
+            <span className="merfit-header-profile-name">{displayName}</span>
           </Space>
         </Dropdown>
       </div>

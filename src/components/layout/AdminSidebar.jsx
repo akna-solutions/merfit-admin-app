@@ -7,6 +7,7 @@ import {
   navigationSections,
 } from "../../routes/navigationConfig";
 import { useThemeMode } from "../../theme/ThemeContext";
+import { useAuth } from "../../features/auth/context/AuthContext";
 
 const { Sider } = Layout;
 
@@ -49,12 +50,27 @@ function SidebarBrand({ collapsed }) {
 function SidebarContent({ collapsed, onNavigate }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const selectedKey = useMemo(() => {
-    const match = navigationItems.find(
+    // Exact match first (covers "/admin" for Dashboard exactly), then fall
+    // back to the longest path prefix match so nested routes like
+    // "/admin/users/123" still highlight "Users". Sorting by path length
+    // means "/admin/users" wins over the bare "/admin" prefix.
+    const exact = navigationItems.find(
       (item) => item.path === location.pathname,
     );
-    return match ? [match.key] : ["dashboard"];
+    if (exact) return [exact.key];
+
+    const prefixMatches = navigationItems
+      .filter(
+        (item) =>
+          item.path !== "/admin" &&
+          location.pathname.startsWith(`${item.path}/`),
+      )
+      .sort((a, b) => b.path.length - a.path.length);
+
+    return prefixMatches.length ? [prefixMatches[0].key] : ["dashboard"];
   }, [location.pathname]);
 
   const menuItems = useMemo(
@@ -87,6 +103,10 @@ function SidebarContent({ collapsed, onNavigate }) {
               key: "sign-out",
               icon: <LogoutOutlined />,
               label: "Sign Out",
+              onClick: () => {
+                logout();
+                navigate("/login", { replace: true });
+              },
             },
           ]}
         />

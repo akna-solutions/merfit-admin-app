@@ -36,7 +36,7 @@ export const navigationItems = [
     icon: TeamOutlined,
     path: "/admin/users",
     section: "MANAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "workouts",
@@ -44,7 +44,7 @@ export const navigationItems = [
     icon: ThunderboltOutlined,
     path: "/admin/workouts",
     section: "MANAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "nutrition",
@@ -52,7 +52,7 @@ export const navigationItems = [
     icon: AppleOutlined,
     path: "/admin/nutrition",
     section: "MANAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "subscriptions",
@@ -60,7 +60,7 @@ export const navigationItems = [
     icon: CreditCardOutlined,
     path: "/admin/subscriptions",
     section: "MANAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "gamification",
@@ -68,7 +68,7 @@ export const navigationItems = [
     icon: TrophyOutlined,
     path: "/admin/gamification",
     section: "ENGAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "notifications",
@@ -76,7 +76,7 @@ export const navigationItems = [
     icon: BellOutlined,
     path: "/admin/notifications",
     section: "ENGAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "support",
@@ -84,7 +84,7 @@ export const navigationItems = [
     icon: CustomerServiceOutlined,
     path: "/admin/support",
     section: "ENGAGEMENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "content",
@@ -92,7 +92,7 @@ export const navigationItems = [
     icon: FileTextOutlined,
     path: "/admin/content",
     section: "CONTENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "faq",
@@ -100,7 +100,7 @@ export const navigationItems = [
     icon: QuestionCircleOutlined,
     path: "/admin/faq",
     section: "CONTENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "translations",
@@ -108,7 +108,7 @@ export const navigationItems = [
     icon: TranslationOutlined,
     path: "/admin/translations",
     section: "CONTENT",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "analytics",
@@ -116,7 +116,7 @@ export const navigationItems = [
     icon: BarChartOutlined,
     path: "/admin/analytics",
     section: "ANALYTICS",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "ai",
@@ -124,7 +124,7 @@ export const navigationItems = [
     icon: RobotOutlined,
     path: "/admin/ai",
     section: "ANALYTICS",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "audit-logs",
@@ -132,7 +132,7 @@ export const navigationItems = [
     icon: AuditOutlined,
     path: "/admin/audit-logs",
     section: "SYSTEM",
-    enabled: false,
+    enabled: true,
   },
   {
     key: "settings",
@@ -140,7 +140,7 @@ export const navigationItems = [
     icon: SettingOutlined,
     path: "/admin/settings",
     section: "SYSTEM",
-    enabled: false,
+    enabled: true,
   },
 ];
 
