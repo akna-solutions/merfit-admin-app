@@ -1,193 +1,132 @@
-// Mock implementations of AdminScoreController, AdminAchievementController,
-// AdminLeaderboardController, and AdminRewardController (see MerfitApi repo:
-// MerfitApi.Api/Controllers/Admin/*.cs).
-import {
-  scoresMockData,
-  achievementsMockData,
-  achievementEarnersMockData,
-  leaderboardPeriodsMockData,
-  leaderboardEntriesMockData,
-  rewardsMockData,
-} from "../data/gamificationMockData";
-import { simulateLatency, apiSuccess, apiPagedSuccess, queryRows } from "../../../utils/queryMockData";
-
-let scores = [...scoresMockData];
-let achievements = [...achievementsMockData];
-let leaderboardPeriods = [...leaderboardPeriodsMockData];
-const leaderboardEntries = { ...leaderboardEntriesMockData };
-let rewards = [...rewardsMockData];
+// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
+// MerfitApi.Api/Controllers/Admin/AdminScoreController.cs,
+// AdminAchievementController.cs, AdminLeaderboardController.cs, and
+// AdminRewardController.cs.
+import { apiClient, buildQuery } from "../../../utils/apiClient";
 
 export const scoreService = {
-  /** GET /api/admin/scores */
+  /** GET /api/admin/scores — AdminScoreListRequest */
   getScores(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const sorted = [...scores].sort((a, b) => b.score - a.score);
-    const result = queryRows(sorted, {
-      search: params.search,
-      searchFields: ["userEmail"],
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search } = params;
+    return apiClient.get(`/api/admin/scores${buildQuery({ page, pageSize, search })}`);
+  },
+  /** GET /api/admin/scores/{userId} */
+  getScoreByUserId(userId) {
+    return apiClient.get(`/api/admin/scores/${userId}`);
   },
   /** POST /api/admin/users/{userId}/score/recalculate */
   recalculate(userId) {
-    const record = scores.find((s) => s.userId === Number(userId));
-    const previousScore = record?.score ?? 0;
-    const newScore = Math.min(100, Math.max(0, Math.round(previousScore + (Math.random() * 10 - 5))));
-    scores = scores.map((s) =>
-      s.userId === Number(userId) ? { ...s, score: newScore, calculatedAt: new Date().toISOString() } : s,
-    );
-    return simulateLatency(
-      apiSuccess({ userId: Number(userId), previousScore, newScore, calculatedAt: new Date().toISOString() }),
-      300,
-    );
+    return apiClient.post(`/api/admin/users/${userId}/score/recalculate`);
   },
 };
 
 export const achievementService = {
-  /** GET /api/admin/achievements */
+  /** GET /api/admin/achievements — AdminAchievementListRequest */
   getAchievements(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(achievements, {
-      search: params.search,
-      searchFields: ["title", "code"],
-      filters: { isActive: params.isActive },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search, isActive } = params;
+    return apiClient.get(`/api/admin/achievements${buildQuery({ page, pageSize, search, isActive })}`);
   },
+  /** GET /api/admin/achievements/{id} */
   getAchievementById(id) {
-    return simulateLatency(apiSuccess(achievements.find((a) => a.id === Number(id)) ?? null), 150);
+    return apiClient.get(`/api/admin/achievements/${id}`);
   },
   /** POST /api/admin/achievements — AdminUpsertAchievementRequest */
   createAchievement(payload) {
-    const newAchievement = {
-      id: Math.max(0, ...achievements.map((a) => a.id)) + 1,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-    };
-    achievements = [newAchievement, ...achievements];
-    return simulateLatency(apiSuccess(newAchievement), 250);
+    return apiClient.post(`/api/admin/achievements`, payload);
   },
+  /** PUT /api/admin/achievements/{id} — AdminUpsertAchievementRequest */
   updateAchievement(id, payload) {
-    achievements = achievements.map((a) =>
-      a.id === Number(id) ? { ...a, ...payload, updatedAt: new Date().toISOString() } : a,
-    );
-    return simulateLatency(apiSuccess(achievements.find((a) => a.id === Number(id))), 250);
+    return apiClient.put(`/api/admin/achievements/${id}`, payload);
   },
+  /** DELETE /api/admin/achievements/{id} */
   deleteAchievement(id) {
-    achievements = achievements.filter((a) => a.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/achievements/${id}`);
   },
+  /** PATCH /api/admin/achievements/{id}/status — AdminUpdateAchievementStatusRequest */
   updateStatus(id, { isActive }) {
-    achievements = achievements.map((a) => (a.id === Number(id) ? { ...a, isActive } : a));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.patch(`/api/admin/achievements/${id}/status`, { isActive });
   },
-  /** GET /api/admin/achievements/{id}/users */
+  /** GET /api/admin/achievements/{id}/users — PagedRequest */
   getUsers(id, params = {}) {
     const { page = 1, pageSize = 20 } = params;
-    const items = achievementEarnersMockData[Number(id)] ?? [];
-    return simulateLatency(apiPagedSuccess(items, page, pageSize, items.length), 200);
+    return apiClient.get(`/api/admin/achievements/${id}/users${buildQuery({ page, pageSize })}`);
   },
 };
 
 export const leaderboardService = {
-  /** GET /api/admin/leaderboard-periods */
+  /** GET /api/admin/leaderboard-periods — AdminLeaderboardPeriodListRequest */
   getPeriods(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(leaderboardPeriods, {
-      filters: { type: params.type, isActive: params.isActive },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, type, isActive } = params;
+    return apiClient.get(`/api/admin/leaderboard-periods${buildQuery({ page, pageSize, type, isActive })}`);
   },
+  /** GET /api/admin/leaderboard-periods/{id} */
   getPeriodById(id) {
-    return simulateLatency(apiSuccess(leaderboardPeriods.find((p) => p.id === Number(id)) ?? null), 150);
+    return apiClient.get(`/api/admin/leaderboard-periods/${id}`);
   },
   /** POST /api/admin/leaderboard-periods — AdminUpsertLeaderboardPeriodRequest */
   createPeriod(payload) {
-    const newPeriod = {
-      id: Math.max(0, ...leaderboardPeriods.map((p) => p.id)) + 1,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      ...payload,
-    };
-    leaderboardPeriods = [newPeriod, ...leaderboardPeriods];
-    leaderboardEntries[newPeriod.id] = [];
-    return simulateLatency(apiSuccess(newPeriod), 250);
+    return apiClient.post(`/api/admin/leaderboard-periods`, payload);
   },
+  /** PUT /api/admin/leaderboard-periods/{id} — AdminUpsertLeaderboardPeriodRequest */
   updatePeriod(id, payload) {
-    leaderboardPeriods = leaderboardPeriods.map((p) => (p.id === Number(id) ? { ...p, ...payload } : p));
-    return simulateLatency(apiSuccess(leaderboardPeriods.find((p) => p.id === Number(id))), 250);
+    return apiClient.put(`/api/admin/leaderboard-periods/${id}`, payload);
   },
+  /** DELETE /api/admin/leaderboard-periods/{id} */
   deletePeriod(id) {
-    leaderboardPeriods = leaderboardPeriods.filter((p) => p.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/leaderboard-periods/${id}`);
   },
-  /** GET /api/admin/leaderboards/{periodId}/entries */
+  /** GET /api/admin/leaderboards/{periodId}/entries — PagedRequest */
   getEntries(periodId, params = {}) {
     const { page = 1, pageSize = 20 } = params;
-    const items = leaderboardEntries[Number(periodId)] ?? [];
-    return simulateLatency(apiPagedSuccess(items, page, pageSize, items.length), 200);
+    return apiClient.get(`/api/admin/leaderboards/${periodId}/entries${buildQuery({ page, pageSize })}`);
   },
   /** POST /api/admin/leaderboards/{periodId}/recalculate */
   recalculate(periodId) {
-    const entries = (leaderboardEntries[Number(periodId)] ?? [])
-      .map((e) => ({ ...e, points: Math.max(0, e.points + Math.round(Math.random() * 40 - 20)) }))
-      .sort((a, b) => b.points - a.points)
-      .map((e, i) => ({ ...e, rank: i + 1 }));
-    leaderboardEntries[Number(periodId)] = entries;
-    return simulateLatency(
-      apiSuccess({ leaderboardPeriodId: Number(periodId), entryCount: entries.length, recalculatedAt: new Date().toISOString() }),
-      400,
-    );
+    return apiClient.post(`/api/admin/leaderboards/${periodId}/recalculate`);
   },
 };
 
 export const rewardService = {
-  /** GET /api/admin/rewards */
+  /** GET /api/admin/rewards — AdminRewardListRequest */
   getRewards(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(rewards, {
-      search: params.search,
-      searchFields: ["title"],
-      filters: { isActive: params.isActive, rewardType: params.rewardType },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search, isActive, rewardType } = params;
+    return apiClient.get(`/api/admin/rewards${buildQuery({ page, pageSize, search, isActive, rewardType })}`);
   },
+  /** GET /api/admin/rewards/{id} */
   getRewardById(id) {
-    return simulateLatency(apiSuccess(rewards.find((r) => r.id === Number(id)) ?? null), 150);
+    return apiClient.get(`/api/admin/rewards/${id}`);
   },
+  /** POST /api/admin/rewards — AdminUpsertRewardRequest */
   createReward(payload) {
-    const newReward = {
-      id: Math.max(0, ...rewards.map((r) => r.id)) + 1,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-    };
-    rewards = [newReward, ...rewards];
-    return simulateLatency(apiSuccess(newReward), 250);
+    return apiClient.post(`/api/admin/rewards`, payload);
   },
+  /** PUT /api/admin/rewards/{id} — AdminUpsertRewardRequest */
   updateReward(id, payload) {
-    rewards = rewards.map((r) =>
-      r.id === Number(id) ? { ...r, ...payload, updatedAt: new Date().toISOString() } : r,
-    );
-    return simulateLatency(apiSuccess(rewards.find((r) => r.id === Number(id))), 250);
+    return apiClient.put(`/api/admin/rewards/${id}`, payload);
   },
+  /** DELETE /api/admin/rewards/{id} */
   deleteReward(id) {
-    rewards = rewards.filter((r) => r.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/rewards/${id}`);
   },
+  /** PATCH /api/admin/rewards/{id}/status — AdminUpdateRewardStatusRequest */
   updateStatus(id, { isActive }) {
-    rewards = rewards.map((r) => (r.id === Number(id) ? { ...r, isActive } : r));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.patch(`/api/admin/rewards/${id}/status`, { isActive });
+  },
+  /** GET /api/admin/leaderboard-rewards — AdminLeaderboardRewardListRequest */
+  getLeaderboardRewards(params = {}) {
+    const { page = 1, pageSize = 20, leaderboardPeriodId } = params;
+    return apiClient.get(`/api/admin/leaderboard-rewards${buildQuery({ page, pageSize, leaderboardPeriodId })}`);
+  },
+  /** POST /api/admin/leaderboard-rewards — AdminUpsertLeaderboardRewardRequest */
+  createLeaderboardReward(payload) {
+    return apiClient.post(`/api/admin/leaderboard-rewards`, payload);
+  },
+  /** PUT /api/admin/leaderboard-rewards/{id} — AdminUpsertLeaderboardRewardRequest */
+  updateLeaderboardReward(id, payload) {
+    return apiClient.put(`/api/admin/leaderboard-rewards/${id}`, payload);
+  },
+  /** DELETE /api/admin/leaderboard-rewards/{id} */
+  deleteLeaderboardReward(id) {
+    return apiClient.delete(`/api/admin/leaderboard-rewards/${id}`);
   },
 };

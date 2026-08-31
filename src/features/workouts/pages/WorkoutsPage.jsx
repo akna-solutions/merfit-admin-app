@@ -27,7 +27,11 @@ export default function WorkoutsPage() {
       workoutService.getMuscleGroupOptions(),
       workoutService.getExerciseOptions(),
     ]).then(([categories, muscleGroups, exercises]) => {
-      setLookups({ categories: categories.data, muscleGroups: muscleGroups.data, exercises: exercises.data });
+      setLookups({
+        categories: categories.data.items,
+        muscleGroups: muscleGroups.data.items,
+        exercises: exercises.data.items,
+      });
     });
   }, []);
 

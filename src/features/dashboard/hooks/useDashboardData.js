@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { dashboardService } from "../services/dashboardService";
+import { analyticsService } from "../../analytics/services/analyticsService";
 
 const initialState = {
   kpiMetrics: [],
@@ -11,9 +12,21 @@ const initialState = {
   quickStats: [],
 };
 
+function formatMoney(amount) {
+  return `₺${Number(amount ?? 0).toLocaleString("tr-TR", { maximumFractionDigits: 0 })}`;
+}
+
+function formatDay(dateOnly) {
+  // AdminDashboardTimeSeriesPointDto.Date is a DateOnly ("YYYY-MM-DD").
+  const d = new Date(dateOnly);
+  return Number.isNaN(d.getTime()) ? String(dateOnly) : d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
 // Single abstraction dashboard components pull data through (spec §18).
-// Swapping dashboardService's mock implementation for real API calls
-// later requires no changes here or in any component using this hook.
+// Talks to the real MerfitApi admin endpoints (see dashboardService.js) and
+// reshapes their DTOs into the flat { month, users }/{ day, workouts }/etc.
+// shapes the existing chart components (UserGrowthChart, RevenueChart, ...)
+// already expect, so no chart/component changes are needed.
 export function useDashboardData(dateRange) {
   const [data, setData] = useState(initialState);
   const [loading, setLoading] = useState(true);
@@ -30,31 +43,90 @@ export function useDashboardData(dateRange) {
     setError(null);
     try {
       const [
-        summary,
-        userGrowth,
-        revenue,
-        subscriptions,
-        workoutActivity,
-        recent,
-        stats,
+        summaryRes,
+        userGrowthRes,
+        revenueRes,
+        subscriptionsRes,
+        activityRes,
+        workoutsAnalyticsRes,
+        retentionAnalyticsRes,
       ] = await Promise.all([
-        dashboardService.getSummary(dateRange),
+        dashboardService.getSummary(),
         dashboardService.getUserGrowth(dateRange),
         dashboardService.getRevenue(dateRange),
-        dashboardService.getSubscriptions(dateRange),
-        dashboardService.getWorkoutActivity(dateRange),
-        dashboardService.getRecentActivity(dateRange),
-        dashboardService.getQuickStats(dateRange),
+        dashboardService.getSubscriptions(),
+        dashboardService.getActivity(dateRange),
+        // Two "Quick Stats" figures (workout completion rate, 7-day
+        // retention) aren't on AdminDashboardController — they live on
+        // AdminAnalyticsController, which the Dashboard already borrows from.
+        analyticsService.getWorkouts(),
+        analyticsService.getRetention(),
       ]);
 
+      const summary = summaryRes.data;
+      const subscriptions = subscriptionsRes.data;
+      const workoutsAnalytics = workoutsAnalyticsRes.data;
+      const retentionAnalytics = retentionAnalyticsRes.data;
+
+      const kpiMetrics = [
+        { id: "total-users", title: "Total Users", value: summary.totalUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "users" },
+        { id: "active-users", title: "Active Users", value: summary.activeUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "active" },
+        { id: "plus-subscribers", title: "Plus Subscribers", value: summary.plusSubscribers.toLocaleString(), trend: 0, trendLabel: "", icon: "crown" },
+        { id: "monthly-revenue", title: "Monthly Revenue", value: formatMoney(summary.revenueThisMonth), trend: 0, trendLabel: "", icon: "revenue" },
+        { id: "workouts-completed", title: "Workouts Completed", value: summary.workoutsCompleted.toLocaleString(), trend: 0, trendLabel: "", icon: "workout" },
+        { id: "new-users", title: "New Users", value: summary.newUsersThisMonth.toLocaleString(), trend: 0, trendLabel: "this month", icon: "new" },
+      ];
+
+      const userGrowth = (userGrowthRes.data.points ?? []).map((p) => ({
+        month: formatDay(p.date),
+        users: p.count,
+      }));
+
+      const revenue = (revenueRes.data.points ?? []).map((p) => ({
+        month: formatDay(p.date),
+        revenue: p.amount,
+      }));
+
+      const subscriptionDistribution = (subscriptions.byProduct ?? []).map((p) => ({
+        name: p.productName,
+        value: p.activeCount,
+      }));
+
+      const workoutActivity = (activityRes.data.workoutsCompleted ?? []).map((p) => ({
+        day: formatDay(p.date),
+        workouts: p.count,
+      }));
+
+      // No backend endpoint returns a per-user "recent activity" feed
+      // (AdminDashboardController only exposes aggregate metrics), so this
+      // stays empty rather than showing fabricated rows.
+      const recentActivity = [];
+
+      const quickStats = [
+        { id: "active-subs", label: "Active Subscriptions", value: subscriptions.activeCount?.toLocaleString() ?? "0" },
+        {
+          id: "workout-completion",
+          label: "Workout Completion",
+          value: `${workoutsAnalytics.workoutCompletionRatePercent.toFixed(1)}%`,
+          progress: workoutsAnalytics.workoutCompletionRatePercent,
+        },
+        {
+          id: "retention",
+          label: "7 Day Retention",
+          value: `${retentionAnalytics.retention7DayPercent.toFixed(1)}%`,
+          progress: retentionAnalytics.retention7DayPercent,
+        },
+        { id: "open-tickets", label: "Open Support Tickets", value: summary.openSupportTickets?.toLocaleString() ?? "0" },
+      ];
+
       setData({
-        kpiMetrics: summary.kpiMetrics,
-        userGrowth: userGrowth.series,
-        revenue: revenue.series,
-        subscriptions: subscriptions.series,
-        workoutActivity: workoutActivity.series,
-        recentActivity: recent.rows,
-        quickStats: stats.stats,
+        kpiMetrics,
+        userGrowth,
+        revenue,
+        subscriptions: subscriptionDistribution,
+        workoutActivity,
+        recentActivity,
+        quickStats,
       });
     } catch (err) {
       setError(err);

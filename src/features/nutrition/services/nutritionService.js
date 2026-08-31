@@ -1,6 +1,6 @@
-// Mock implementations of AdminFoodController and AdminNutritionController
-// (see MerfitApi repo: MerfitApi.Api/Controllers/Admin/AdminFoodController.cs,
-// AdminNutritionController.cs). Method names mirror the real endpoints:
+// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
+// MerfitApi.Api/Controllers/Admin/AdminFoodController.cs and
+// AdminNutritionController.cs. Method names mirror the real endpoints:
 //
 //   GET    /api/admin/foods            -> foodService.getFoods(params)
 //   GET    /api/admin/foods/{id}        -> foodService.getFoodById(id)
@@ -10,86 +10,46 @@
 //
 //   GET    /api/admin/meals             -> mealService.getMeals(params)   (read-only)
 //   GET    /api/admin/meals/{id}         -> mealService.getMealById(id)   (read-only)
-import { foodsMockData, mealsMockData } from "../data/nutritionMockData";
-import { simulateLatency, apiSuccess, apiPagedSuccess, queryRows } from "../../../utils/queryMockData";
-
-let foods = [...foodsMockData];
-const meals = [...mealsMockData];
+import { apiClient, buildQuery } from "../../../utils/apiClient";
 
 export const foodService = {
   /** GET /api/admin/foods — AdminFoodListRequest */
   getFoods(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(foods, {
-      search: params.search,
-      searchFields: ["name", "brand", "barcode"],
-      filters: { brand: params.brand, barcode: params.barcode },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search, brand, barcode } = params;
+    return apiClient.get(`/api/admin/foods${buildQuery({ page, pageSize, search, brand, barcode })}`);
   },
 
   /** GET /api/admin/foods/{id} */
   getFoodById(id) {
-    const food = foods.find((f) => f.id === Number(id));
-    return simulateLatency(apiSuccess(food ?? null), 150);
+    return apiClient.get(`/api/admin/foods/${id}`);
   },
 
   /** POST /api/admin/foods — AdminUpsertFoodRequest */
   createFood(payload) {
-    const newFood = {
-      id: Math.max(0, ...foods.map((f) => f.id)) + 1,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-    };
-    foods = [newFood, ...foods];
-    return simulateLatency(apiSuccess(newFood), 250);
+    return apiClient.post(`/api/admin/foods`, payload);
   },
 
   /** PUT /api/admin/foods/{id} — AdminUpsertFoodRequest */
   updateFood(id, payload) {
-    foods = foods.map((f) =>
-      f.id === Number(id) ? { ...f, ...payload, updatedAt: new Date().toISOString() } : f,
-    );
-    return simulateLatency(apiSuccess(foods.find((f) => f.id === Number(id))), 250);
+    return apiClient.put(`/api/admin/foods/${id}`, payload);
   },
 
   /** DELETE /api/admin/foods/{id} */
   deleteFood(id) {
-    foods = foods.filter((f) => f.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/foods/${id}`);
   },
 };
 
 export const mealService = {
   /** GET /api/admin/meals — AdminMealListRequest (read-only, cross-user) */
   getMeals(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(meals, {
-      filters: { userId: params.userId },
-      dateRange: params.dateRange,
-      dateField: "date",
-      page,
-      pageSize,
-    });
-    return simulateLatency(
-      apiPagedSuccess(
-        result.items.map(({ items, ...listItem }) => {
-          void items;
-          return listItem;
-        }),
-        page,
-        pageSize,
-        result.total,
-      ),
-    );
+    const { page = 1, pageSize = 20, userId, dateRange } = params;
+    const [from, to] = dateRange ?? [];
+    return apiClient.get(`/api/admin/meals${buildQuery({ page, pageSize, userId, from, to })}`);
   },
 
   /** GET /api/admin/meals/{id} */
   getMealById(id) {
-    const meal = meals.find((m) => m.id === Number(id));
-    return simulateLatency(apiSuccess(meal ?? null), 150);
+    return apiClient.get(`/api/admin/meals/${id}`);
   },
 };

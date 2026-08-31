@@ -15,9 +15,15 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
+import {
+  GENDER, FITNESS_GOAL, EXPERIENCE_LEVEL, ACTIVITY_LEVEL, TRAINING_LOCATION, PLATFORM, enumLabel,
+} from "../../../constants/apiEnums";
 
 // Renders AdminUserDetailDto + the per-tab sub-resources fetched alongside it
 // (see userService.js — each maps 1:1 to an AdminUserController endpoint).
+// Gender/Goal/ExperienceLevel/ActivityLevel/TrainingLocation/Platform arrive
+// from the real API as raw enum integers (see constants/apiEnums.js), so
+// every raw-enum field is converted through enumLabel() before display.
 
 function ProfileTab({ user }) {
   const { profile } = user;
@@ -29,11 +35,17 @@ function ProfileTab({ user }) {
       <Descriptions.Item label="Username">@{profile.username}</Descriptions.Item>
       <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
       <Descriptions.Item label="Phone">{user.phoneNumber || "—"}</Descriptions.Item>
-      <Descriptions.Item label="Gender">{profile.gender ?? "—"}</Descriptions.Item>
-      <Descriptions.Item label="Goal">{profile.goal ?? "—"}</Descriptions.Item>
-      <Descriptions.Item label="Experience Level">{profile.experienceLevel ?? "—"}</Descriptions.Item>
-      <Descriptions.Item label="Activity Level">{profile.activityLevel ?? "—"}</Descriptions.Item>
-      <Descriptions.Item label="Training Location">{profile.trainingLocation ?? "—"}</Descriptions.Item>
+      <Descriptions.Item label="Gender">{enumLabel(GENDER, profile.gender) ?? "—"}</Descriptions.Item>
+      <Descriptions.Item label="Goal">{enumLabel(FITNESS_GOAL, profile.goal) ?? "—"}</Descriptions.Item>
+      <Descriptions.Item label="Experience Level">
+        {enumLabel(EXPERIENCE_LEVEL, profile.experienceLevel) ?? "—"}
+      </Descriptions.Item>
+      <Descriptions.Item label="Activity Level">
+        {enumLabel(ACTIVITY_LEVEL, profile.activityLevel) ?? "—"}
+      </Descriptions.Item>
+      <Descriptions.Item label="Training Location">
+        {enumLabel(TRAINING_LOCATION, profile.trainingLocation) ?? "—"}
+      </Descriptions.Item>
       <Descriptions.Item label="Height">{profile.heightCm ? `${profile.heightCm} cm` : "—"}</Descriptions.Item>
       <Descriptions.Item label="Weight">{profile.weightKg ? `${profile.weightKg} kg` : "—"}</Descriptions.Item>
     </Descriptions>
@@ -190,7 +202,7 @@ function DevicesTab({ devices }) {
   if (!devices?.length) return <Empty description="No linked devices." />;
   const columns = [
     { title: "Device", dataIndex: "deviceName", key: "deviceName" },
-    { title: "Platform", dataIndex: "platform", key: "platform" },
+    { title: "Platform", dataIndex: "platform", key: "platform", render: (v) => enumLabel(PLATFORM, v) ?? "—" },
     { title: "App Version", dataIndex: "appVersion", key: "appVersion" },
     { title: "Last Seen", dataIndex: "lastSeenAt", key: "lastSeenAt", render: (v) => dayjs(v).format("DD MMM YYYY") },
   ];

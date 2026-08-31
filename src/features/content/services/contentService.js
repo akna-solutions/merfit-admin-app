@@ -1,88 +1,42 @@
-// Mock implementation of AdminContentController (see MerfitApi repo:
-// MerfitApi.Api/Controllers/Admin/AdminContentController.cs).
-import { contentMockData } from "../data/contentMockData";
-import { simulateLatency, apiSuccess, apiPagedSuccess, queryRows } from "../../../utils/queryMockData";
-
-let content = [...contentMockData];
-
-function isCurrentlyLive(isActive, startAt, endAt) {
-  if (!isActive) return false;
-  const now = Date.now();
-  if (startAt && new Date(startAt).getTime() > now) return false;
-  if (endAt && new Date(endAt).getTime() < now) return false;
-  return true;
-}
+// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
+// MerfitApi.Api/Controllers/Admin/AdminContentController.cs
+import { apiClient, buildQuery } from "../../../utils/apiClient";
 
 export const contentService = {
   /** GET /api/admin/content — AdminContentListRequest */
   getContent(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(content, {
-      search: params.search,
-      searchFields: ["title", "key", "description"],
-      filters: { type: params.type, isActive: params.isActive },
-      dateRange: params.dateRange,
-      dateField: "createdAt",
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search, type, isActive, dateRange } = params;
+    void dateRange; // no date filter on AdminContentListRequest server-side
+    return apiClient.get(`/api/admin/content${buildQuery({ page, pageSize, search, type, isActive })}`);
   },
 
+  /** GET /api/admin/content/{id} */
   getContentById(id) {
-    return simulateLatency(apiSuccess(content.find((c) => c.id === Number(id)) ?? null), 150);
+    return apiClient.get(`/api/admin/content/${id}`);
   },
 
   /** POST /api/admin/content — AdminUpsertContentRequest */
   createContent(payload) {
-    const newItem = {
-      id: Math.max(0, ...content.map((c) => c.id)) + 1,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-    };
-    newItem.isCurrentlyLive = isCurrentlyLive(newItem.isActive, newItem.startAt, newItem.endAt);
-    content = [newItem, ...content];
-    return simulateLatency(apiSuccess(newItem), 250);
+    return apiClient.post(`/api/admin/content`, payload);
   },
 
-  /** PUT /api/admin/content/{id} */
+  /** PUT /api/admin/content/{id} — AdminUpsertContentRequest */
   updateContent(id, payload) {
-    content = content.map((c) => {
-      if (c.id !== Number(id)) return c;
-      const updated = { ...c, ...payload, updatedAt: new Date().toISOString() };
-      updated.isCurrentlyLive = isCurrentlyLive(updated.isActive, updated.startAt, updated.endAt);
-      return updated;
-    });
-    return simulateLatency(apiSuccess(content.find((c) => c.id === Number(id))), 250);
+    return apiClient.put(`/api/admin/content/${id}`, payload);
   },
 
   /** DELETE /api/admin/content/{id} */
   deleteContent(id) {
-    content = content.filter((c) => c.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/content/${id}`);
   },
 
-  /** PATCH /api/admin/content/{id}/status */
+  /** PATCH /api/admin/content/{id}/status — AdminUpdateContentStatusRequest */
   updateStatus(id, { isActive }) {
-    content = content.map((c) => {
-      if (c.id !== Number(id)) return c;
-      const updated = { ...c, isActive };
-      updated.isCurrentlyLive = isCurrentlyLive(updated.isActive, updated.startAt, updated.endAt);
-      return updated;
-    });
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.patch(`/api/admin/content/${id}/status`, { isActive });
   },
 
   /** POST /api/admin/content/{id}/publish */
   publish(id) {
-    content = content.map((c) => {
-      if (c.id !== Number(id)) return c;
-      const updated = { ...c, isActive: true, startAt: c.startAt ?? new Date().toISOString() };
-      updated.isCurrentlyLive = isCurrentlyLive(updated.isActive, updated.startAt, updated.endAt);
-      return updated;
-    });
-    return simulateLatency(apiSuccess(content.find((c) => c.id === Number(id))), 250);
+    return apiClient.post(`/api/admin/content/${id}/publish`);
   },
 };

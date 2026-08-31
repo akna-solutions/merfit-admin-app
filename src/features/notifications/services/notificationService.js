@@ -1,5 +1,5 @@
-// Mock implementation of AdminNotificationController (see MerfitApi repo:
-// MerfitApi.Api/Controllers/Admin/AdminNotificationController.cs).
+// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
+// MerfitApi.Api/Controllers/Admin/AdminNotificationController.cs
 //
 //   GET    /api/admin/notifications           -> getNotifications(params)
 //   GET    /api/admin/notifications/{id}       -> getNotificationById(id)
@@ -7,76 +7,46 @@
 //   POST   /api/admin/notifications/broadcast  -> broadcast(payload)
 //   POST   /api/admin/notifications/segment    -> sendToSegment(payload)
 //   DELETE /api/admin/notifications/{id}       -> deleteNotification(id)
-import { notificationsMockData } from "../data/notificationsMockData";
-import { simulateLatency, apiSuccess, apiPagedSuccess, queryRows } from "../../../utils/queryMockData";
-
-let notifications = [...notificationsMockData];
-
-// Every mock user "belongs" to one of these segments so segment sends have
-// something plausible to fan out to — the real API resolves this from user/
-// subscription data server-side.
-const SEGMENT_SIZE = {
-  AllUsers: 842,
-  PlusUsers: 213,
-  FreeUsers: 629,
-  InactiveUsers: 174,
-  NewUsers: 58,
-  WorkoutInactiveUsers: 96,
-};
+import { apiClient, buildQuery } from "../../../utils/apiClient";
 
 export const notificationService = {
   /** GET /api/admin/notifications — AdminNotificationListRequest */
   getNotifications(params = {}) {
-    const { page = 1, pageSize = 20 } = params;
-    const result = queryRows(notifications, {
-      search: params.search,
-      searchFields: ["title", "body", "userEmail"],
-      filters: { userId: params.userId, isRead: params.isRead },
-      dateRange: params.dateRange,
-      dateField: "createdAt",
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 20, search, userId, isRead, dateRange } = params;
+    const [from, to] = dateRange ?? [];
+    return apiClient.get(
+      `/api/admin/notifications${buildQuery({ page, pageSize, search, userId, isRead, from, to })}`,
+    );
   },
 
+  /** GET /api/admin/notifications/{id} */
   getNotificationById(id) {
-    return simulateLatency(apiSuccess(notifications.find((n) => n.id === Number(id)) ?? null), 150);
+    return apiClient.get(`/api/admin/notifications/${id}`);
   },
 
   /** POST /api/admin/notifications/user — AdminSendUserNotificationRequest */
   sendToUser(payload) {
-    const newNotification = {
-      id: Math.max(0, ...notifications.map((n) => n.id)) + 1,
-      userId: payload.userId,
-      userEmail: `user${payload.userId}@example.com`,
-      isRead: false,
-      readAt: null,
-      createdAt: new Date().toISOString(),
-      ...payload,
-    };
-    notifications = [newNotification, ...notifications];
-    return simulateLatency(apiSuccess(newNotification), 300);
+    return apiClient.post(`/api/admin/notifications/user`, payload);
   },
 
   /** POST /api/admin/notifications/broadcast — AdminBroadcastNotificationRequest */
   broadcast(payload) {
-    void payload;
-    return simulateLatency(apiSuccess({ recipientCount: SEGMENT_SIZE.AllUsers }), 400);
+    return apiClient.post(`/api/admin/notifications/broadcast`, payload);
   },
 
-  /** POST /api/admin/notifications/segment — AdminSegmentNotificationRequest */
+  /** POST /api/admin/notifications/segment — AdminSegmentNotificationRequest { segment, title, body, imageUrl?, dataJson?, expiresAt? } */
   sendToSegment(payload) {
-    return simulateLatency(apiSuccess({ recipientCount: SEGMENT_SIZE[payload.segment] ?? 0 }), 400);
+    return apiClient.post(`/api/admin/notifications/segment`, payload);
   },
 
   /** DELETE /api/admin/notifications/{id} */
   deleteNotification(id) {
-    notifications = notifications.filter((n) => n.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/notifications/${id}`);
   },
 };
 
+// AdminNotificationSegment enum (see MerfitApi repo:
+// MerfitApi.Business.Dtos.Admin.Notifications.AdminNotificationSegment).
 export const NOTIFICATION_SEGMENTS = [
   { value: "AllUsers", label: "All Users" },
   { value: "PlusUsers", label: "Plus Users" },

@@ -84,7 +84,7 @@ export default function UsersPage() {
         scoreBreakdown: scoreBreakdown.data,
         achievements: achievements.data.items,
         devices: devices.data.items,
-        supportTickets: supportTickets.data,
+        supportTickets: supportTickets.data.items,
       },
     });
   };

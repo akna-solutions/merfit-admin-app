@@ -1,136 +1,70 @@
-// Mock implementations of AdminLanguageController and
-// AdminTranslationController (see MerfitApi repo:
-// MerfitApi.Api/Controllers/Admin/AdminLanguageController.cs,
-// AdminTranslationController.cs).
-import { languagesMockData, translationsMockData, ALL_RESOURCE_KEYS } from "../data/translationsMockData";
-import { simulateLatency, apiSuccess, apiPagedSuccess, queryRows } from "../../../utils/queryMockData";
-
-let languages = [...languagesMockData];
-let translations = [...translationsMockData];
-
-function translationCount(languageId) {
-  return translations.filter((t) => t.languageId === languageId).length;
-}
+// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
+// MerfitApi.Api/Controllers/Admin/AdminLanguageController.cs and
+// AdminTranslationController.cs.
+import { apiClient, buildQuery } from "../../../utils/apiClient";
+import { ALL_RESOURCE_KEYS } from "../data/translationsMockData";
 
 export const languageService = {
-  /** GET /api/admin/languages */
+  /** GET /api/admin/languages — AdminLanguageListRequest */
   getLanguages(params = {}) {
-    const { page = 1, pageSize = 50 } = params;
-    const withCounts = languages.map((l) => ({ ...l, translationCount: translationCount(l.id) }));
-    const result = queryRows(withCounts, {
-      filters: { isActive: params.isActive },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 50, isActive } = params;
+    return apiClient.get(`/api/admin/languages${buildQuery({ page, pageSize, isActive })}`);
+  },
+  /** GET /api/admin/languages/{id} */
+  getLanguageById(id) {
+    return apiClient.get(`/api/admin/languages/${id}`);
   },
   /** POST /api/admin/languages — AdminUpsertLanguageRequest */
   createLanguage(payload) {
-    if (payload.isDefault) {
-      languages = languages.map((l) => ({ ...l, isDefault: false }));
-    }
-    const newLanguage = {
-      id: Math.max(0, ...languages.map((l) => l.id)) + 1,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-    };
-    languages = [...languages, newLanguage];
-    return simulateLatency(apiSuccess({ ...newLanguage, translationCount: 0 }), 250);
+    return apiClient.post(`/api/admin/languages`, payload);
   },
+  /** PUT /api/admin/languages/{id} — AdminUpsertLanguageRequest */
   updateLanguage(id, payload) {
-    if (payload.isDefault) {
-      languages = languages.map((l) => ({ ...l, isDefault: l.id === Number(id) }));
-    }
-    languages = languages.map((l) =>
-      l.id === Number(id) ? { ...l, ...payload, updatedAt: new Date().toISOString() } : l,
-    );
-    const updated = languages.find((l) => l.id === Number(id));
-    return simulateLatency(apiSuccess({ ...updated, translationCount: translationCount(updated.id) }), 250);
+    return apiClient.put(`/api/admin/languages/${id}`, payload);
   },
+  /** DELETE /api/admin/languages/{id} */
   deleteLanguage(id) {
-    languages = languages.filter((l) => l.id !== Number(id));
-    translations = translations.filter((t) => t.languageId !== Number(id));
-    return simulateLatency(apiSuccess(null), 200);
+    return apiClient.delete(`/api/admin/languages/${id}`);
   },
 };
 
 export const translationService = {
   /** GET /api/admin/translations — AdminTranslationListRequest */
   getTranslations(params = {}) {
-    const { page = 1, pageSize = 1000 } = params;
-    const result = queryRows(translations, {
-      search: params.resourceKey,
-      searchFields: ["resourceKey"],
-      filters: { languageId: params.languageId },
-      page,
-      pageSize,
-    });
-    return simulateLatency(apiPagedSuccess(result.items, page, pageSize, result.total));
+    const { page = 1, pageSize = 1000, languageId, resourceKey } = params;
+    return apiClient.get(
+      `/api/admin/translations${buildQuery({ page, pageSize, languageId, resourceKey })}`,
+    );
+  },
+
+  /** GET /api/admin/translations/{id} */
+  getTranslationById(id) {
+    return apiClient.get(`/api/admin/translations/${id}`);
   },
 
   /** POST /api/admin/translations — AdminUpsertTranslationRequest */
   createTranslation(payload) {
-    const language = languages.find((l) => l.id === payload.languageId);
-    const newTranslation = {
-      id: Math.max(0, ...translations.map((t) => t.id)) + 1,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      ...payload,
-      languageCode: language?.code ?? "",
-    };
-    translations = [...translations, newTranslation];
-    return simulateLatency(apiSuccess(newTranslation), 200);
+    return apiClient.post(`/api/admin/translations`, payload);
   },
 
-  /** PUT /api/admin/translations/{id} */
+  /** PUT /api/admin/translations/{id} — AdminUpsertTranslationRequest */
   updateTranslation(id, payload) {
-    translations = translations.map((t) =>
-      t.id === Number(id) ? { ...t, ...payload, updatedAt: new Date().toISOString() } : t,
-    );
-    return simulateLatency(apiSuccess(translations.find((t) => t.id === Number(id))), 200);
+    return apiClient.put(`/api/admin/translations/${id}`, payload);
   },
 
+  /** DELETE /api/admin/translations/{id} */
   deleteTranslation(id) {
-    translations = translations.filter((t) => t.id !== Number(id));
-    return simulateLatency(apiSuccess(null), 150);
+    return apiClient.delete(`/api/admin/translations/${id}`);
   },
 
-  /** PUT /api/admin/translations/bulk — AdminBulkUpdateTranslationsRequest (upsert by languageId+resourceKey) */
+  /** PUT /api/admin/translations/bulk — AdminBulkUpdateTranslationsRequest { items: AdminUpsertTranslationRequest[] } */
   bulkUpdate(items) {
-    let createdCount = 0;
-    let updatedCount = 0;
-    items.forEach(({ languageId, resourceKey, value }) => {
-      const language = languages.find((l) => l.id === languageId);
-      const existing = translations.find((t) => t.languageId === languageId && t.resourceKey === resourceKey);
-      if (existing) {
-        translations = translations.map((t) =>
-          t.id === existing.id ? { ...t, value, updatedAt: new Date().toISOString() } : t,
-        );
-        updatedCount += 1;
-      } else {
-        translations = [
-          ...translations,
-          {
-            id: Math.max(0, ...translations.map((t) => t.id)) + 1,
-            languageId,
-            languageCode: language?.code ?? "",
-            resourceKey,
-            value,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-        ];
-        createdCount += 1;
-      }
-    });
-    return simulateLatency(apiSuccess({ createdCount, updatedCount }), 400);
+    return apiClient.put(`/api/admin/translations/bulk`, { items });
   },
 
-  /** POST /api/admin/translations/import — single-language bulk upsert */
+  /** POST /api/admin/translations/import — AdminImportTranslationsRequest { languageId, items: [{ resourceKey, value }] } */
   importForLanguage(languageId, items) {
-    return this.bulkUpdate(items.map((i) => ({ languageId, ...i })));
+    return apiClient.post(`/api/admin/translations/import`, { languageId, items });
   },
 };
 
