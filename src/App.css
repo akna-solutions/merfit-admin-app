@@ -460,12 +460,19 @@ body {
 }
 
 /* ---------- Login page ---------- */
+/* Fixed to the viewport (height, not min-height) with border-box sizing so
+   the 24px padding is included in that height/width instead of adding to
+   it — the old min-height:100vh + content-box padding pushed the page a
+   few pixels taller/wider than the viewport, which is what let it scroll
+   left-right instead of sitting still filling the screen. */
 .merfit-login-page {
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   background: linear-gradient(160deg, #eef3ff 0%, #f7f9fc 60%);
   padding: 24px;
 }
@@ -475,6 +482,9 @@ body {
 .merfit-login-card {
   width: 100%;
   max-width: 400px;
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(16, 24, 40, 0.12);
