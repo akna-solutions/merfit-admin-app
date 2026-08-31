@@ -1,6 +1,71 @@
-import React, { useEffect } from "react";
-import { Form, Input, InputNumber, Select, Switch, Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, InputNumber, Select, Switch, Space, Divider, Button, Spin, App } from "antd";
+import { SaveOutlined } from "@ant-design/icons";
 import { FormDrawer } from "../../../components/admin";
+import { subscriptionProductService, featureService } from "../services/subscriptionsService";
+
+// Feature attachment editor — mirrors the real API's replace-all endpoint
+// (GET/PUT /api/admin/subscription-products/{id}/features). Was completely
+// unused before: subscriptionProductService.getFeatures/setFeatures existed
+// but no screen ever called them, so products could never actually be
+// linked to a Feature.
+function FeaturesEditor({ productId }) {
+  const { message } = App.useApp();
+  const [allFeatures, setAllFeatures] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!productId) return;
+    setLoading(true);
+    Promise.all([
+      featureService.getFeatures({ pageSize: 200 }),
+      subscriptionProductService.getFeatures(productId),
+    ]).then(([featuresRes, productFeaturesRes]) => {
+      setAllFeatures(featuresRes.data.items);
+      setSelectedIds((productFeaturesRes.data ?? []).map((f) => f.id));
+      setLoading(false);
+    });
+  }, [productId]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await subscriptionProductService.setFeatures(productId, selectedIds);
+      message.success("Features saved.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (!productId) {
+    return <Select disabled placeholder="Save the product first to attach features" style={{ width: "100%" }} />;
+  }
+  if (loading) return <Spin />;
+
+  return (
+    <>
+      <Select
+        mode="multiple"
+        style={{ width: "100%" }}
+        placeholder="Select features included in this product"
+        value={selectedIds}
+        onChange={setSelectedIds}
+        options={allFeatures.map((f) => ({ value: f.id, label: f.name }))}
+      />
+      <Button
+        type="primary"
+        icon={<SaveOutlined />}
+        onClick={handleSave}
+        loading={saving}
+        style={{ marginTop: 12 }}
+      >
+        Save Features
+      </Button>
+    </>
+  );
+}
 
 export default function ProductFormDrawer({ open, product, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
@@ -20,6 +85,7 @@ export default function ProductFormDrawer({ open, product, submitting, onClose, 
       title={isEdit ? `Edit ${product?.name}` : "Create Product"}
       submitText={isEdit ? "Save Changes" : "Create Product"}
       submitting={submitting}
+      width={560}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
@@ -56,6 +122,9 @@ export default function ProductFormDrawer({ open, product, submitting, onClose, 
           <Switch />
         </Form.Item>
       </Form>
+
+      <Divider>Features</Divider>
+      <FeaturesEditor productId={product?.id} />
     </FormDrawer>
   );
 }

@@ -14,6 +14,7 @@ import {
   RobotOutlined,
   AuditOutlined,
   SettingOutlined,
+  SafetyCertificateOutlined,
 } from "@ant-design/icons";
 
 // Central navigation source of truth for the admin sidebar.
@@ -107,6 +108,14 @@ export const navigationItems = [
     label: "Translations",
     icon: TranslationOutlined,
     path: "/admin/translations",
+    section: "CONTENT",
+    enabled: true,
+  },
+  {
+    key: "legal",
+    label: "Legal",
+    icon: SafetyCertificateOutlined,
+    path: "/admin/legal",
     section: "CONTENT",
     enabled: true,
   },

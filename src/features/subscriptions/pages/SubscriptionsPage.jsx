@@ -4,6 +4,7 @@ import { PageHeader, PageContainer } from "../../../components/admin";
 import ProductsTab from "../components/ProductsTab";
 import SubscriptionsTab from "../components/SubscriptionsTab";
 import TransactionsTab from "../components/TransactionsTab";
+import FeaturesTab from "../components/FeaturesTab";
 
 export default function SubscriptionsPage() {
   return (
@@ -19,6 +20,7 @@ export default function SubscriptionsPage() {
           { key: "products", label: "Products", children: <ProductsTab /> },
           { key: "subscriptions", label: "Subscriptions", children: <SubscriptionsTab /> },
           { key: "transactions", label: "Transactions", children: <TransactionsTab /> },
+          { key: "features", label: "Features", children: <FeaturesTab /> },
         ]}
       />
     </PageContainer>

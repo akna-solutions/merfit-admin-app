@@ -17,6 +17,7 @@ import TranslationsPage from '../features/translations/pages/TranslationsPage';
 import AnalyticsPage from '../features/analytics/pages/AnalyticsPage';
 import AiPage from '../features/ai/pages/AiPage';
 import AuditLogsPage from '../features/auditLogs/pages/AuditLogsPage';
+import LegalPage from '../features/legal/pages/LegalPage';
 import SettingsPage from '../features/settings/pages/SettingsPage';
 import LoginPage from '../features/auth/pages/LoginPage';
 import ProtectedRoute from '../features/auth/components/ProtectedRoute';
@@ -36,6 +37,7 @@ const builtPages = {
   content: ContentPage,
   faq: FaqPage,
   translations: TranslationsPage,
+  legal: LegalPage,
   analytics: AnalyticsPage,
   ai: AiPage,
   'audit-logs': AuditLogsPage,

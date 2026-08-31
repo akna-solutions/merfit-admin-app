@@ -66,6 +66,33 @@ export const subscriptionService = {
   },
 };
 
+// MerfitApi.Api/Controllers/Admin/AdminFeatureController.cs — the master
+// list of Features that can be attached to a subscription product via
+// subscriptionProductService.getFeatures/setFeatures.
+export const featureService = {
+  /** GET /api/admin/features — AdminFeatureListRequest */
+  getFeatures(params = {}) {
+    const { page = 1, pageSize = 20, search } = params;
+    return apiClient.get(`/api/admin/features${buildQuery({ page, pageSize, search })}`);
+  },
+  /** GET /api/admin/features/{id} */
+  getFeatureById(id) {
+    return apiClient.get(`/api/admin/features/${id}`);
+  },
+  /** POST /api/admin/features — AdminUpsertFeatureRequest */
+  createFeature(payload) {
+    return apiClient.post(`/api/admin/features`, payload);
+  },
+  /** PUT /api/admin/features/{id} — AdminUpsertFeatureRequest */
+  updateFeature(id, payload) {
+    return apiClient.put(`/api/admin/features/${id}`, payload);
+  },
+  /** DELETE /api/admin/features/{id} */
+  deleteFeature(id) {
+    return apiClient.delete(`/api/admin/features/${id}`);
+  },
+};
+
 export const transactionService = {
   /** GET /api/admin/subscription-transactions — fully read-only */
   getTransactions(params = {}) {
