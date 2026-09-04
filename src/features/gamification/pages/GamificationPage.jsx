@@ -10,17 +10,17 @@ export default function GamificationPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Gamification" }]}
-        title="Gamification"
-        description="Manage Merfit Score, achievements, leaderboards and rewards."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Oyunlaştırma" }]}
+        title="Oyunlaştırma"
+        description="Merfit Skoru, başarıları, liderlik tablolarını ve ödülleri yönetin."
       />
       <Tabs
         defaultActiveKey="score"
         items={[
-          { key: "score", label: "Merfit Score", children: <ScoreTab /> },
-          { key: "achievements", label: "Achievements", children: <AchievementsTab /> },
-          { key: "leaderboard", label: "Leaderboard", children: <LeaderboardTab /> },
-          { key: "rewards", label: "Rewards", children: <RewardsTab /> },
+          { key: "score", label: "Merfit Skoru", children: <ScoreTab /> },
+          { key: "achievements", label: "Başarılar", children: <AchievementsTab /> },
+          { key: "leaderboard", label: "Liderlik Tablosu", children: <LeaderboardTab /> },
+          { key: "rewards", label: "Ödüller", children: <RewardsTab /> },
         ]}
       />
     </PageContainer>

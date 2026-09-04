@@ -19,13 +19,13 @@ export default function RewardsTab() {
 
   const handleToggleStatus = async (record) => {
     await rewardService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.title}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.title}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await rewardService.deleteReward(record.id);
-    message.success(`"${record.title}" was deleted.`);
+    message.success(`"${record.title}" silindi.`);
     refetch();
   };
 
@@ -34,10 +34,10 @@ export default function RewardsTab() {
     try {
       if (formState.reward) {
         await rewardService.updateReward(formState.reward.id, values);
-        message.success("Reward updated.");
+        message.success("Ödül güncellendi.");
       } else {
         await rewardService.createReward(values);
-        message.success("Reward created.");
+        message.success("Ödül oluşturuldu.");
       }
       setFormState({ open: false, reward: null });
       refetch();
@@ -48,14 +48,14 @@ export default function RewardsTab() {
 
   const columns = [
     {
-      title: "Reward",
+      title: "Ödül",
       key: "title",
       width: 260,
       render: (_, r) => <EntityCell title={r.title} subtitle={r.description} avatarColor="#7C3AED" />,
     },
-    { title: "Type", dataIndex: "rewardType", key: "rewardType", width: 130, render: (v) => <Tag>{v}</Tag> },
-    { title: "Value", dataIndex: "value", key: "value", width: 150, render: (v) => v ?? <Text type="secondary">—</Text> },
-    { title: "Status", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"} /> },
+    { title: "Tür", dataIndex: "rewardType", key: "rewardType", width: 130, render: (v) => <Tag>{REWARD_TYPE_LABELS[v] ?? v}</Tag> },
+    { title: "Değer", dataIndex: "value", key: "value", width: 150, render: (v) => v ?? <Text type="secondary">—</Text> },
+    { title: "Durum", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag> },
     {
       title: "",
       key: "actions",
@@ -64,19 +64,19 @@ export default function RewardsTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, reward: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, reward: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.title}"?`,
+              confirm: `"${record.title}" silinsin mi?`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -89,7 +89,7 @@ export default function RewardsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, reward: null })}>
-          Create Reward
+          Ödül Oluştur
         </Button>
       </div>
 
@@ -99,7 +99,7 @@ export default function RewardsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={800}
-          emptyDescription="No rewards yet."
+          emptyDescription="Henüz ödül yok."
           pagination={{
             current: page,
             pageSize,

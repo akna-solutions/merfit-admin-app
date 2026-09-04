@@ -3,7 +3,7 @@ import { Col, Input, Select, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import { SectionCard, DataTable, EntityCell, FilterBar } from "../../../components/admin";
 import { useListQuery } from "../../../utils/useListQuery";
-import { consentService } from "../services/legalService";
+import { consentService, LEGAL_DOCUMENT_TYPE_LABELS } from "../services/legalService";
 
 const { Text } = Typography;
 
@@ -17,34 +17,34 @@ export default function ConsentsTab() {
 
   const columns = [
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "userEmail",
       width: 220,
-      render: (_, r) => <EntityCell title={r.userEmail} subtitle={`User #${r.userId}`} avatarColor="#2F6FED" />,
+      render: (_, r) => <EntityCell title={r.userEmail} subtitle={`Kullanıcı #${r.userId}`} avatarColor="#2F6FED" />,
     },
     {
-      title: "Document",
+      title: "Belge",
       key: "documentTitle",
       width: 240,
-      render: (_, r) => <EntityCell title={r.documentTitle} subtitle={r.documentType} avatarColor="#722ED1" />,
+      render: (_, r) => <EntityCell title={r.documentTitle} subtitle={LEGAL_DOCUMENT_TYPE_LABELS[r.documentType] ?? r.documentType} avatarColor="#722ED1" />,
     },
-    { title: "Version", dataIndex: "version", key: "version", width: 100 },
+    { title: "Sürüm", dataIndex: "version", key: "version", width: 100 },
     {
-      title: "Accepted",
+      title: "Onaylandı",
       dataIndex: "accepted",
       key: "accepted",
       width: 110,
-      render: (v) => (v ? <Tag color="green">Accepted</Tag> : <Tag color="red">Declined</Tag>),
+      render: (v) => (v ? <Tag color="green">Onaylandı</Tag> : <Tag color="red">Reddedildi</Tag>),
     },
     {
-      title: "Accepted At",
+      title: "Onay Tarihi",
       dataIndex: "acceptedAt",
       key: "acceptedAt",
       width: 160,
       render: (v) => dayjs(v).format("DD MMM YYYY HH:mm"),
     },
     {
-      title: "IP Address",
+      title: "IP Adresi",
       dataIndex: "ipAddress",
       key: "ipAddress",
       width: 140,
@@ -58,7 +58,7 @@ export default function ConsentsTab() {
         <Col xs={12} sm={8} lg={6}>
           <Input
             allowClear
-            placeholder="User ID"
+            placeholder="Kullanıcı ID"
             value={filters.userId}
             onChange={(e) => updateFilters({ userId: e.target.value ? Number(e.target.value) : undefined })}
           />
@@ -66,11 +66,11 @@ export default function ConsentsTab() {
         <Col xs={12} sm={8} lg={6}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Accepted?"
+            placeholder="Onaylandı mı?"
             allowClear
             value={filters.accepted}
             onChange={(v) => updateFilters({ accepted: v })}
-            options={[{ value: true, label: "Accepted" }, { value: false, label: "Declined" }]}
+            options={[{ value: true, label: "Onaylandı" }, { value: false, label: "Reddedildi" }]}
           />
         </Col>
       </FilterBar>
@@ -81,7 +81,7 @@ export default function ConsentsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={900}
-          emptyDescription="No consent records match these filters."
+          emptyDescription="Bu filtrelerle eşleşen onay kaydı yok."
           pagination={{
             current: page,
             pageSize,

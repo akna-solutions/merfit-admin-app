@@ -48,10 +48,10 @@ export const notificationService = {
 // AdminNotificationSegment enum (see MerfitApi repo:
 // MerfitApi.Business.Dtos.Admin.Notifications.AdminNotificationSegment).
 export const NOTIFICATION_SEGMENTS = [
-  { value: "AllUsers", label: "All Users" },
-  { value: "PlusUsers", label: "Plus Users" },
-  { value: "FreeUsers", label: "Free Users" },
-  { value: "InactiveUsers", label: "Inactive Users" },
-  { value: "NewUsers", label: "New Users" },
-  { value: "WorkoutInactiveUsers", label: "Workout Inactive Users" },
+  { value: "AllUsers", label: "Tüm Kullanıcılar" },
+  { value: "PlusUsers", label: "Plus Kullanıcılar" },
+  { value: "FreeUsers", label: "Ücretsiz Kullanıcılar" },
+  { value: "InactiveUsers", label: "Pasif Kullanıcılar" },
+  { value: "NewUsers", label: "Yeni Kullanıcılar" },
+  { value: "WorkoutInactiveUsers", label: "Antrenman Yapmayan Kullanıcılar" },
 ];

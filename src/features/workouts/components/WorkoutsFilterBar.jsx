@@ -3,11 +3,12 @@ import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar } from "../../../components/admin";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
+import { difficultyLabel } from "../data/enumLabels";
 
 const TRI_STATE = (label) => [
   { value: "all", label },
-  { value: "true", label: "Yes" },
-  { value: "false", label: "No" },
+  { value: "true", label: "Evet" },
+  { value: "false", label: "Hayır" },
 ];
 
 export default function WorkoutsFilterBar({ filters, categories, onChange, onReset }) {
@@ -16,7 +17,7 @@ export default function WorkoutsFilterBar({ filters, categories, onChange, onRes
       <Col xs={24} sm={12} lg={6}>
         <Input
           allowClear
-          placeholder="Search workouts"
+          placeholder="Antrenman ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -28,7 +29,7 @@ export default function WorkoutsFilterBar({ filters, categories, onChange, onRes
           value={filters.categoryId ?? "all"}
           onChange={(value) => onChange({ categoryId: value === "all" ? undefined : value })}
           options={[
-            { value: "all", label: "All categories" },
+            { value: "all", label: "Tüm kategoriler" },
             ...categories.map((c) => ({ value: c.id, label: c.name })),
           ]}
         />
@@ -39,8 +40,8 @@ export default function WorkoutsFilterBar({ filters, categories, onChange, onRes
           value={filters.difficulty ?? "all"}
           onChange={(value) => onChange({ difficulty: value === "all" ? undefined : value })}
           options={[
-            { value: "all", label: "All levels" },
-            ...DIFFICULTY_LEVEL.map((d) => ({ value: d, label: d })),
+            { value: "all", label: "Tüm seviyeler" },
+            ...DIFFICULTY_LEVEL.map((d) => ({ value: d, label: difficultyLabel(d) })),
           ]}
         />
       </Col>
@@ -57,7 +58,7 @@ export default function WorkoutsFilterBar({ filters, categories, onChange, onRes
           style={{ width: "100%" }}
           value={filters.isFeatured === undefined ? "all" : String(filters.isFeatured)}
           onChange={(value) => onChange({ isFeatured: value === "all" ? undefined : value === "true" })}
-          options={TRI_STATE("Featured")}
+          options={TRI_STATE("Öne Çıkan")}
         />
       </Col>
       <Col xs={8} sm={4} lg={3}>
@@ -65,7 +66,7 @@ export default function WorkoutsFilterBar({ filters, categories, onChange, onRes
           style={{ width: "100%" }}
           value={filters.isActive === undefined ? "all" : String(filters.isActive)}
           onChange={(value) => onChange({ isActive: value === "all" ? undefined : value === "true" })}
-          options={TRI_STATE("Active")}
+          options={TRI_STATE("Aktif")}
         />
       </Col>
     </FilterBar>

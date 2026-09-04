@@ -3,13 +3,14 @@ import { Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import { EntityCell, StatusTag, RowActions } from "../../../components/admin";
 import { EyeOutlined, EditOutlined, StopOutlined, CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import { difficultyLabel } from "../data/enumLabels";
 
 const { Text } = Typography;
 
 export function buildWorkoutsColumns({ onView, onEdit, onToggleStatus, onDelete }) {
   return [
     {
-      title: "Workout",
+      title: "Antrenman",
       key: "title",
       fixed: "left",
       width: 260,
@@ -22,24 +23,24 @@ export function buildWorkoutsColumns({ onView, onEdit, onToggleStatus, onDelete 
       ),
     },
     {
-      title: "Difficulty",
+      title: "Zorluk",
       dataIndex: "difficulty",
       key: "difficulty",
       width: 120,
       render: (v) => (
-        <Tag color={v === "Beginner" ? "green" : v === "Intermediate" ? "blue" : "purple"}>{v}</Tag>
+        <Tag color={v === "Beginner" ? "green" : v === "Intermediate" ? "blue" : "purple"}>{difficultyLabel(v)}</Tag>
       ),
     },
     {
-      title: "Duration",
+      title: "Süre",
       dataIndex: "durationMin",
       key: "durationMin",
       width: 100,
       sorter: (a, b) => a.durationMin - b.durationMin,
-      render: (v) => `${v} min`,
+      render: (v) => `${v} dk`,
     },
     {
-      title: "Muscle Group",
+      title: "Kas Grubu",
       dataIndex: "muscleGroupName",
       key: "muscleGroupName",
       width: 130,
@@ -53,28 +54,28 @@ export function buildWorkoutsColumns({ onView, onEdit, onToggleStatus, onDelete 
       render: (v) => (v ? <Tag color="gold">Premium</Tag> : <Text type="secondary">—</Text>),
     },
     {
-      title: "Featured",
+      title: "Öne Çıkan",
       dataIndex: "isFeatured",
       key: "isFeatured",
       width: 100,
-      render: (v) => (v ? <Tag color="blue">Featured</Tag> : <Text type="secondary">—</Text>),
+      render: (v) => (v ? <Tag color="blue">Öne Çıkan</Tag> : <Text type="secondary">—</Text>),
     },
     {
-      title: "AI Generated",
+      title: "Yapay Zeka ile Oluşturuldu",
       dataIndex: "isAiGenerated",
       key: "isAiGenerated",
       width: 110,
-      render: (v) => (v ? <Tag color="purple">AI</Tag> : <Text type="secondary">—</Text>),
+      render: (v) => (v ? <Tag color="purple">YZ</Tag> : <Text type="secondary">—</Text>),
     },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
-      title: "Created At",
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 140,
@@ -89,20 +90,20 @@ export function buildWorkoutsColumns({ onView, onEdit, onToggleStatus, onDelete 
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "view", label: "View", icon: <EyeOutlined />, onClick: () => onView(record) },
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => onEdit(record) },
+            { key: "view", label: "Görüntüle", icon: <EyeOutlined />, onClick: () => onView(record) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => onEdit(record) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => onToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.title}"? This cannot be undone.`,
+              confirm: `"${record.title}" silinsin mi? Bu işlem geri alınamaz.`,
               onClick: () => onDelete(record),
             },
           ]}

@@ -12,15 +12,15 @@ export default function LegalPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Legal" }]}
-        title="Legal"
-        description="Manage legal documents (privacy policy, terms of service) and review user consents."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Hukuki" }]}
+        title="Hukuki"
+        description="Hukuki belgeleri (gizlilik politikası, kullanım şartları) yönetin ve kullanıcı onaylarını inceleyin."
       />
       <Tabs
         defaultActiveKey="documents"
         items={[
-          { key: "documents", label: "Documents", children: <DocumentsTab /> },
-          { key: "consents", label: "User Consents", children: <ConsentsTab /> },
+          { key: "documents", label: "Belgeler", children: <DocumentsTab /> },
+          { key: "consents", label: "Kullanıcı Onayları", children: <ConsentsTab /> },
         ]}
       />
     </PageContainer>

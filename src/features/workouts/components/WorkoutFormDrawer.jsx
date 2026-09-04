@@ -102,13 +102,13 @@ function ExercisesEditor({ workoutId, exerciseOptions }) {
               style={{ marginTop: 12 }}
               block
             >
-              Add Exercise
+              Egzersiz Ekle
             </Button>
           </>
         )}
       </Form.List>
       <Button type="primary" onClick={handleSave} loading={saving} style={{ marginTop: 16 }}>
-        Save Exercises
+        Egzersizleri Kaydet
       </Button>
     </Form>
   );
@@ -135,8 +135,8 @@ export default function WorkoutFormDrawer({
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${workout?.title}` : "Create Workout"}
-      submitText={isEdit ? "Save Changes" : "Create Workout"}
+      title={isEdit ? `"${workout?.title}" Düzenle` : "Antrenman Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Antrenman Oluştur"}
       submitting={submitting}
       width={640}
       onClose={onClose}
@@ -145,31 +145,31 @@ export default function WorkoutFormDrawer({
       <Form form={form} layout="vertical">
         <Form.Item
           name="title"
-          label="Title"
-          rules={[{ required: true, min: 2, max: 200, message: "2-200 characters required" }]}
+          label="Başlık"
+          rules={[{ required: true, min: 2, max: 200, message: "2-200 karakter olmalıdır" }]}
         >
-          <Input placeholder="e.g. Full Body Burn" />
+          <Input placeholder="örn. Tüm Vücut Yakımı" />
         </Form.Item>
         <Form.Item
           name="slug"
           label="Slug"
           rules={[
-            { required: true, min: 2, max: 200, message: "2-200 characters required" },
-            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Lowercase letters, numbers and hyphens only" },
+            { required: true, min: 2, max: 200, message: "2-200 karakter olmalıdır" },
+            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Yalnızca küçük harf, rakam ve tire kullanılabilir" },
           ]}
         >
-          <Input placeholder="e.g. full-body-burn" />
+          <Input placeholder="örn. tum-vucut-yakimi" />
         </Form.Item>
-        <Form.Item name="tagline" label="Tagline" rules={[{ max: 300 }]}>
-          <Input placeholder="Short one-line summary" />
+        <Form.Item name="tagline" label="Slogan" rules={[{ max: 300 }]}>
+          <Input placeholder="Kısa tek satırlık özet" />
         </Form.Item>
-        <Form.Item name="description" label="Description" rules={[{ max: 4000 }]}>
-          <Input.TextArea rows={3} placeholder="Full workout description" />
+        <Form.Item name="description" label="Açıklama" rules={[{ max: 4000 }]}>
+          <Input.TextArea rows={3} placeholder="Antrenmanın tam açıklaması" />
         </Form.Item>
         <Space size={16} style={{ width: "100%" }}>
           <Form.Item
             name="durationMin"
-            label="Duration (min)"
+            label="Süre (dk)"
             rules={[{ required: true, type: "number", min: 1, max: 600 }]}
             style={{ flex: 1 }}
           >
@@ -177,28 +177,28 @@ export default function WorkoutFormDrawer({
           </Form.Item>
           <Form.Item
             name="difficulty"
-            label="Difficulty"
+            label="Zorluk"
             rules={[{ required: true }]}
             style={{ flex: 1 }}
           >
-            <Select options={DIFFICULTY_LEVEL.map((d) => ({ value: d, label: d }))} />
+            <Select options={DIFFICULTY_LEVEL.map((d) => ({ value: d, label: difficultyLabel(d) }))} />
           </Form.Item>
         </Space>
         <Space size={16} style={{ width: "100%" }}>
           <Form.Item
             name="categoryId"
-            label="Category"
-            rules={[{ required: true, message: "Category is required" }]}
+            label="Kategori"
+            rules={[{ required: true, message: "Kategori zorunludur" }]}
             style={{ flex: 1 }}
           >
             <Select
-              placeholder="Select category"
+              placeholder="Kategori seçin"
               options={categories.map((c) => ({ value: c.id, label: c.name }))}
             />
           </Form.Item>
-          <Form.Item name="muscleGroupId" label="Muscle Group" style={{ flex: 1 }}>
+          <Form.Item name="muscleGroupId" label="Kas Grubu" style={{ flex: 1 }}>
             <Select
-              placeholder="Select muscle group"
+              placeholder="Kas grubu seçin"
               allowClear
               options={muscleGroups.map((m) => ({ value: m.id, label: m.name }))}
             />
@@ -206,25 +206,25 @@ export default function WorkoutFormDrawer({
         </Space>
         <Form.Item
           name="imageUrl"
-          label="Image URL"
-          rules={[{ type: "url", message: "Enter a valid URL" }]}
+          label="Görsel URL"
+          rules={[{ type: "url", message: "Geçerli bir URL girin" }]}
         >
           <Input placeholder="https://..." />
         </Form.Item>
         <Space size={32}>
-          <Form.Item name="isFeatured" label="Featured" valuePropName="checked">
+          <Form.Item name="isFeatured" label="Öne Çıkan" valuePropName="checked">
             <Switch />
           </Form.Item>
           <Form.Item name="isPremium" label="Premium" valuePropName="checked">
             <Switch />
           </Form.Item>
-          <Form.Item name="isActive" label="Active" valuePropName="checked">
+          <Form.Item name="isActive" label="Aktif" valuePropName="checked">
             <Switch />
           </Form.Item>
         </Space>
       </Form>
 
-      <Divider>Exercises</Divider>
+      <Divider>Egzersizler</Divider>
       <ExercisesEditor workoutId={workout?.id} exerciseOptions={exerciseOptions} />
     </FormDrawer>
   );

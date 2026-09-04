@@ -50,13 +50,13 @@ export default function WorkoutsTab() {
   const handleToggleStatus = async (record) => {
     const nextActive = !record.isActive;
     await workoutService.updateStatus(record.id, { isActive: nextActive });
-    message.success(`"${record.title}" is now ${nextActive ? "active" : "inactive"}.`);
+    message.success(`"${record.title}" artık ${nextActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await workoutService.deleteWorkout(record.id);
-    message.success(`"${record.title}" was deleted.`);
+    message.success(`"${record.title}" silindi.`);
     refetch();
   };
 
@@ -65,11 +65,11 @@ export default function WorkoutsTab() {
     try {
       if (formState.workout) {
         await workoutService.updateWorkout(formState.workout.id, values);
-        message.success("Workout updated.");
+        message.success("Antrenman güncellendi.");
         refetch();
       } else {
         const created = await workoutService.createWorkout(values);
-        message.success("Workout created. You can now add exercises.");
+        message.success("Antrenman oluşturuldu. Artık egzersiz ekleyebilirsiniz.");
         refetch();
         // Keep the drawer open, switched into edit mode, so the exercise
         // editor (which needs a real workout id) becomes available —
@@ -98,7 +98,7 @@ export default function WorkoutsTab() {
           icon={<PlusOutlined />}
           onClick={() => setFormState({ open: true, workout: null })}
         >
-          Create Workout
+          Antrenman Oluştur
         </Button>
       </div>
 
@@ -115,7 +115,7 @@ export default function WorkoutsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1300}
-          emptyDescription="No workouts match these filters."
+          emptyDescription="Bu filtrelerle eşleşen antrenman yok."
           onRow={(record) => ({
             className: "merfit-row-clickable",
             onClick: () => handleView(record),

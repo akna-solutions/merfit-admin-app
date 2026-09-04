@@ -30,19 +30,19 @@ export const scoresMockData = USER_EMAILS.map((email, i) => {
     userId: seed,
     userEmail: email,
     score: Math.round(40 + seeded(seed) * 58),
-    period: "current",
+    period: "current", // display translation handled in ScoreTab.jsx
     calculatedAt: daysAgo(seed % 5),
   };
 });
 
 // AdminAchievementDto[]
 export const achievementsMockData = [
-  { id: 1, code: "FIRST_WORKOUT", title: "First Workout", description: "Complete your first workout.", icon: "🏁", points: 10, conditionType: "workout_count", conditionValue: "1", isActive: true },
-  { id: 2, code: "STREAK_7", title: "7 Day Streak", description: "Work out 7 days in a row.", icon: "🔥", points: 25, conditionType: "streak_days", conditionValue: "7", isActive: true },
-  { id: 3, code: "WORKOUTS_50", title: "50 Workouts", description: "Complete 50 workouts.", icon: "💪", points: 50, conditionType: "workout_count", conditionValue: "50", isActive: true },
-  { id: 4, code: "NUTRITION_PRO", title: "Nutrition Pro", description: "Log meals for 30 days.", icon: "🥗", points: 30, conditionType: "meal_log_days", conditionValue: "30", isActive: true },
-  { id: 5, code: "EARLY_BIRD", title: "Early Bird", description: "Complete 10 workouts before 8am.", icon: "🌅", points: 15, conditionType: "early_workout_count", conditionValue: "10", isActive: false },
-  { id: 6, code: "SCORE_90", title: "Score 90+", description: "Reach a Merfit Score of 90.", icon: "🏆", points: 40, conditionType: "score_threshold", conditionValue: "90", isActive: true },
+  { id: 1, code: "FIRST_WORKOUT", title: "İlk Antrenman", description: "İlk antrenmanını tamamla.", icon: "🏁", points: 10, conditionType: "workout_count", conditionValue: "1", isActive: true },
+  { id: 2, code: "STREAK_7", title: "7 Günlük Seri", description: "7 gün üst üste antrenman yap.", icon: "🔥", points: 25, conditionType: "streak_days", conditionValue: "7", isActive: true },
+  { id: 3, code: "WORKOUTS_50", title: "50 Antrenman", description: "50 antrenman tamamla.", icon: "💪", points: 50, conditionType: "workout_count", conditionValue: "50", isActive: true },
+  { id: 4, code: "NUTRITION_PRO", title: "Beslenme Uzmanı", description: "30 gün boyunca öğün kaydet.", icon: "🥗", points: 30, conditionType: "meal_log_days", conditionValue: "30", isActive: true },
+  { id: 5, code: "EARLY_BIRD", title: "Erken Kalkan", description: "Saat 08:00'den önce 10 antrenman tamamla.", icon: "🌅", points: 15, conditionType: "early_workout_count", conditionValue: "10", isActive: false },
+  { id: 6, code: "SCORE_90", title: "90+ Skor", description: "Merfit Skorunu 90'a ulaştır.", icon: "🏆", points: 40, conditionType: "score_threshold", conditionValue: "90", isActive: true },
 ].map((a, i) => ({
   ...a,
   createdAt: daysAgo(200 - i * 10),
@@ -90,8 +90,8 @@ export const leaderboardEntriesMockData = {
 
 // AdminRewardDto[]
 export const rewardsMockData = [
-  { id: 1, title: "1 Month Free Plus", description: "One free month of Merfit Plus.", imageUrl: null, rewardType: "subscription", value: "plus_monthly:1", isActive: true },
-  { id: 2, title: "Merfit T-Shirt", description: "Official Merfit branded t-shirt.", imageUrl: null, rewardType: "physical", value: null, isActive: true },
-  { id: 3, title: "500 Bonus Points", description: "Bonus points added to your score.", imageUrl: null, rewardType: "points", value: "500", isActive: true },
-  { id: 4, title: "Personal Coaching Session", description: "30-minute session with a Merfit coach.", imageUrl: null, rewardType: "service", value: null, isActive: false },
+  { id: 1, title: "1 Ay Ücretsiz Plus", description: "Bir ay ücretsiz Merfit Plus.", imageUrl: null, rewardType: "subscription", value: "plus_monthly:1", isActive: true },
+  { id: 2, title: "Merfit Tişört", description: "Resmi Merfit marka tişört.", imageUrl: null, rewardType: "physical", value: null, isActive: true },
+  { id: 3, title: "500 Bonus Puan", description: "Skoruna eklenen bonus puanlar.", imageUrl: null, rewardType: "points", value: "500", isActive: true },
+  { id: 4, title: "Kişisel Koçluk Seansı", description: "Bir Merfit koçuyla 30 dakikalık seans.", imageUrl: null, rewardType: "service", value: null, isActive: false },
 ].map((r, i) => ({ ...r, createdAt: daysAgo(150 - i * 10), updatedAt: daysAgo(20 + i) }));

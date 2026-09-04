@@ -59,3 +59,10 @@ export const consentService = {
 // matters (see constants/apiEnums.js note re: default System.Text.Json
 // integer serialization for request-side enum fields).
 export const LEGAL_DOCUMENT_TYPE = ["PrivacyPolicy", "TermsOfService"];
+
+// Display-only labels — LEGAL_DOCUMENT_TYPE values above stay in English
+// since they are matched against the API and stored on the DTOs as-is.
+export const LEGAL_DOCUMENT_TYPE_LABELS = {
+  PrivacyPolicy: "Gizlilik Politikası",
+  TermsOfService: "Kullanım Şartları",
+};

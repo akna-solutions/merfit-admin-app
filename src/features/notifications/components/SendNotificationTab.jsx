@@ -32,13 +32,14 @@ export default function SendNotificationTab() {
       let result;
       if (recipientType === "user") {
         result = await notificationService.sendToUser({ ...payload, userId: values.userId });
-        message.success(`Notification sent to user #${values.userId}.`);
+        message.success(`Bildirim #${values.userId} numaralı kullanıcıya gönderildi.`);
       } else if (recipientType === "broadcast") {
         result = await notificationService.broadcast(payload);
-        message.success(`Notification broadcast to ${result.data.recipientCount} users.`);
+        message.success(`Bildirim ${result.data.recipientCount} kullanıcıya yayınlandı.`);
       } else {
         result = await notificationService.sendToSegment({ ...payload, segment: values.segment });
-        message.success(`Notification sent to ${result.data.recipientCount} users in "${values.segment}".`);
+        const segmentLabel = NOTIFICATION_SEGMENTS.find((s) => s.value === values.segment)?.label;
+        message.success(`Bildirim, "${segmentLabel}" segmentindeki ${result.data.recipientCount} kullanıcıya gönderildi.`);
       }
       form.resetFields();
       setPreview({ title: "", body: "" });
@@ -51,14 +52,14 @@ export default function SendNotificationTab() {
     form.validateFields().then((values) => {
       const audienceLabel =
         recipientType === "user"
-          ? `user #${values.userId}`
+          ? `#${values.userId} numaralı kullanıcı`
           : recipientType === "broadcast"
-            ? "ALL users"
+            ? "TÜM kullanıcılar"
             : NOTIFICATION_SEGMENTS.find((s) => s.value === values.segment)?.label;
       modal.confirm({
-        title: "Send this notification?",
-        content: `This will send "${values.title}" to ${audienceLabel}.`,
-        okText: "Send",
+        title: "Bu bildirim gönderilsin mi?",
+        content: `"${values.title}" bildirimi şu alıcıya gönderilecek: ${audienceLabel}.`,
+        okText: "Gönder",
         onOk: () => doSend(values),
       });
     });
@@ -69,52 +70,52 @@ export default function SendNotificationTab() {
       <Col xs={24} lg={14}>
         <Card bordered={false} className="merfit-table-card">
           <Form form={form} layout="vertical" onValuesChange={handleValuesChange} initialValues={{ recipientType: "user" }}>
-            <Form.Item label="Recipients">
+            <Form.Item label="Alıcılar">
               <Radio.Group
                 value={recipientType}
                 onChange={(e) => setRecipientType(e.target.value)}
                 options={[
-                  { value: "user", label: "Single User" },
+                  { value: "user", label: "Tek Kullanıcı" },
                   { value: "segment", label: "Segment" },
-                  { value: "broadcast", label: "All Users" },
+                  { value: "broadcast", label: "Tüm Kullanıcılar" },
                 ]}
                 optionType="button"
               />
             </Form.Item>
 
             {recipientType === "user" && (
-              <Form.Item name="userId" label="User ID" rules={[{ required: true, message: "User ID is required" }]}>
-                <InputNumber style={{ width: "100%" }} min={1} placeholder="e.g. 42" />
+              <Form.Item name="userId" label="Kullanıcı ID" rules={[{ required: true, message: "Kullanıcı ID zorunludur" }]}>
+                <InputNumber style={{ width: "100%" }} min={1} placeholder="örn. 42" />
               </Form.Item>
             )}
             {recipientType === "segment" && (
-              <Form.Item name="segment" label="Audience Segment" rules={[{ required: true, message: "Segment is required" }]}>
-                <Select options={NOTIFICATION_SEGMENTS} placeholder="Select a segment" />
+              <Form.Item name="segment" label="Hedef Segment" rules={[{ required: true, message: "Segment zorunludur" }]}>
+                <Select options={NOTIFICATION_SEGMENTS} placeholder="Bir segment seçin" />
               </Form.Item>
             )}
 
-            <Form.Item name="title" label="Title" rules={[{ required: true, max: 200 }]}>
-              <Input placeholder="e.g. Time for your workout!" />
+            <Form.Item name="title" label="Başlık" rules={[{ required: true, max: 200 }]}>
+              <Input placeholder="örn. Antrenman zamanı!" />
             </Form.Item>
-            <Form.Item name="body" label="Body" rules={[{ required: true, max: 2000 }]}>
-              <Input.TextArea rows={3} placeholder="Notification message" />
+            <Form.Item name="body" label="İçerik" rules={[{ required: true, max: 2000 }]}>
+              <Input.TextArea rows={3} placeholder="Bildirim mesajı" />
             </Form.Item>
-            <Form.Item name="imageUrl" label="Image URL" rules={[{ type: "url" }]}>
-              <Input placeholder="https://... (optional)" />
+            <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
+              <Input placeholder="https://... (isteğe bağlı)" />
             </Form.Item>
-            <Form.Item name="expiresAt" label="Expires At">
-              <DatePicker showTime style={{ width: "100%" }} placeholder="Optional" />
+            <Form.Item name="expiresAt" label="Sona Erme Tarihi">
+              <DatePicker showTime style={{ width: "100%" }} placeholder="İsteğe bağlı" />
             </Form.Item>
 
             <Button type="primary" icon={<SendOutlined />} onClick={handleSubmit} loading={sending}>
-              Send Notification
+              Bildirim Gönder
             </Button>
           </Form>
         </Card>
       </Col>
 
       <Col xs={24} lg={10}>
-        <Card bordered={false} className="merfit-table-card" title="Preview">
+        <Card bordered={false} className="merfit-table-card" title="Önizleme">
           <div
             style={{
               border: "1px solid rgba(16,24,40,0.08)",
@@ -133,14 +134,14 @@ export default function SendNotificationTab() {
               <BellOutlined />
             </div>
             <div style={{ minWidth: 0 }}>
-              <Title level={5} style={{ margin: 0 }}>{preview.title || "Notification title"}</Title>
+              <Title level={5} style={{ margin: 0 }}>{preview.title || "Bildirim başlığı"}</Title>
               <Paragraph type="secondary" style={{ margin: 0, fontSize: 13 }}>
-                {preview.body || "Notification body will appear here."}
+                {preview.body || "Bildirim içeriği burada görünecek."}
               </Paragraph>
             </div>
           </div>
           <Text type="secondary" style={{ display: "block", marginTop: 12, fontSize: 12 }}>
-            This is an approximation of how the push notification will look on a device.
+            Bu, push bildirimin bir cihazda nasıl görüneceğine dair yaklaşık bir gösterimdir.
           </Text>
         </Card>
       </Col>

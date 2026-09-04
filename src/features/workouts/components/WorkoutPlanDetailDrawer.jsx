@@ -6,6 +6,7 @@ import { PlusOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
 import { workoutPlanService, workoutService } from "../services/workoutService";
+import { fitnessGoalLabel } from "../data/enumLabels";
 
 const { Text } = Typography;
 
@@ -39,7 +40,7 @@ function DaysEditor({ planId }) {
     try {
       const days = values.days.map((d, i) => ({ ...d, order: d.order ?? i + 1 }));
       await workoutPlanService.setDays(planId, { days });
-      message.success("Plan days saved.");
+      message.success("Plan günleri kaydedildi.");
     } finally {
       setSaving(false);
     }
@@ -52,25 +53,25 @@ function DaysEditor({ planId }) {
       <Form.List name="days">
         {(fields, { add, remove }) => (
           <>
-            {fields.length === 0 && <Empty description="No days yet." style={{ marginBottom: 12 }} />}
+            {fields.length === 0 && <Empty description="Henüz gün yok." style={{ marginBottom: 12 }} />}
             <Space direction="vertical" style={{ width: "100%" }} size={8}>
               {fields.map((field, index) => (
                 <Space key={field.key} align="baseline" style={{ width: "100%" }} wrap>
                   <Text type="secondary" style={{ width: 20 }}>{index + 1}.</Text>
                   <Form.Item
                     name={[field.name, "workoutId"]}
-                    rules={[{ required: true, message: "Required" }]}
+                    rules={[{ required: true, message: "Zorunlu alan" }]}
                     style={{ marginBottom: 0, minWidth: 220 }}
                   >
                     <Select
-                      placeholder="Workout"
+                      placeholder="Antrenman"
                       showSearch
                       optionFilterProp="label"
                       options={workoutOptions.map((w) => ({ value: w.id, label: w.title }))}
                     />
                   </Form.Item>
                   <Form.Item name={[field.name, "order"]} style={{ marginBottom: 0 }} initialValue={index}>
-                    <InputNumber min={0} max={400} addonBefore="Order" style={{ width: 140 }} />
+                    <InputNumber min={0} max={400} addonBefore="Sıra" style={{ width: 140 }} />
                   </Form.Item>
                   <Button type="text" danger icon={<DeleteOutlined />} onClick={() => remove(field.name)} />
                 </Space>
@@ -83,13 +84,13 @@ function DaysEditor({ planId }) {
               style={{ marginTop: 12 }}
               block
             >
-              Add Day
+              Gün Ekle
             </Button>
           </>
         )}
       </Form.List>
       <Button type="primary" icon={<SaveOutlined />} onClick={handleSave} loading={saving} style={{ marginTop: 16 }}>
-        Save Days
+        Günleri Kaydet
       </Button>
     </Form>
   );
@@ -97,31 +98,31 @@ function DaysEditor({ planId }) {
 
 export default function WorkoutPlanDetailDrawer({ open, plan, loading, onClose }) {
   return (
-    <DetailDrawer open={open} title={plan ? plan.name : "Plan Details"} width={620} onClose={onClose}>
+    <DetailDrawer open={open} title={plan ? plan.name : "Plan Detayları"} width={620} onClose={onClose}>
       {loading || !plan ? (
         <Spin />
       ) : (
         <>
           <Descriptions column={1} bordered size="small" style={{ marginBottom: 24 }}>
-            <Descriptions.Item label="User">{plan.userEmail}</Descriptions.Item>
-            <Descriptions.Item label="Goal">{plan.goal ?? <Text type="secondary">—</Text>}</Descriptions.Item>
-            <Descriptions.Item label="Description">
+            <Descriptions.Item label="Kullanıcı">{plan.userEmail}</Descriptions.Item>
+            <Descriptions.Item label="Hedef">{plan.goal ? fitnessGoalLabel(plan.goal) : <Text type="secondary">—</Text>}</Descriptions.Item>
+            <Descriptions.Item label="Açıklama">
               {plan.description || <Text type="secondary">—</Text>}
             </Descriptions.Item>
-            <Descriptions.Item label="Start Date">{dayjs(plan.startDate).format("DD MMM YYYY")}</Descriptions.Item>
-            <Descriptions.Item label="End Date">
+            <Descriptions.Item label="Başlangıç Tarihi">{dayjs(plan.startDate).format("DD MMM YYYY")}</Descriptions.Item>
+            <Descriptions.Item label="Bitiş Tarihi">
               {plan.endDate ? dayjs(plan.endDate).format("DD MMM YYYY") : <Text type="secondary">—</Text>}
             </Descriptions.Item>
-            <Descriptions.Item label="Source">
-              {plan.isAiGenerated ? <Tag color="purple">AI Generated</Tag> : <Tag>Manual</Tag>}
+            <Descriptions.Item label="Kaynak">
+              {plan.isAiGenerated ? <Tag color="purple">Yapay Zeka ile Oluşturuldu</Tag> : <Tag>Manuel</Tag>}
             </Descriptions.Item>
-            <Descriptions.Item label="Status">
-              <StatusTag status={plan.isActive ? "Active" : "Inactive"} />
+            <Descriptions.Item label="Durum">
+              <StatusTag status={plan.isActive ? "Active" : "Inactive"}>{plan.isActive ? "Aktif" : "Pasif"}</StatusTag>
             </Descriptions.Item>
-            <Descriptions.Item label="Created At">{dayjs(plan.createdAt).format("DD MMM YYYY")}</Descriptions.Item>
+            <Descriptions.Item label="Oluşturulma Tarihi">{dayjs(plan.createdAt).format("DD MMM YYYY")}</Descriptions.Item>
           </Descriptions>
 
-          <Text strong>Plan Days</Text>
+          <Text strong>Plan Günleri</Text>
           <div style={{ marginTop: 12 }}>
             <DaysEditor planId={plan.id} />
           </div>
