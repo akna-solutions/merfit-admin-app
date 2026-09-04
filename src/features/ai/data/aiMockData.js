@@ -44,10 +44,14 @@ export const aiRequestsMockData = Array.from({ length: 40 }, (_, i) => {
     createdAt,
 
     // AdminAiRequestDetailDto extras
-    prompt: "Generate a 4-week progressive workout plan for an intermediate user focused on strength.",
+    prompt: "Orta seviyeli bir kullanıcı için güce odaklanan, 4 haftalık aşamalı bir antrenman planı oluştur.",
     hasResult: status === "Completed",
   };
 });
+
+// Display-only wording for the summary sentence embedded in resultJson below
+// (the sibling "type" field keeps the real English DTO value untouched).
+const TYPE_LABELS_TR = { Workout: "antrenman", Nutrition: "beslenme", Insight: "içgörü" };
 
 // AdminAiResultListItemDto[] (+ AdminAiResultDetailDto.resultJson) — one per completed request
 export const aiResultsMockData = aiRequestsMockData
@@ -61,7 +65,7 @@ export const aiResultsMockData = aiRequestsMockData
     resultJson: JSON.stringify(
       {
         type: r.type,
-        summary: `Generated ${r.type.toLowerCase()} plan for user #${r.userId}`,
+        summary: `#${r.userId} numaralı kullanıcı için ${TYPE_LABELS_TR[r.type] ?? r.type.toLowerCase()} planı oluşturuldu`,
         weeks: 4,
       },
       null,

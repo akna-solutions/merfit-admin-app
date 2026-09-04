@@ -11,13 +11,13 @@ export default function UsersAnalyticsTab() {
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Total Users" value={d.totalUsers} icon={<TeamOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Active Users" value={d.activeUsers} icon={<UserSwitchOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="New Users (7d)" value={d.newUsersLast7Days} icon={<UserAddOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="New Users (30d)" value={d.newUsersLast30Days} icon={<UserAddOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={8}><MetricCard title="Daily Active Users" value={d.dau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={8}><MetricCard title="Weekly Active Users" value={d.wau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={8}><MetricCard title="Monthly Active Users" value={d.mau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Toplam Kullanıcı" value={d.totalUsers} icon={<TeamOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Aktif Kullanıcı" value={d.activeUsers} icon={<UserSwitchOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Yeni Kullanıcı (7g)" value={d.newUsersLast7Days} icon={<UserAddOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Yeni Kullanıcı (30g)" value={d.newUsersLast30Days} icon={<UserAddOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Günlük Aktif Kullanıcı" value={d.dau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Haftalık Aktif Kullanıcı" value={d.wau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Aylık Aktif Kullanıcı" value={d.mau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
     </Row>
   );
 }

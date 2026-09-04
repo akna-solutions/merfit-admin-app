@@ -8,15 +8,15 @@ export default function NutritionPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Nutrition" }]}
-        title="Nutrition"
-        description="Manage the food catalog and review nutrition activity."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "Beslenme" }]}
+        title="Beslenme"
+        description="Besin kataloğunu yönetin ve beslenme etkinliğini inceleyin."
       />
       <Tabs
         defaultActiveKey="foods"
         items={[
-          { key: "foods", label: "Foods", children: <FoodsTab /> },
-          { key: "overview", label: "Nutrition Overview", children: <NutritionOverviewTab /> },
+          { key: "foods", label: "Besinler", children: <FoodsTab /> },
+          { key: "overview", label: "Beslenme Genel Bakış", children: <NutritionOverviewTab /> },
         ]}
       />
     </PageContainer>

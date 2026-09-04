@@ -9,7 +9,7 @@ export default function ProductsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Search by name or code"
+          placeholder="İsme veya koda göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -21,9 +21,9 @@ export default function ProductsFilterBar({ filters, onChange, onReset }) {
           value={filters.billingPeriod ?? "all"}
           onChange={(v) => onChange({ billingPeriod: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All periods" },
-            { value: "Monthly", label: "Monthly" },
-            { value: "Yearly", label: "Yearly" },
+            { value: "all", label: "Tüm dönemler" },
+            { value: "Monthly", label: "Aylık" },
+            { value: "Yearly", label: "Yıllık" },
           ]}
         />
       </Col>
@@ -33,9 +33,9 @@ export default function ProductsFilterBar({ filters, onChange, onReset }) {
           value={filters.isActive === undefined ? "all" : String(filters.isActive)}
           onChange={(v) => onChange({ isActive: v === "all" ? undefined : v === "true" })}
           options={[
-            { value: "all", label: "All statuses" },
-            { value: "true", label: "Active" },
-            { value: "false", label: "Inactive" },
+            { value: "all", label: "Tüm durumlar" },
+            { value: "true", label: "Aktif" },
+            { value: "false", label: "Pasif" },
           ]}
         />
       </Col>

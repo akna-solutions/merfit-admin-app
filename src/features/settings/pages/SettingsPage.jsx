@@ -13,17 +13,17 @@ export default function SettingsPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Settings" }]}
-        title="Settings"
-        description="Admin panel preferences."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Ayarlar" }]}
+        title="Ayarlar"
+        description="Yönetici paneli tercihleri."
       />
       <Tabs
         defaultActiveKey="general"
         items={[
-          { key: "general", label: "General", children: <GeneralSettingsTab /> },
-          { key: "appearance", label: "Appearance", children: <AppearanceSettingsTab /> },
-          { key: "notifications", label: "Notifications", children: <NotificationSettingsTab /> },
-          { key: "security", label: "Security", children: <SecuritySettingsTab /> },
+          { key: "general", label: "Genel", children: <GeneralSettingsTab /> },
+          { key: "appearance", label: "Görünüm", children: <AppearanceSettingsTab /> },
+          { key: "notifications", label: "Bildirimler", children: <NotificationSettingsTab /> },
+          { key: "security", label: "Güvenlik", children: <SecuritySettingsTab /> },
         ]}
       />
     </PageContainer>

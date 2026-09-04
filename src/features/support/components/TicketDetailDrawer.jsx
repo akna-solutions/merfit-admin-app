@@ -4,6 +4,7 @@ import { SendOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
 import { ticketService } from "../services/ticketService";
+import { STATUS_LABELS, PRIORITY_LABELS } from "../data/supportMockData";
 
 const STATUSES = ["Open", "InProgress", "Resolved", "Closed"];
 const PRIORITIES = ["Low", "Medium", "High", "Urgent"];
@@ -30,7 +31,7 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
     setUpdating(true);
     try {
       await ticketService.updateStatus(ticket.id, { status });
-      message.success(`Status set to ${status}.`);
+      message.success(`Durum "${STATUS_LABELS[status] ?? status}" olarak güncellendi.`);
       onChanged?.();
     } finally {
       setUpdating(false);
@@ -41,7 +42,7 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
     setUpdating(true);
     try {
       await ticketService.updatePriority(ticket.id, { priority });
-      message.success(`Priority set to ${priority}.`);
+      message.success(`Öncelik "${PRIORITY_LABELS[priority] ?? priority}" olarak güncellendi.`);
       onChanged?.();
     } finally {
       setUpdating(false);
@@ -62,17 +63,17 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
   };
 
   return (
-    <DetailDrawer open={open} title={ticket ? `Ticket #${ticket.id}` : "Ticket Detail"} width={560} onClose={onClose}>
+    <DetailDrawer open={open} title={ticket ? `Talep #${ticket.id}` : "Talep Detayı"} width={560} onClose={onClose}>
       {loading || !ticket ? (
         <Skeleton active paragraph={{ rows: 8 }} />
       ) : (
         <>
           <Descriptions column={1} bordered size="small" style={{ marginBottom: 16 }}>
-            <Descriptions.Item label="User">{ticket.userEmail}</Descriptions.Item>
-            <Descriptions.Item label="Subject">{ticket.subject}</Descriptions.Item>
-            <Descriptions.Item label="Created">{dayjs(ticket.createdAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
+            <Descriptions.Item label="Kullanıcı">{ticket.userEmail}</Descriptions.Item>
+            <Descriptions.Item label="Konu">{ticket.subject}</Descriptions.Item>
+            <Descriptions.Item label="Oluşturulma">{dayjs(ticket.createdAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
             {ticket.closedAt && (
-              <Descriptions.Item label="Closed">{dayjs(ticket.closedAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
+              <Descriptions.Item label="Kapanma">{dayjs(ticket.closedAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
             )}
           </Descriptions>
 
@@ -82,16 +83,16 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
               value={ticket.status}
               disabled={updating}
               onChange={handleStatusChange}
-              options={STATUSES.map((s) => ({ value: s, label: s }))}
+              options={STATUSES.map((s) => ({ value: s, label: STATUS_LABELS[s] }))}
             />
             <Select
               style={{ width: 140 }}
               value={ticket.priority}
               disabled={updating}
               onChange={handlePriorityChange}
-              options={PRIORITIES.map((p) => ({ value: p, label: p }))}
+              options={PRIORITIES.map((p) => ({ value: p, label: PRIORITY_LABELS[p] }))}
             />
-            <StatusTag status={ticket.status} />
+            <StatusTag status={ticket.status}>{STATUS_LABELS[ticket.status] ?? ticket.status}</StatusTag>
           </Space>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
@@ -120,7 +121,7 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
           <Space.Compact style={{ width: "100%" }}>
             <Input.TextArea
               rows={2}
-              placeholder="Write a reply..."
+              placeholder="Bir yanıt yazın..."
               value={reply}
               onChange={(e) => setReply(e.target.value)}
               disabled={ticket.status === "Closed"}

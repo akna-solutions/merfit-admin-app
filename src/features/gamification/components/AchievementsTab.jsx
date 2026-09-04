@@ -21,13 +21,13 @@ export default function AchievementsTab() {
 
   const handleToggleStatus = async (record) => {
     await achievementService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.title}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.title}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await achievementService.deleteAchievement(record.id);
-    message.success(`"${record.title}" was deleted.`);
+    message.success(`"${record.title}" silindi.`);
     refetch();
   };
 
@@ -42,10 +42,10 @@ export default function AchievementsTab() {
     try {
       if (formState.achievement) {
         await achievementService.updateAchievement(formState.achievement.id, values);
-        message.success("Achievement updated.");
+        message.success("Başarı güncellendi.");
       } else {
         await achievementService.createAchievement(values);
-        message.success("Achievement created.");
+        message.success("Başarı oluşturuldu.");
       }
       setFormState({ open: false, achievement: null });
       refetch();
@@ -55,17 +55,17 @@ export default function AchievementsTab() {
   };
 
   const columns = [
-    { title: "Icon", dataIndex: "icon", key: "icon", width: 60, render: (v) => <span style={{ fontSize: 20 }}>{v}</span> },
-    { title: "Title", dataIndex: "title", key: "title", width: 200 },
-    { title: "Code", dataIndex: "code", key: "code", width: 160, render: (v) => <Text code>{v}</Text> },
-    { title: "Points", dataIndex: "points", key: "points", width: 90 },
+    { title: "Simge", dataIndex: "icon", key: "icon", width: 60, render: (v) => <span style={{ fontSize: 20 }}>{v}</span> },
+    { title: "Başlık", dataIndex: "title", key: "title", width: 200 },
+    { title: "Kod", dataIndex: "code", key: "code", width: 160, render: (v) => <Text code>{v}</Text> },
+    { title: "Puan", dataIndex: "points", key: "points", width: 90 },
     {
-      title: "Condition",
+      title: "Koşul",
       key: "condition",
       width: 180,
       render: (_, r) => <Tag>{r.conditionType} ≥ {r.conditionValue}</Tag>,
     },
-    { title: "Status", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"} /> },
+    { title: "Durum", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag> },
     {
       title: "",
       key: "actions",
@@ -74,20 +74,20 @@ export default function AchievementsTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "users", label: "View Users", icon: <TeamOutlined />, onClick: () => handleViewUsers(record) },
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, achievement: record }) },
+            { key: "users", label: "Kullanıcıları Görüntüle", icon: <TeamOutlined />, onClick: () => handleViewUsers(record) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, achievement: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.title}"?`,
+              confirm: `"${record.title}" silinsin mi?`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -100,7 +100,7 @@ export default function AchievementsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, achievement: null })}>
-          Create Achievement
+          Başarı Oluştur
         </Button>
       </div>
 
@@ -110,7 +110,7 @@ export default function AchievementsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1050}
-          emptyDescription="No achievements yet."
+          emptyDescription="Henüz başarı yok."
           pagination={{
             current: page,
             pageSize,

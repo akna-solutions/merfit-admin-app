@@ -11,10 +11,10 @@ export default function SubscriptionsAnalyticsTab() {
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Total Subscriptions" value={d.totalSubscriptions} icon={<CreditCardOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Active Subscriptions" value={d.activeSubscriptions} icon={<CrownOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Plus Conversion Rate" value={d.plusConversionRatePercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Churn Rate" value={d.churnRatePercent} suffix="%" precision={1} icon={<FallOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Toplam Abonelik" value={d.totalSubscriptions} icon={<CreditCardOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Aktif Abonelik" value={d.activeSubscriptions} icon={<CrownOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Plus Dönüşüm Oranı" value={d.plusConversionRatePercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Kayıp Oranı" value={d.churnRatePercent} suffix="%" precision={1} icon={<FallOutlined />} loading={loading} /></Col>
     </Row>
   );
 }

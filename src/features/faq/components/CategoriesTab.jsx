@@ -17,7 +17,7 @@ export default function CategoriesTab() {
 
   const handleDelete = async (record) => {
     await faqCategoryService.deleteCategory(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -26,10 +26,10 @@ export default function CategoriesTab() {
     try {
       if (formState.category) {
         await faqCategoryService.updateCategory(formState.category.id, values);
-        message.success("Category updated.");
+        message.success("Kategori güncellendi.");
       } else {
         await faqCategoryService.createCategory(values);
-        message.success("Category created.");
+        message.success("Kategori oluşturuldu.");
       }
       setFormState({ open: false, category: null });
       refetch();
@@ -39,9 +39,9 @@ export default function CategoriesTab() {
   };
 
   const columns = [
-    { title: "Name", dataIndex: "name", key: "name", width: 240 },
-    { title: "FAQ Count", dataIndex: "faqCount", key: "faqCount", width: 120 },
-    { title: "Sort Order", dataIndex: "sortOrder", key: "sortOrder", width: 120 },
+    { title: "Ad", dataIndex: "name", key: "name", width: 240 },
+    { title: "SSS Sayısı", dataIndex: "faqCount", key: "faqCount", width: 120 },
+    { title: "Sıra", dataIndex: "sortOrder", key: "sortOrder", width: 120 },
     {
       title: "",
       key: "actions",
@@ -50,13 +50,13 @@ export default function CategoriesTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, category: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, category: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? Its FAQs will also be removed.`,
+              confirm: `"${record.name}" silinsin mi? Bu kategoriye ait SSS'ler de kaldırılacak.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -69,7 +69,7 @@ export default function CategoriesTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, category: null })}>
-          Create Category
+          Kategori Oluştur
         </Button>
       </div>
 
@@ -79,7 +79,7 @@ export default function CategoriesTab() {
           dataSource={rows}
           loading={loading}
           scrollX={600}
-          emptyDescription="No FAQ categories yet."
+          emptyDescription="Henüz SSS kategorisi yok."
           pagination={{
             current: page,
             pageSize,

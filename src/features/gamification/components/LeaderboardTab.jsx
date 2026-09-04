@@ -4,7 +4,7 @@ import { PlusOutlined, EditOutlined, DeleteOutlined, UnorderedListOutlined } fro
 import dayjs from "dayjs";
 import { SectionCard, DataTable, StatusTag, RowActions } from "../../../components/admin";
 import { useListQuery } from "../../../utils/useListQuery";
-import { leaderboardService } from "../services/gamificationService";
+import { leaderboardService, LEADERBOARD_PERIOD_TYPE_LABELS } from "../services/gamificationService";
 import LeaderboardPeriodFormDrawer from "./LeaderboardPeriodFormDrawer";
 import LeaderboardEntriesDrawer from "./LeaderboardEntriesDrawer";
 
@@ -20,7 +20,7 @@ export default function LeaderboardTab() {
 
   const handleDelete = async (record) => {
     await leaderboardService.deletePeriod(record.id);
-    message.success("Leaderboard period deleted.");
+    message.success("Liderlik tablosu dönemi silindi.");
     refetch();
   };
 
@@ -41,10 +41,10 @@ export default function LeaderboardTab() {
     try {
       if (formState.period) {
         await leaderboardService.updatePeriod(formState.period.id, values);
-        message.success("Period updated.");
+        message.success("Dönem güncellendi.");
       } else {
         await leaderboardService.createPeriod(values);
-        message.success("Period created.");
+        message.success("Dönem oluşturuldu.");
       }
       setFormState({ open: false, period: null });
       refetch();
@@ -54,10 +54,10 @@ export default function LeaderboardTab() {
   };
 
   const columns = [
-    { title: "Type", dataIndex: "type", key: "type", width: 120 },
-    { title: "Start Date", dataIndex: "startDate", key: "startDate", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
-    { title: "End Date", dataIndex: "endDate", key: "endDate", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
-    { title: "Active", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"} /> },
+    { title: "Tür", dataIndex: "type", key: "type", width: 120, render: (v) => LEADERBOARD_PERIOD_TYPE_LABELS[v] ?? v },
+    { title: "Başlangıç Tarihi", dataIndex: "startDate", key: "startDate", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
+    { title: "Bitiş Tarihi", dataIndex: "endDate", key: "endDate", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
+    { title: "Aktif", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag> },
     {
       title: "",
       key: "actions",
@@ -66,14 +66,14 @@ export default function LeaderboardTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "entries", label: "View Entries", icon: <UnorderedListOutlined />, onClick: () => loadEntries(record) },
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, period: record }) },
+            { key: "entries", label: "Kayıtları Görüntüle", icon: <UnorderedListOutlined />, onClick: () => loadEntries(record) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, period: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: "Delete this leaderboard period?",
+              confirm: "Bu liderlik tablosu dönemi silinsin mi?",
               onClick: () => handleDelete(record),
             },
           ]}
@@ -86,7 +86,7 @@ export default function LeaderboardTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, period: null })}>
-          Create Period
+          Dönem Oluştur
         </Button>
       </div>
 
@@ -96,7 +96,7 @@ export default function LeaderboardTab() {
           dataSource={rows}
           loading={loading}
           scrollX={700}
-          emptyDescription="No leaderboard periods yet."
+          emptyDescription="Henüz liderlik tablosu dönemi yok."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => loadEntries(record) })}
           pagination={{
             current: page,

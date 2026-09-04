@@ -9,6 +9,8 @@ import ProductFormDrawer from "./ProductFormDrawer";
 
 const { Text } = Typography;
 
+const BILLING_PERIOD_LABELS = { Monthly: "Aylık", Yearly: "Yıllık" };
+
 export default function ProductsTab() {
   const { message } = App.useApp();
   const {
@@ -23,13 +25,13 @@ export default function ProductsTab() {
 
   const handleToggleStatus = async (record) => {
     await subscriptionProductService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.name}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.name}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await subscriptionProductService.deleteProduct(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -38,10 +40,10 @@ export default function ProductsTab() {
     try {
       if (formState.product) {
         await subscriptionProductService.updateProduct(formState.product.id, values);
-        message.success("Product updated.");
+        message.success("Ürün güncellendi.");
       } else {
         await subscriptionProductService.createProduct(values);
-        message.success("Product created.");
+        message.success("Ürün oluşturuldu.");
       }
       setFormState({ open: false, product: null });
       refetch();
@@ -52,26 +54,32 @@ export default function ProductsTab() {
 
   const columns = [
     {
-      title: "Name",
+      title: "İsim",
       key: "name",
       width: 240,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.code} avatarColor="#F5A623" />,
     },
-    { title: "Billing Period", dataIndex: "billingPeriod", key: "billingPeriod", width: 130 },
     {
-      title: "Price",
+      title: "Faturalandırma Dönemi",
+      dataIndex: "billingPeriod",
+      key: "billingPeriod",
+      width: 130,
+      render: (v) => BILLING_PERIOD_LABELS[v] ?? v,
+    },
+    {
+      title: "Fiyat",
       key: "price",
       width: 120,
       render: (_, r) => `${r.price.toFixed(2)} ${r.currency}`,
     },
-    { title: "iOS Product ID", dataIndex: "storeProductIdIos", key: "storeProductIdIos", width: 180, render: (v) => v ?? <Text type="secondary">—</Text> },
-    { title: "Android Product ID", dataIndex: "storeProductIdAndroid", key: "storeProductIdAndroid", width: 180, render: (v) => v ?? <Text type="secondary">—</Text> },
+    { title: "iOS Ürün Kimliği", dataIndex: "storeProductIdIos", key: "storeProductIdIos", width: 180, render: (v) => v ?? <Text type="secondary">—</Text> },
+    { title: "Android Ürün Kimliği", dataIndex: "storeProductIdAndroid", key: "storeProductIdAndroid", width: 180, render: (v) => v ?? <Text type="secondary">—</Text> },
     {
-      title: "Active",
+      title: "Aktif",
       dataIndex: "isActive",
       key: "isActive",
       width: 100,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
       title: "",
@@ -81,19 +89,19 @@ export default function ProductsTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, product: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, product: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"?`,
+              confirm: `"${record.name}" silinsin mi?`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -106,7 +114,7 @@ export default function ProductsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, product: null })}>
-          Create Product
+          Ürün Oluştur
         </Button>
       </div>
 
@@ -118,7 +126,7 @@ export default function ProductsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1100}
-          emptyDescription="No products match these filters."
+          emptyDescription="Bu filtrelere uyan ürün yok."
           pagination={{
             current: page,
             pageSize,

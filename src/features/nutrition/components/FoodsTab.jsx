@@ -30,7 +30,7 @@ export default function FoodsTab() {
 
   const handleDelete = async (record) => {
     await foodService.deleteFood(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -39,10 +39,10 @@ export default function FoodsTab() {
     try {
       if (formState.food) {
         await foodService.updateFood(formState.food.id, values);
-        message.success("Food updated.");
+        message.success("Besin güncellendi.");
       } else {
         await foodService.createFood(values);
-        message.success("Food created.");
+        message.success("Besin oluşturuldu.");
       }
       setFormState({ open: false, food: null });
       refetch();
@@ -57,7 +57,7 @@ export default function FoodsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, food: null })}>
-          Add Food
+          Besin Ekle
         </Button>
       </div>
 
@@ -69,7 +69,7 @@ export default function FoodsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No foods match these filters."
+          emptyDescription="Bu filtrelere uyan besin bulunamadı."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

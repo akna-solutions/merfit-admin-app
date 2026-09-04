@@ -15,7 +15,7 @@ export default function ComingSoonPage({ title }) {
               {title}
             </Title>
             <Typography.Text type="secondary">
-              This screen hasn&apos;t been built yet.
+              Bu ekran henüz oluşturulmadı.
             </Typography.Text>
           </>
         }

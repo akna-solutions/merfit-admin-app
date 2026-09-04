@@ -18,7 +18,7 @@ export default function UserGrowthChart({ data, loading }) {
 
   return (
     <Card
-      title="User Growth"
+      title="Kullanıcı Artışı"
       className="merfit-chart-card"
       bordered={false}
       loading={loading}

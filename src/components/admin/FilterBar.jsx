@@ -14,7 +14,7 @@ export default function FilterBar({ children, onReset, extra }) {
         {children}
         <Col flex="none" className="merfit-filter-bar-actions">
           <Button icon={<ReloadOutlined />} onClick={onReset}>
-            Reset
+            Sıfırla
           </Button>
           {extra}
         </Col>

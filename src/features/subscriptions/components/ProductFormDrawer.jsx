@@ -33,14 +33,14 @@ function FeaturesEditor({ productId }) {
     setSaving(true);
     try {
       await subscriptionProductService.setFeatures(productId, selectedIds);
-      message.success("Features saved.");
+      message.success("Özellikler kaydedildi.");
     } finally {
       setSaving(false);
     }
   };
 
   if (!productId) {
-    return <Select disabled placeholder="Save the product first to attach features" style={{ width: "100%" }} />;
+    return <Select disabled placeholder="Özellik eklemek için önce ürünü kaydedin" style={{ width: "100%" }} />;
   }
   if (loading) return <Spin />;
 
@@ -49,7 +49,7 @@ function FeaturesEditor({ productId }) {
       <Select
         mode="multiple"
         style={{ width: "100%" }}
-        placeholder="Select features included in this product"
+        placeholder="Bu ürüne dahil özellikleri seçin"
         value={selectedIds}
         onChange={setSelectedIds}
         options={allFeatures.map((f) => ({ value: f.id, label: f.name }))}
@@ -61,7 +61,7 @@ function FeaturesEditor({ productId }) {
         loading={saving}
         style={{ marginTop: 12 }}
       >
-        Save Features
+        Özellikleri Kaydet
       </Button>
     </>
   );
@@ -82,48 +82,48 @@ export default function ProductFormDrawer({ open, product, submitting, onClose, 
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${product?.name}` : "Create Product"}
-      submitText={isEdit ? "Save Changes" : "Create Product"}
+      title={isEdit ? `${product?.name} Ürününü Düzenle` : "Ürün Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Ürün Oluştur"}
       submitting={submitting}
       width={560}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 200 }]}>
-          <Input placeholder="e.g. Merfit Plus — Monthly" />
+        <Form.Item name="name" label="İsim" rules={[{ required: true, min: 2, max: 200 }]}>
+          <Input placeholder="örn. Merfit Plus — Aylık" />
         </Form.Item>
-        <Form.Item name="code" label="Code" rules={[{ required: true, min: 2, max: 100 }]}>
-          <Input placeholder="e.g. plus_monthly" />
+        <Form.Item name="code" label="Kod" rules={[{ required: true, min: 2, max: 100 }]}>
+          <Input placeholder="örn. plus_monthly" />
         </Form.Item>
         <Space size={16} style={{ width: "100%" }}>
-          <Form.Item name="billingPeriod" label="Billing Period" rules={[{ required: true }]} style={{ flex: 1 }}>
-            <Select options={[{ value: "Monthly", label: "Monthly" }, { value: "Yearly", label: "Yearly" }]} />
+          <Form.Item name="billingPeriod" label="Faturalandırma Dönemi" rules={[{ required: true }]} style={{ flex: 1 }}>
+            <Select options={[{ value: "Monthly", label: "Aylık" }, { value: "Yearly", label: "Yıllık" }]} />
           </Form.Item>
-          <Form.Item name="price" label="Price" rules={[{ required: true, type: "number", min: 0, max: 100000 }]} style={{ flex: 1 }}>
+          <Form.Item name="price" label="Fiyat" rules={[{ required: true, type: "number", min: 0, max: 100000 }]} style={{ flex: 1 }}>
             <InputNumber style={{ width: "100%" }} min={0} step={0.01} />
           </Form.Item>
           <Form.Item
             name="currency"
-            label="Currency"
-            rules={[{ required: true, len: 3, message: "3-letter ISO code" }]}
+            label="Para Birimi"
+            rules={[{ required: true, len: 3, message: "3 harfli ISO kodu" }]}
             style={{ flex: 1 }}
           >
             <Input placeholder="TRY" maxLength={3} />
           </Form.Item>
         </Space>
-        <Form.Item name="storeProductIdIos" label="iOS Product ID" rules={[{ max: 200 }]}>
+        <Form.Item name="storeProductIdIos" label="iOS Ürün Kimliği" rules={[{ max: 200 }]}>
           <Input placeholder="com.merfit.plus.monthly" />
         </Form.Item>
-        <Form.Item name="storeProductIdAndroid" label="Android Product ID" rules={[{ max: 200 }]}>
+        <Form.Item name="storeProductIdAndroid" label="Android Ürün Kimliği" rules={[{ max: 200 }]}>
           <Input placeholder="plus_monthly" />
         </Form.Item>
-        <Form.Item name="isActive" label="Active" valuePropName="checked">
+        <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Form>
 
-      <Divider>Features</Divider>
+      <Divider>Özellikler</Divider>
       <FeaturesEditor productId={product?.id} />
     </FormDrawer>
   );

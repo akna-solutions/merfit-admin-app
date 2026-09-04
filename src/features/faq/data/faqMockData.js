@@ -11,26 +11,26 @@ function daysAgo(n) {
 
 // AdminFaqCategoryDto[]
 export const faqCategoriesMockData = [
-  { id: 1, name: "Getting Started", sortOrder: 1 },
-  { id: 2, name: "Subscriptions & Billing", sortOrder: 2 },
-  { id: 3, name: "Workouts", sortOrder: 3 },
-  { id: 4, name: "Nutrition", sortOrder: 4 },
-  { id: 5, name: "Account & Privacy", sortOrder: 5 },
+  { id: 1, name: "Başlarken", sortOrder: 1 },
+  { id: 2, name: "Abonelik ve Faturalandırma", sortOrder: 2 },
+  { id: 3, name: "Antrenmanlar", sortOrder: 3 },
+  { id: 4, name: "Beslenme", sortOrder: 4 },
+  { id: 5, name: "Hesap ve Gizlilik", sortOrder: 5 },
 ].map((c, i) => ({ ...c, createdAt: daysAgo(300 - i * 10), updatedAt: daysAgo(30 + i) }));
 
 // AdminFaqDto[]
 const RAW_FAQS = [
-  { categoryId: 1, question: "How do I create an account?", answer: "Download the app and tap Sign Up to create your account with email or Apple/Google sign-in." },
-  { categoryId: 1, question: "Is Merfit free to use?", answer: "Yes, Merfit has a free tier. Merfit Plus unlocks additional features like AI-generated workouts." },
-  { categoryId: 2, question: "How do I cancel my subscription?", answer: "Go to your device's subscription settings (App Store or Play Store) to manage or cancel." },
-  { categoryId: 2, question: "Will I be charged after my free trial?", answer: "Yes, unless you cancel before the trial period ends." },
-  { categoryId: 2, question: "Can I get a refund?", answer: "Refunds are handled by Apple or Google depending on your purchase platform." },
-  { categoryId: 3, question: "Can I create custom workouts?", answer: "Yes, use the AI workout generator or build one manually from the exercise library." },
-  { categoryId: 3, question: "How is my Merfit Score calculated?", answer: "Your score combines workout consistency, nutrition logging, and overall activity." },
-  { categoryId: 4, question: "Can I log food by scanning a barcode?", answer: "Yes, use the barcode scanner in the nutrition tab to quickly log packaged foods." },
-  { categoryId: 4, question: "Does Merfit support custom macros?", answer: "Yes, you can set custom calorie and macro targets in your nutrition goals." },
-  { categoryId: 5, question: "How do I delete my account?", answer: "Go to Settings > Account > Delete Account. This action is permanent." },
-  { categoryId: 5, question: "How is my data protected?", answer: "We use industry-standard encryption and never sell your personal data." },
+  { categoryId: 1, question: "Nasıl hesap oluştururum?", answer: "Uygulamayı indirin ve e-posta ya da Apple/Google ile giriş kullanarak hesap oluşturmak için Kaydol'a dokunun." },
+  { categoryId: 1, question: "Merfit kullanmak ücretsiz mi?", answer: "Evet, Merfit'in ücretsiz bir seviyesi vardır. Merfit Plus, yapay zekâ ile oluşturulan antrenmanlar gibi ek özelliklerin kilidini açar." },
+  { categoryId: 2, question: "Aboneliğimi nasıl iptal ederim?", answer: "Yönetmek veya iptal etmek için cihazınızın abonelik ayarlarına (App Store veya Play Store) gidin." },
+  { categoryId: 2, question: "Ücretsiz deneme süresinden sonra ücretlendirilecek miyim?", answer: "Evet, deneme süresi bitmeden iptal etmezseniz ücretlendirilirsiniz." },
+  { categoryId: 2, question: "Para iadesi alabilir miyim?", answer: "Para iadeleri, satın alma platformunuza bağlı olarak Apple veya Google tarafından yönetilir." },
+  { categoryId: 3, question: "Kendi antrenmanımı oluşturabilir miyim?", answer: "Evet, yapay zekâ antrenman oluşturucusunu kullanabilir veya egzersiz kitaplığından manuel olarak bir tane oluşturabilirsiniz." },
+  { categoryId: 3, question: "Merfit Skorum nasıl hesaplanır?", answer: "Skorunuz; antrenman düzenliliğinizi, beslenme kaydınızı ve genel aktivitenizi birleştirir." },
+  { categoryId: 4, question: "Barkod okutarak besin kaydedebilir miyim?", answer: "Evet, paketli besinleri hızlıca kaydetmek için beslenme sekmesindeki barkod tarayıcıyı kullanabilirsiniz." },
+  { categoryId: 4, question: "Merfit özel makro hedeflerini destekliyor mu?", answer: "Evet, beslenme hedeflerinizde özel kalori ve makro hedefleri belirleyebilirsiniz." },
+  { categoryId: 5, question: "Hesabımı nasıl silerim?", answer: "Ayarlar > Hesap > Hesabı Sil yolunu izleyin. Bu işlem kalıcıdır." },
+  { categoryId: 5, question: "Verilerim nasıl korunuyor?", answer: "Endüstri standardı şifreleme kullanıyoruz ve kişisel verilerinizi asla satmıyoruz." },
 ];
 
 export const faqsMockData = RAW_FAQS.map((faq, i) => ({

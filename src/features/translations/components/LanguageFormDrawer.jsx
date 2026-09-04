@@ -15,8 +15,8 @@ export default function LanguageFormDrawer({ open, language, submitting, onClose
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${language?.name}` : "Add Language"}
-      submitText={isEdit ? "Save Changes" : "Add Language"}
+      title={isEdit ? `${language?.name} Dilini Düzenle` : "Dil Ekle"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Dil Ekle"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -24,23 +24,23 @@ export default function LanguageFormDrawer({ open, language, submitting, onClose
       <Form form={form} layout="vertical">
         <Form.Item
           name="code"
-          label="Code"
+          label="Kod"
           rules={[{ required: true, min: 2, max: 10 }]}
         >
-          <Input placeholder="e.g. tr, en, en-US" />
+          <Input placeholder="örn. tr, en, en-US" />
         </Form.Item>
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 100 }]}>
-          <Input placeholder="e.g. Turkish" />
+        <Form.Item name="name" label="Ad" rules={[{ required: true, min: 2, max: 100 }]}>
+          <Input placeholder="örn. Türkçe" />
         </Form.Item>
         <Form.Item
           name="isDefault"
-          label="Default Language"
+          label="Varsayılan Dil"
           valuePropName="checked"
-          extra="Setting this as default automatically unsets any other default language."
+          extra="Bunu varsayılan olarak ayarlamak, başka bir varsayılan dili otomatik olarak kaldırır."
         >
           <Switch />
         </Form.Item>
-        <Form.Item name="isActive" label="Active" valuePropName="checked">
+        <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Form>

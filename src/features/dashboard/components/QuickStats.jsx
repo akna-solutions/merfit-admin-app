@@ -4,7 +4,7 @@ import { Card, Statistic, Progress, Space } from "antd";
 export default function QuickStats({ data, loading }) {
   return (
     <Card
-      title="Quick Stats"
+      title="Hızlı İstatistikler"
       className="merfit-quickstats-card"
       bordered={false}
       loading={loading}

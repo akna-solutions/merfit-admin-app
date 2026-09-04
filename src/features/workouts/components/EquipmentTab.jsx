@@ -20,7 +20,7 @@ export default function EquipmentTab() {
 
   const handleDelete = async (record) => {
     await equipmentService.deleteEquipment(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -29,10 +29,10 @@ export default function EquipmentTab() {
     try {
       if (formState.equipment) {
         await equipmentService.updateEquipment(formState.equipment.id, values);
-        message.success("Equipment updated.");
+        message.success("Ekipman güncellendi.");
       } else {
         await equipmentService.createEquipment(values);
-        message.success("Equipment created.");
+        message.success("Ekipman oluşturuldu.");
       }
       setFormState({ open: false, equipment: null });
       refetch();
@@ -43,7 +43,7 @@ export default function EquipmentTab() {
 
   const columns = [
     {
-      title: "Equipment",
+      title: "Ekipman",
       key: "name",
       width: 260,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#13A8A8" />,
@@ -56,13 +56,13 @@ export default function EquipmentTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, equipment: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, equipment: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? Workouts using it may be affected.`,
+              confirm: `"${record.name}" silinsin mi? Bunu kullanan antrenmanlar etkilenebilir.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -75,7 +75,7 @@ export default function EquipmentTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, equipment: null })}>
-          Create Equipment
+          Ekipman Oluştur
         </Button>
       </div>
 
@@ -85,7 +85,7 @@ export default function EquipmentTab() {
           dataSource={rows}
           loading={loading}
           scrollX={500}
-          emptyDescription="No equipment yet."
+          emptyDescription="Henüz ekipman yok."
           pagination={{
             current: page,
             pageSize,

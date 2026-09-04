@@ -49,9 +49,9 @@ const VALUES = {
 
 // AdminLanguageDto[]
 export const languagesMockData = [
-  { id: 1, code: "tr", name: "Turkish", isDefault: true, isActive: true },
-  { id: 2, code: "en", name: "English", isDefault: false, isActive: true },
-  { id: 3, code: "de", name: "German", isDefault: false, isActive: false },
+  { id: 1, code: "tr", name: "Türkçe", isDefault: true, isActive: true },
+  { id: 2, code: "en", name: "İngilizce", isDefault: false, isActive: true },
+  { id: 3, code: "de", name: "Almanca", isDefault: false, isActive: false },
 ].map((l, i) => ({
   ...l,
   translationCount: Object.keys(VALUES[l.code] ?? {}).length,

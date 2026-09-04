@@ -16,10 +16,10 @@ export default function RevenueAnalyticsTab() {
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Total Revenue" value={money(d.totalRevenue)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Revenue (7d)" value={money(d.revenueLast7Days)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Revenue (30d)" value={money(d.revenueLast30Days)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Avg Revenue / Paying User" value={money(d.averageRevenuePerPayingUser)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Toplam Gelir" value={money(d.totalRevenue)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Gelir (7g)" value={money(d.revenueLast7Days)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Gelir (30g)" value={money(d.revenueLast30Days)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Ort. Gelir / Ödeme Yapan Kullanıcı" value={money(d.averageRevenuePerPayingUser)} suffix="TRY" icon={<DollarCircleOutlined />} loading={loading} /></Col>
     </Row>
   );
 }

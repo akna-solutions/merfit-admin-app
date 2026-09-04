@@ -41,17 +41,17 @@ function usePageTitle() {
       (item) => item.path !== "/admin" && pathname.startsWith(`${item.path}/`),
     )
     .sort((a, b) => b.path.length - a.path.length);
-  return prefixMatches.length ? prefixMatches[0].label : "Dashboard";
+  return prefixMatches.length ? prefixMatches[0].label : "Anasayfa";
 }
 
 function buildProfileMenuItems(navigate) {
   return [
-    { key: "settings", icon: <SettingOutlined />, label: "Settings", onClick: () => navigate("/admin/settings") },
+    { key: "settings", icon: <SettingOutlined />, label: "Ayarlar", onClick: () => navigate("/admin/settings") },
     { type: "divider" },
     {
       key: "sign-out",
       icon: <LogoutOutlined />,
-      label: "Sign Out",
+      label: "Çıkış Yap",
       danger: true,
     },
   ];
@@ -73,7 +73,7 @@ export default function AdminHeader({
     }
   };
 
-  const displayName = user?.name ?? user?.email ?? "Admin";
+  const displayName = user?.name ?? user?.email ?? "Yönetici";
   const avatarInitial = displayName.charAt(0).toUpperCase();
 
   // Reusable default range; wired so the RangePicker is ready to be
@@ -87,7 +87,7 @@ export default function AdminHeader({
           type="text"
           className="merfit-header-menu-btn"
           icon={<MenuOutlined />}
-          aria-label="Open navigation menu"
+          aria-label="Gezinme menüsünü aç"
           onClick={onOpenMobileSidebar}
         />
         <Title level={4} className="merfit-header-title">
@@ -106,7 +106,7 @@ export default function AdminHeader({
 
         <Tooltip
           title={
-            mode === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            mode === "dark" ? "Açık moda geç" : "Koyu moda geç"
           }
         >
           <span className="merfit-theme-toggle">
@@ -114,19 +114,19 @@ export default function AdminHeader({
             <Switch
               checked={mode === "dark"}
               onChange={toggleMode}
-              aria-label="Toggle dark mode"
+              aria-label="Koyu modu aç/kapat"
             />
             <MoonOutlined className="merfit-theme-toggle-icon" />
           </span>
         </Tooltip>
 
-        <Tooltip title="Notifications">
+        <Tooltip title="Bildirimler">
           <Badge count={3} size="small" offset={[-2, 2]}>
             <Button
               type="text"
               shape="circle"
               icon={<BellOutlined />}
-              aria-label="Notifications"
+              aria-label="Bildirimler"
               className="merfit-header-icon-btn"
             />
           </Badge>

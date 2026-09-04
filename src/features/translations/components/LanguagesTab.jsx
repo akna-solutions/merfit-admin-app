@@ -21,7 +21,7 @@ export default function LanguagesTab() {
 
   const handleDelete = async (record) => {
     await languageService.deleteLanguage(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -30,10 +30,10 @@ export default function LanguagesTab() {
     try {
       if (formState.language) {
         await languageService.updateLanguage(formState.language.id, values);
-        message.success("Language updated.");
+        message.success("Dil güncellendi.");
       } else {
         await languageService.createLanguage(values);
-        message.success("Language created.");
+        message.success("Dil oluşturuldu.");
       }
       setFormState({ open: false, language: null });
       refetch();
@@ -44,30 +44,30 @@ export default function LanguagesTab() {
 
   const columns = [
     {
-      title: "Language",
+      title: "Dil",
       key: "name",
       width: 220,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.code} avatarColor="#2F6FED" />,
     },
     {
-      title: "Default",
+      title: "Varsayılan",
       dataIndex: "isDefault",
       key: "isDefault",
       width: 100,
-      render: (v) => (v ? <Tag color="gold">Default</Tag> : null),
+      render: (v) => (v ? <Tag color="gold">Varsayılan</Tag> : null),
     },
     {
-      title: "Translation Count",
+      title: "Çeviri Sayısı",
       dataIndex: "translationCount",
       key: "translationCount",
       width: 150,
     },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
       title: "",
@@ -77,13 +77,13 @@ export default function LanguagesTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, language: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, language: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? Its translations will also be removed.`,
+              confirm: `"${record.name}" silinsin mi? Bu dile ait çeviriler de kaldırılacaktır.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -96,7 +96,7 @@ export default function LanguagesTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, language: null })}>
-          Add Language
+          Dil Ekle
         </Button>
       </div>
 
@@ -106,7 +106,7 @@ export default function LanguagesTab() {
           dataSource={rows}
           loading={loading}
           scrollX={700}
-          emptyDescription="No languages yet."
+          emptyDescription="Henüz dil eklenmedi."
           pagination={{
             current: page,
             pageSize,

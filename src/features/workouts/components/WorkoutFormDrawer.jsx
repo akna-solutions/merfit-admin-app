@@ -7,6 +7,7 @@ import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { FormDrawer } from "../../../components/admin";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
 import { workoutService } from "../services/workoutService";
+import { difficultyLabel } from "../data/enumLabels";
 
 const { Text } = Typography;
 
@@ -42,14 +43,14 @@ function ExercisesEditor({ workoutId, exerciseOptions }) {
         exerciseName: exerciseOptions.find((o) => o.id === ex.exerciseId)?.name ?? "",
       }));
       await workoutService.setExercises(workoutId, { exercises });
-      message.success("Exercises saved.");
+      message.success("Egzersizler kaydedildi.");
     } finally {
       setSaving(false);
     }
   };
 
   if (!workoutId) {
-    return <Empty description="Save the workout first to add exercises." />;
+    return <Empty description="Egzersiz eklemek için önce antrenmanı kaydedin." />;
   }
 
   return (
@@ -58,7 +59,7 @@ function ExercisesEditor({ workoutId, exerciseOptions }) {
         {(fields, { add, remove }) => (
           <>
             {fields.length === 0 && !loading && (
-              <Empty description="No exercises yet." style={{ marginBottom: 12 }} />
+              <Empty description="Henüz egzersiz yok." style={{ marginBottom: 12 }} />
             )}
             <Space direction="vertical" style={{ width: "100%" }} size={8}>
               {fields.map((field, index) => (
@@ -66,24 +67,24 @@ function ExercisesEditor({ workoutId, exerciseOptions }) {
                   <Text type="secondary" style={{ width: 20 }}>{index + 1}.</Text>
                   <Form.Item
                     name={[field.name, "exerciseId"]}
-                    rules={[{ required: true, message: "Required" }]}
+                    rules={[{ required: true, message: "Zorunlu alan" }]}
                     style={{ marginBottom: 0, minWidth: 180 }}
                   >
                     <Select
-                      placeholder="Exercise"
+                      placeholder="Egzersiz"
                       options={exerciseOptions.map((o) => ({ value: o.id, label: o.name }))}
                       showSearch
                       optionFilterProp="label"
                     />
                   </Form.Item>
                   <Form.Item name={[field.name, "sets"]} style={{ marginBottom: 0 }} initialValue={3}>
-                    <InputNumber min={1} max={50} addonBefore="Sets" style={{ width: 120 }} />
+                    <InputNumber min={1} max={50} addonBefore="Set" style={{ width: 120 }} />
                   </Form.Item>
                   <Form.Item name={[field.name, "reps"]} style={{ marginBottom: 0 }} initialValue={10}>
-                    <InputNumber min={1} max={500} addonBefore="Reps" style={{ width: 120 }} />
+                    <InputNumber min={1} max={500} addonBefore="Tekrar" style={{ width: 120 }} />
                   </Form.Item>
                   <Form.Item name={[field.name, "restSeconds"]} style={{ marginBottom: 0 }} initialValue={45}>
-                    <InputNumber min={0} max={1800} addonBefore="Rest s" style={{ width: 130 }} />
+                    <InputNumber min={0} max={1800} addonBefore="Dinlenme sn" style={{ width: 130 }} />
                   </Form.Item>
                   <Button
                     type="text"

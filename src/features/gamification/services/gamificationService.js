@@ -4,6 +4,21 @@
 // AdminRewardController.cs.
 import { apiClient, buildQuery } from "../../../utils/apiClient";
 
+// Display-only label maps — the underlying values below stay in English
+// because they are matched against the API (query params, filters, DTOs).
+export const LEADERBOARD_PERIOD_TYPE_LABELS = {
+  Weekly: "Haftalık",
+  Monthly: "Aylık",
+  AllTime: "Tüm Zamanlar",
+};
+
+export const REWARD_TYPE_LABELS = {
+  subscription: "Abonelik",
+  physical: "Fiziksel Ürün",
+  points: "Bonus Puan",
+  service: "Hizmet",
+};
+
 export const scoreService = {
   /** GET /api/admin/scores — AdminScoreListRequest */
   getScores(params = {}) {

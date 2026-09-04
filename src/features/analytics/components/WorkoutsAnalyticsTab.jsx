@@ -17,12 +17,12 @@ export default function WorkoutsAnalyticsTab() {
   return (
     <div className="merfit-page" style={{ gap: 20 }}>
       <Row gutter={[20, 20]}>
-        <Col xs={24} sm={12} lg={6}><MetricCard title="Sessions (30d)" value={d.totalSessionsLast30Days} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-        <Col xs={24} sm={12} lg={6}><MetricCard title="Completed (30d)" value={d.completedSessionsLast30Days} icon={<CheckCircleOutlined />} loading={loading} /></Col>
-        <Col xs={24} sm={12} lg={6}><MetricCard title="Completion Rate" value={d.workoutCompletionRatePercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
-        <Col xs={24} sm={12} lg={6}><MetricCard title="Avg / Active User" value={d.averageWorkoutsPerActiveUser} precision={1} icon={<FireOutlined />} loading={loading} /></Col>
+        <Col xs={24} sm={12} lg={6}><MetricCard title="Seans (30g)" value={d.totalSessionsLast30Days} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+        <Col xs={24} sm={12} lg={6}><MetricCard title="Tamamlanan (30g)" value={d.completedSessionsLast30Days} icon={<CheckCircleOutlined />} loading={loading} /></Col>
+        <Col xs={24} sm={12} lg={6}><MetricCard title="Tamamlanma Oranı" value={d.workoutCompletionRatePercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
+        <Col xs={24} sm={12} lg={6}><MetricCard title="Ort. / Aktif Kullanıcı" value={d.averageWorkoutsPerActiveUser} precision={1} icon={<FireOutlined />} loading={loading} /></Col>
       </Row>
-      <Card title="Top Workouts" bordered={false} className="merfit-chart-card" loading={loading}>
+      <Card title="En Popüler Antrenmanlar" bordered={false} className="merfit-chart-card" loading={loading}>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={d.topWorkouts ?? []} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
             <CartesianGrid stroke={gridColor} vertical={false} />

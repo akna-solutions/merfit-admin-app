@@ -11,19 +11,19 @@ const { Text, Paragraph } = Typography;
 // needs a file-parsing step that's out of scope for this pass.
 export default function ImportExportModal({ open, onClose }) {
   return (
-    <Modal open={open} onCancel={onClose} footer={null} title="Import / Export Translations">
+    <Modal open={open} onCancel={onClose} footer={null} title="Çevirileri İçe / Dışa Aktar">
       <Paragraph type="secondary">
-        Bulk import and export will read/write a JSON or CSV file per language,
-        upserting into the real <Text code>POST /api/admin/translations/import</Text> endpoint.
+        Toplu içe ve dışa aktarma, dil başına bir JSON veya CSV dosyası okuyup yazacak ve
+        gerçek <Text code>POST /api/admin/translations/import</Text> uç noktasına ekleyip güncelleyecek.
       </Paragraph>
       <Space direction="vertical" style={{ width: "100%" }} size={16}>
         <Upload.Dragger disabled multiple={false} style={{ padding: 12 }}>
           <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-          <p className="ant-upload-text">Click or drag a translation file to import</p>
-          <p className="ant-upload-hint">Coming soon — JSON / CSV per language</p>
+          <p className="ant-upload-text">İçe aktarmak için bir çeviri dosyasını tıklayın veya sürükleyin</p>
+          <p className="ant-upload-hint">Yakında — dil başına JSON / CSV</p>
         </Upload.Dragger>
         <Button icon={<DownloadOutlined />} disabled block>
-          Export current grid (coming soon)
+          Geçerli tabloyu dışa aktar (yakında)
         </Button>
       </Space>
     </Modal>

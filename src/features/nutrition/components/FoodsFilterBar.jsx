@@ -9,7 +9,7 @@ export default function FoodsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Search by food name"
+          placeholder="Besin adına göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -18,7 +18,7 @@ export default function FoodsFilterBar({ filters, onChange, onReset }) {
       <Col xs={12} sm={6} lg={5}>
         <Input
           allowClear
-          placeholder="Brand"
+          placeholder="Marka"
           value={filters.brand}
           onChange={(e) => onChange({ brand: e.target.value || undefined })}
         />
@@ -26,7 +26,7 @@ export default function FoodsFilterBar({ filters, onChange, onReset }) {
       <Col xs={12} sm={6} lg={5}>
         <Input
           allowClear
-          placeholder="Barcode"
+          placeholder="Barkod"
           value={filters.barcode}
           onChange={(e) => onChange({ barcode: e.target.value || undefined })}
         />

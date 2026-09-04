@@ -8,15 +8,15 @@ export default function FaqPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "FAQ" }]}
-        title="FAQ"
-        description="Manage FAQ categories and questions."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "SSS" }]}
+        title="SSS"
+        description="SSS kategorilerini ve sorularını yönetin."
       />
       <Tabs
         defaultActiveKey="categories"
         items={[
-          { key: "categories", label: "Categories", children: <CategoriesTab /> },
-          { key: "faqs", label: "FAQs", children: <FaqsTab /> },
+          { key: "categories", label: "Kategoriler", children: <CategoriesTab /> },
+          { key: "faqs", label: "SSS'ler", children: <FaqsTab /> },
         ]}
       />
     </PageContainer>

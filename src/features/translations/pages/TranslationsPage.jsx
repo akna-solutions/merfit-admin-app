@@ -12,15 +12,15 @@ export default function TranslationsPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Translations" }]}
-        title="Translations"
-        description="Manage supported languages and edit translation strings."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Çeviriler" }]}
+        title="Çeviriler"
+        description="Desteklenen dilleri yönetin ve çeviri metinlerini düzenleyin."
       />
       <Tabs
         defaultActiveKey="languages"
         items={[
-          { key: "languages", label: "Languages", children: <LanguagesTab /> },
-          { key: "translations", label: "Translations", children: <TranslationGridTab /> },
+          { key: "languages", label: "Diller", children: <LanguagesTab /> },
+          { key: "translations", label: "Çeviriler", children: <TranslationGridTab /> },
         ]}
       />
     </PageContainer>

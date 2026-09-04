@@ -16,7 +16,7 @@ export default function GeneralSettingsTab() {
       setSaving(true);
       setTimeout(() => {
         setSaving(false);
-        message.success("General settings saved (mock — no backend yet).");
+        message.success("Genel ayarlar kaydedildi (mock — henüz backend yok).");
       }, 400);
     });
   };
@@ -29,19 +29,19 @@ export default function GeneralSettingsTab() {
         style={{ maxWidth: 480 }}
         initialValues={{ appName: "Merfit Admin", defaultLanguage: "tr", timezone: "Europe/Istanbul" }}
       >
-        <Form.Item name="appName" label="App Name" rules={[{ required: true }]}>
+        <Form.Item name="appName" label="Uygulama Adı" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item name="defaultLanguage" label="Default Language">
+        <Form.Item name="defaultLanguage" label="Varsayılan Dil">
           <Select
             options={[
-              { value: "tr", label: "Turkish" },
-              { value: "en", label: "English" },
-              { value: "de", label: "German" },
+              { value: "tr", label: "Türkçe" },
+              { value: "en", label: "İngilizce" },
+              { value: "de", label: "Almanca" },
             ]}
           />
         </Form.Item>
-        <Form.Item name="timezone" label="Timezone">
+        <Form.Item name="timezone" label="Saat Dilimi">
           <Select
             options={[
               { value: "Europe/Istanbul", label: "Europe/Istanbul (UTC+3)" },
@@ -51,7 +51,7 @@ export default function GeneralSettingsTab() {
           />
         </Form.Item>
         <Button type="primary" loading={saving} onClick={handleSave}>
-          Save Changes
+          Değişiklikleri Kaydet
         </Button>
       </Form>
     </SectionCard>

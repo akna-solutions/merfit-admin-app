@@ -92,19 +92,19 @@ export default function UsersPage() {
   const handleToggleStatus = async (record) => {
     const nextActive = !record.isActive;
     await userService.updateStatus(record.id, { isActive: nextActive });
-    message.success(`${record.firstName} ${record.lastName} is now ${nextActive ? "active" : "inactive"}.`);
+    message.success(`${record.firstName} ${record.lastName} artık ${nextActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await userService.deleteUser(record.id);
-    message.success(`${record.firstName} ${record.lastName} was deleted.`);
+    message.success(`${record.firstName} ${record.lastName} silindi.`);
     refetch();
   };
 
   const handleRestore = async (record) => {
     await userService.restoreUser(record.id);
-    message.success(`${record.firstName} ${record.lastName} was restored.`);
+    message.success(`${record.firstName} ${record.lastName} geri yüklendi.`);
     refetch();
   };
 
@@ -118,9 +118,9 @@ export default function UsersPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Users" }]}
-        title="Users"
-        description="Manage all Merfit users."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "Kullanıcılar" }]}
+        title="Kullanıcılar"
+        description="Tüm Merfit kullanıcılarını yönetin."
       />
 
       <UsersFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
@@ -131,7 +131,7 @@ export default function UsersPage() {
           dataSource={rows}
           loading={loading}
           scrollX={1100}
-          emptyDescription="No users match these filters."
+          emptyDescription="Bu filtrelere uyan kullanıcı bulunamadı."
           onRow={(record) => ({
             className: "merfit-row-clickable",
             onClick: () => handleView(record),

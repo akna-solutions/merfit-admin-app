@@ -17,21 +17,21 @@ const { Text } = Typography;
 // create/update-profile endpoint, so row actions are limited to what the
 // real API can actually do (see MerfitApi AdminUserController.cs).
 function deriveStatus(record) {
-  if (record.isDeleted) return { label: "Deleted", color: "red" };
-  if (record.isActive) return { label: "Active", color: "green" };
-  return { label: "Inactive", color: "default" };
+  if (record.isDeleted) return { label: "Silindi", color: "red", code: "deleted" };
+  if (record.isActive) return { label: "Aktif", color: "green", code: "active" };
+  return { label: "Pasif", color: "default", code: "inactive" };
 }
 
 const SUBSCRIPTION_LABEL = {
-  active: { label: "Active", color: "gold" },
-  expired: { label: "Expired", color: "orange" },
-  cancelled: { label: "Cancelled", color: "red" },
+  active: { label: "Aktif", color: "gold" },
+  expired: { label: "Süresi Doldu", color: "orange" },
+  cancelled: { label: "İptal Edildi", color: "red" },
 };
 
 export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore }) {
   return [
     {
-      title: "Name",
+      title: "Ad Soyad",
       key: "name",
       fixed: "left",
       width: 240,
@@ -44,23 +44,23 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
       ),
     },
     {
-      title: "Username",
+      title: "Kullanıcı Adı",
       dataIndex: "userName",
       key: "userName",
       width: 160,
       render: (value) => <Text type="secondary">@{value}</Text>,
     },
     {
-      title: "Status",
+      title: "Durum",
       key: "status",
       width: 120,
       filters: [
-        { text: "Active", value: "active" },
-        { text: "Inactive", value: "inactive" },
-        { text: "Deleted", value: "deleted" },
+        { text: "Aktif", value: "active" },
+        { text: "Pasif", value: "inactive" },
+        { text: "Silindi", value: "deleted" },
       ],
       onFilter: (value, record) => {
-        const status = deriveStatus(record).label.toLowerCase();
+        const status = deriveStatus(record).code;
         return status === value;
       },
       render: (_, record) => {
@@ -69,17 +69,17 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
       },
     },
     {
-      title: "Subscription",
+      title: "Abonelik",
       dataIndex: "subscriptionStatus",
       key: "subscriptionStatus",
       width: 140,
       render: (value) => {
         const meta = SUBSCRIPTION_LABEL[value];
-        return <Tag color={meta?.color ?? "default"}>{meta?.label ?? "None"}</Tag>;
+        return <Tag color={meta?.color ?? "default"}>{meta?.label ?? "Yok"}</Tag>;
       },
     },
     {
-      title: "Last Login",
+      title: "Son Giriş",
       dataIndex: "lastLoginAt",
       key: "lastLoginAt",
       width: 150,
@@ -87,7 +87,7 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
       render: (value) => (value ? dayjs(value).format("DD MMM YYYY") : "—"),
     },
     {
-      title: "Created At",
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 150,
@@ -102,12 +102,12 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "view", label: "View", icon: <EyeOutlined />, onClick: () => onView(record) },
+            { key: "view", label: "Görüntüle", icon: <EyeOutlined />, onClick: () => onView(record) },
             ...(record.isDeleted
               ? [
                   {
                     key: "restore",
-                    label: "Restore",
+                    label: "Geri Yükle",
                     icon: <UndoOutlined />,
                     onClick: () => onRestore(record),
                   },
@@ -115,16 +115,16 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
               : [
                   {
                     key: "toggle",
-                    label: record.isActive ? "Deactivate" : "Activate",
+                    label: record.isActive ? "Pasifleştir" : "Aktifleştir",
                     icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
                     onClick: () => onToggleStatus(record),
                   },
                   {
                     key: "delete",
-                    label: "Delete",
+                    label: "Sil",
                     icon: <DeleteOutlined />,
                     danger: true,
-                    confirm: `Delete ${record.firstName} ${record.lastName}? This soft-deletes the account.`,
+                    confirm: `${record.firstName} ${record.lastName} silinsin mi? Bu işlem hesabı kalıcı olarak silmez, yalnızca pasif duruma alır.`,
                     onClick: () => onDelete(record),
                   },
                 ]),

@@ -23,7 +23,7 @@ function sampleValue(entity, id) {
     case "User":
       return { id, isActive: true };
     case "Workout":
-      return { id, title: "Full Body Burn", isActive: true };
+      return { id, title: "Tüm Vücut Antrenmanı", isActive: true };
     case "Content":
       return { id, isActive: true, startAt: null };
     default:

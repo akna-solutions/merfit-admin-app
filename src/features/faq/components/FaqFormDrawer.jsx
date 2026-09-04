@@ -15,26 +15,26 @@ export default function FaqFormDrawer({ open, faq, categories, submitting, onClo
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? "Edit FAQ" : "Create FAQ"}
-      submitText={isEdit ? "Save Changes" : "Create FAQ"}
+      title={isEdit ? "SSS'yi Düzenle" : "SSS Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "SSS Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="categoryId" label="Category" rules={[{ required: true, message: "Category is required" }]}>
-          <Select options={categories.map((c) => ({ value: c.id, label: c.name }))} placeholder="Select category" />
+        <Form.Item name="categoryId" label="Kategori" rules={[{ required: true, message: "Kategori zorunludur" }]}>
+          <Select options={categories.map((c) => ({ value: c.id, label: c.name }))} placeholder="Kategori seçin" />
         </Form.Item>
-        <Form.Item name="question" label="Question" rules={[{ required: true, min: 2, max: 500 }]}>
-          <Input placeholder="e.g. How do I cancel my subscription?" />
+        <Form.Item name="question" label="Soru" rules={[{ required: true, min: 2, max: 500 }]}>
+          <Input placeholder="örn. Aboneliğimi nasıl iptal ederim?" />
         </Form.Item>
-        <Form.Item name="answer" label="Answer" rules={[{ required: true, min: 2, max: 4000 }]}>
+        <Form.Item name="answer" label="Cevap" rules={[{ required: true, min: 2, max: 4000 }]}>
           <Input.TextArea rows={4} />
         </Form.Item>
-        <Form.Item name="sortOrder" label="Sort Order" rules={[{ required: true, type: "number", min: 0, max: 10000 }]}>
+        <Form.Item name="sortOrder" label="Sıra" rules={[{ required: true, type: "number", min: 0, max: 10000 }]}>
           <InputNumber style={{ width: "100%" }} min={0} />
         </Form.Item>
-        <Form.Item name="isActive" label="Active" valuePropName="checked">
+        <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Form>

@@ -9,6 +9,27 @@ import AuditLogDetailDrawer from "../components/AuditLogDetailDrawer";
 
 const { Text } = Typography;
 
+// Kod değerleri API ile birebir eşleşir — yalnızca gösterilen etiketler Türkçeleştirilir.
+const ACTION_LABELS = {
+  Create: "Oluşturma",
+  Update: "Güncelleme",
+  Delete: "Silme",
+  StatusChange: "Durum Değişikliği",
+  Login: "Giriş",
+  Publish: "Yayınlama",
+};
+
+const ENTITY_LABELS = {
+  User: "Kullanıcı",
+  Workout: "Antrenman",
+  Food: "Besin",
+  SubscriptionProduct: "Abonelik Ürünü",
+  Content: "İçerik",
+  Faq: "SSS",
+  Achievement: "Başarı",
+  SupportTicket: "Destek Talebi",
+};
+
 export default function AuditLogsPage() {
   const {
     rows, total, loading, filters, page, pageSize,
@@ -27,7 +48,7 @@ export default function AuditLogsPage() {
 
   const columns = [
     {
-      title: "Timestamp",
+      title: "Zaman Damgası",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 160,
@@ -36,28 +57,28 @@ export default function AuditLogsPage() {
       render: (v) => dayjs(v).format("DD MMM YYYY, HH:mm"),
     },
     {
-      title: "Admin",
+      title: "Yönetici",
       key: "admin",
       width: 200,
       render: (_, r) =>
         r.adminEmail ? (
           <EntityCell title={r.adminEmail} avatarColor="#2F6FED" />
         ) : (
-          <Text type="secondary">System</Text>
+          <Text type="secondary">Sistem</Text>
         ),
     },
-    { title: "Action", dataIndex: "action", key: "action", width: 130, render: (v) => <Tag color="blue">{v}</Tag> },
-    { title: "Entity", dataIndex: "entity", key: "entity", width: 160 },
-    { title: "Entity ID", dataIndex: "entityId", key: "entityId", width: 100, render: (v) => v ?? "—" },
-    { title: "IP Address", dataIndex: "ipAddress", key: "ipAddress", width: 140 },
+    { title: "İşlem", dataIndex: "action", key: "action", width: 130, render: (v) => <Tag color="blue">{ACTION_LABELS[v] ?? v}</Tag> },
+    { title: "Varlık", dataIndex: "entity", key: "entity", width: 160, render: (v) => ENTITY_LABELS[v] ?? v },
+    { title: "Varlık No", dataIndex: "entityId", key: "entityId", width: 100, render: (v) => v ?? "—" },
+    { title: "IP Adresi", dataIndex: "ipAddress", key: "ipAddress", width: 140 },
   ];
 
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Audit Logs" }]}
-        title="Audit Logs"
-        description="Read-only trail of critical admin actions."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "Denetim Kayıtları" }]}
+        title="Denetim Kayıtları"
+        description="Kritik yönetici işlemlerinin salt okunur kaydı."
       />
 
       <AuditLogsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
@@ -68,7 +89,7 @@ export default function AuditLogsPage() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No audit log entries match these filters."
+          emptyDescription="Bu filtrelerle eşleşen denetim kaydı bulunamadı."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

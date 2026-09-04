@@ -17,20 +17,20 @@ export default function AnalyticsPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Analytics" }]}
-        title="Analytics"
-        description="Current snapshot metrics across the app."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Analitik" }]}
+        title="Analitik"
+        description="Uygulama genelindeki anlık metrikler."
       />
       <Tabs
         defaultActiveKey="users"
         items={[
-          { key: "users", label: "Users", children: <UsersAnalyticsTab /> },
-          { key: "workouts", label: "Workouts", children: <WorkoutsAnalyticsTab /> },
-          { key: "nutrition", label: "Nutrition", children: <NutritionAnalyticsTab /> },
-          { key: "subscriptions", label: "Subscriptions", children: <SubscriptionsAnalyticsTab /> },
-          { key: "revenue", label: "Revenue", children: <RevenueAnalyticsTab /> },
-          { key: "retention", label: "Retention", children: <RetentionAnalyticsTab /> },
-          { key: "engagement", label: "Engagement", children: <EngagementAnalyticsTab /> },
+          { key: "users", label: "Kullanıcılar", children: <UsersAnalyticsTab /> },
+          { key: "workouts", label: "Antrenmanlar", children: <WorkoutsAnalyticsTab /> },
+          { key: "nutrition", label: "Beslenme", children: <NutritionAnalyticsTab /> },
+          { key: "subscriptions", label: "Abonelikler", children: <SubscriptionsAnalyticsTab /> },
+          { key: "revenue", label: "Gelir", children: <RevenueAnalyticsTab /> },
+          { key: "retention", label: "Elde Tutma", children: <RetentionAnalyticsTab /> },
+          { key: "engagement", label: "Etkileşim", children: <EngagementAnalyticsTab /> },
         ]}
       />
     </PageContainer>

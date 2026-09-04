@@ -8,27 +8,27 @@ const { Text } = Typography;
 export function buildFoodsColumns({ onView, onEdit, onDelete }) {
   return [
     {
-      title: "Food",
+      title: "Besin",
       key: "name",
       fixed: "left",
       width: 220,
       render: (_, record) => (
-        <EntityCell title={record.name} subtitle={record.brand ?? "Generic"} avatarColor="#22C55E" />
+        <EntityCell title={record.name} subtitle={record.brand ?? "Jenerik"} avatarColor="#22C55E" />
       ),
     },
     {
-      title: "Serving",
+      title: "Porsiyon",
       key: "serving",
       width: 110,
       render: (_, record) => `${record.servingSize} ${record.servingUnit}`,
     },
-    { title: "Calories", dataIndex: "calories", key: "calories", width: 100, sorter: (a, b) => a.calories - b.calories },
+    { title: "Kalori", dataIndex: "calories", key: "calories", width: 100, sorter: (a, b) => a.calories - b.calories },
     { title: "Protein", dataIndex: "protein", key: "protein", width: 90, render: (v) => `${v} g` },
-    { title: "Carbs", dataIndex: "carbs", key: "carbs", width: 90, render: (v) => `${v} g` },
-    { title: "Fat", dataIndex: "fat", key: "fat", width: 80, render: (v) => `${v} g` },
-    { title: "Fiber", dataIndex: "fiber", key: "fiber", width: 80, render: (v) => (v ? `${v} g` : "—") },
+    { title: "Karbonhidrat", dataIndex: "carbs", key: "carbs", width: 90, render: (v) => `${v} g` },
+    { title: "Yağ", dataIndex: "fat", key: "fat", width: 80, render: (v) => `${v} g` },
+    { title: "Lif", dataIndex: "fiber", key: "fiber", width: 80, render: (v) => (v ? `${v} g` : "—") },
     {
-      title: "Barcode",
+      title: "Barkod",
       dataIndex: "barcode",
       key: "barcode",
       width: 150,
@@ -42,14 +42,14 @@ export function buildFoodsColumns({ onView, onEdit, onDelete }) {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "view", label: "View", icon: <EyeOutlined />, onClick: () => onView(record) },
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => onEdit(record) },
+            { key: "view", label: "Görüntüle", icon: <EyeOutlined />, onClick: () => onView(record) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => onEdit(record) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? This cannot be undone.`,
+              confirm: `"${record.name}" silinsin mi? Bu işlem geri alınamaz.`,
               onClick: () => onDelete(record),
             },
           ]}

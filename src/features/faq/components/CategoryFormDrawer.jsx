@@ -15,17 +15,17 @@ export default function CategoryFormDrawer({ open, category, submitting, onClose
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${category?.name}` : "Create Category"}
-      submitText={isEdit ? "Save Changes" : "Create Category"}
+      title={isEdit ? `Düzenle: ${category?.name}` : "Kategori Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Kategori Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 150 }]}>
-          <Input placeholder="e.g. Getting Started" />
+        <Form.Item name="name" label="Ad" rules={[{ required: true, min: 2, max: 150 }]}>
+          <Input placeholder="örn. Başlarken" />
         </Form.Item>
-        <Form.Item name="sortOrder" label="Sort Order" rules={[{ required: true, type: "number", min: 0, max: 10000 }]}>
+        <Form.Item name="sortOrder" label="Sıra" rules={[{ required: true, type: "number", min: 0, max: 10000 }]}>
           <InputNumber style={{ width: "100%" }} min={0} />
         </Form.Item>
       </Form>

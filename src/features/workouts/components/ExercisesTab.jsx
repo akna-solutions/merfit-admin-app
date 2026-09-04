@@ -7,6 +7,7 @@ import { SectionCard, DataTable, EntityCell, StatusTag, RowActions, FilterBar } 
 import { useListQuery } from "../../../utils/useListQuery";
 import { exerciseService, muscleGroupService } from "../services/workoutService";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
+import { difficultyLabel } from "../data/enumLabels";
 import ExerciseFormDrawer from "./ExerciseFormDrawer";
 
 const { Text } = Typography;
@@ -35,13 +36,13 @@ export default function ExercisesTab() {
 
   const handleToggleStatus = async (record) => {
     await exerciseService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.name}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.name}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await exerciseService.deleteExercise(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -50,10 +51,10 @@ export default function ExercisesTab() {
     try {
       if (formState.exercise) {
         await exerciseService.updateExercise(formState.exercise.id, values);
-        message.success("Exercise updated.");
+        message.success("Egzersiz güncellendi.");
       } else {
         await exerciseService.createExercise(values);
-        message.success("Exercise created.");
+        message.success("Egzersiz oluşturuldu.");
       }
       setFormState({ open: false, exercise: null });
       refetch();
@@ -64,34 +65,34 @@ export default function ExercisesTab() {
 
   const columns = [
     {
-      title: "Exercise",
+      title: "Egzersiz",
       key: "name",
       fixed: "left",
       width: 240,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#722ED1" />,
     },
     {
-      title: "Difficulty",
+      title: "Zorluk",
       dataIndex: "difficulty",
       key: "difficulty",
       width: 120,
       render: (v) => (
-        <Tag color={v === "Beginner" ? "green" : v === "Intermediate" ? "blue" : "purple"}>{v}</Tag>
+        <Tag color={v === "Beginner" ? "green" : v === "Intermediate" ? "blue" : "purple"}>{difficultyLabel(v)}</Tag>
       ),
     },
     {
-      title: "Primary Muscle Group",
+      title: "Birincil Kas Grubu",
       dataIndex: "primaryMuscleGroupName",
       key: "primaryMuscleGroupName",
       width: 170,
       render: (v) => v ?? <Text type="secondary">—</Text>,
     },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
       title: "",
@@ -101,19 +102,19 @@ export default function ExercisesTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, exercise: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, exercise: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? This cannot be undone.`,
+              confirm: `"${record.name}" silinsin mi? Bu işlem geri alınamaz.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -126,7 +127,7 @@ export default function ExercisesTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, exercise: null })}>
-          Create Exercise
+          Egzersiz Oluştur
         </Button>
       </div>
 
@@ -134,7 +135,7 @@ export default function ExercisesTab() {
         <Col xs={24} sm={12} lg={7}>
           <Input
             allowClear
-            placeholder="Search by exercise name"
+            placeholder="Egzersiz adına göre ara"
             prefix={<SearchOutlined />}
             value={filters.search}
             onChange={(e) => updateFilters({ search: e.target.value })}
@@ -143,17 +144,17 @@ export default function ExercisesTab() {
         <Col xs={12} sm={6} lg={5}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Difficulty"
+            placeholder="Zorluk"
             allowClear
             value={filters.difficulty}
             onChange={(v) => updateFilters({ difficulty: v })}
-            options={DIFFICULTY_LEVEL.map((d) => ({ value: d, label: d }))}
+            options={DIFFICULTY_LEVEL.map((d) => ({ value: d, label: difficultyLabel(d) }))}
           />
         </Col>
         <Col xs={12} sm={6} lg={6}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Muscle group"
+            placeholder="Kas grubu"
             allowClear
             showSearch
             optionFilterProp="label"
@@ -170,7 +171,7 @@ export default function ExercisesTab() {
           dataSource={rows}
           loading={loading}
           scrollX={900}
-          emptyDescription="No exercises match these filters."
+          emptyDescription="Bu filtrelerle eşleşen egzersiz yok."
           pagination={{
             current: page,
             pageSize,

@@ -3,7 +3,7 @@ import { Button, Tag, Typography, App } from "antd";
 import { PlusOutlined, EditOutlined, StopOutlined, CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import { SectionCard, DataTable, StatusTag, RowActions, EntityCell } from "../../../components/admin";
 import { useListQuery } from "../../../utils/useListQuery";
-import { rewardService } from "../services/gamificationService";
+import { rewardService, REWARD_TYPE_LABELS } from "../services/gamificationService";
 import RewardFormDrawer from "./RewardFormDrawer";
 
 const { Text } = Typography;

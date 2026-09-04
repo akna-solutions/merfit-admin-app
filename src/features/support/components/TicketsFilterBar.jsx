@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar, DateRangeFilter } from "../../../components/admin";
+import { STATUS_LABELS, PRIORITY_LABELS } from "../data/supportMockData";
 
 export default function TicketsFilterBar({ filters, onChange, onReset }) {
   return (
@@ -9,7 +10,7 @@ export default function TicketsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={7}>
         <Input
           allowClear
-          placeholder="Search by subject or user"
+          placeholder="Konu veya kullanıcıya göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -21,11 +22,11 @@ export default function TicketsFilterBar({ filters, onChange, onReset }) {
           value={filters.status ?? "all"}
           onChange={(v) => onChange({ status: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All statuses" },
-            { value: "Open", label: "Open" },
-            { value: "InProgress", label: "In Progress" },
-            { value: "Resolved", label: "Resolved" },
-            { value: "Closed", label: "Closed" },
+            { value: "all", label: "Tüm durumlar" },
+            { value: "Open", label: STATUS_LABELS.Open },
+            { value: "InProgress", label: STATUS_LABELS.InProgress },
+            { value: "Resolved", label: STATUS_LABELS.Resolved },
+            { value: "Closed", label: STATUS_LABELS.Closed },
           ]}
         />
       </Col>
@@ -35,11 +36,11 @@ export default function TicketsFilterBar({ filters, onChange, onReset }) {
           value={filters.priority ?? "all"}
           onChange={(v) => onChange({ priority: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All priorities" },
-            { value: "Low", label: "Low" },
-            { value: "Medium", label: "Medium" },
-            { value: "High", label: "High" },
-            { value: "Urgent", label: "Urgent" },
+            { value: "all", label: "Tüm öncelikler" },
+            { value: "Low", label: PRIORITY_LABELS.Low },
+            { value: "Medium", label: PRIORITY_LABELS.Medium },
+            { value: "High", label: PRIORITY_LABELS.High },
+            { value: "Urgent", label: PRIORITY_LABELS.Urgent },
           ]}
         />
       </Col>

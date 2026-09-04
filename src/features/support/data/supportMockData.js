@@ -25,6 +25,23 @@ const SUBJECTS = [
 const STATUSES = ["Open", "InProgress", "Resolved", "Closed"];
 const PRIORITIES = ["Low", "Medium", "High", "Urgent"];
 
+// Human-readable Turkish labels for the status/priority code values above.
+// The code values themselves stay in English — they're matched against the
+// API and used in comparisons/color maps elsewhere — only the label shown
+// to the admin should be localized.
+export const STATUS_LABELS = {
+  Open: "Açık",
+  InProgress: "İşlemde",
+  Resolved: "Çözüldü",
+  Closed: "Kapalı",
+};
+export const PRIORITY_LABELS = {
+  Low: "Düşük",
+  Medium: "Orta",
+  High: "Yüksek",
+  Urgent: "Acil",
+};
+
 // AdminSupportTicketListItemDto[] (+ AdminSupportTicketDetailDto.message)
 export const ticketsMockData = SUBJECTS.concat(SUBJECTS.slice(0, 8)).map((subject, i) => {
   const seed = i + 1;
