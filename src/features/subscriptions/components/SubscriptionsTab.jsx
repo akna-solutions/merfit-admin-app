@@ -6,6 +6,15 @@ import { subscriptionService } from "../services/subscriptionsService";
 import SubscriptionsFilterBar from "./SubscriptionsFilterBar";
 import SubscriptionDetailDrawer from "./SubscriptionDetailDrawer";
 
+const STATUS_LABELS = {
+  Active: "Aktif",
+  Expired: "Süresi Doldu",
+  Cancelled: "İptal Edildi",
+  Refunded: "İade Edildi",
+  Paused: "Duraklatıldı",
+  GracePeriod: "Ek Süre",
+};
+
 export default function SubscriptionsTab() {
   const {
     rows, total, loading, filters, page, pageSize,
@@ -24,23 +33,29 @@ export default function SubscriptionsTab() {
 
   const columns = [
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "user",
       width: 220,
       render: (_, r) => <EntityCell title={r.userEmail} subtitle={`#${r.userId}`} avatarColor="#2F6FED" />,
     },
-    { title: "Product", dataIndex: "productName", key: "productName", width: 200 },
-    { title: "Provider", dataIndex: "provider", key: "provider", width: 100 },
-    { title: "Status", dataIndex: "status", key: "status", width: 120, render: (v) => <StatusTag status={v} /> },
-    { title: "Start Date", dataIndex: "startedAt", key: "startedAt", width: 130, render: (v) => dayjs(v).format("DD MMM YYYY") },
+    { title: "Ürün", dataIndex: "productName", key: "productName", width: 200 },
+    { title: "Sağlayıcı", dataIndex: "provider", key: "provider", width: 100 },
     {
-      title: "Expiry",
+      title: "Durum",
+      dataIndex: "status",
+      key: "status",
+      width: 120,
+      render: (v) => <StatusTag status={v}>{STATUS_LABELS[v] ?? v}</StatusTag>,
+    },
+    { title: "Başlangıç Tarihi", dataIndex: "startedAt", key: "startedAt", width: 130, render: (v) => dayjs(v).format("DD MMM YYYY") },
+    {
+      title: "Bitiş",
       dataIndex: "expiresAt",
       key: "expiresAt",
       width: 130,
       render: (v) => (v ? dayjs(v).format("DD MMM YYYY") : "—"),
     },
-    { title: "Auto Renew", dataIndex: "autoRenew", key: "autoRenew", width: 110, render: (v) => (v ? "Yes" : "No") },
+    { title: "Otomatik Yenileme", dataIndex: "autoRenew", key: "autoRenew", width: 110, render: (v) => (v ? "Evet" : "Hayır") },
   ];
 
   return (
@@ -53,7 +68,7 @@ export default function SubscriptionsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No subscriptions match these filters."
+          emptyDescription="Bu filtrelere uyan abonelik yok."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

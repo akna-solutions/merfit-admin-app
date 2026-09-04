@@ -6,6 +6,7 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { ticketService } from "../services/ticketService";
 import TicketsFilterBar from "../components/TicketsFilterBar";
 import TicketDetailDrawer from "../components/TicketDetailDrawer";
+import { STATUS_LABELS, PRIORITY_LABELS } from "../data/supportMockData";
 
 const PRIORITY_COLOR = { Low: "default", Medium: "blue", High: "orange", Urgent: "red" };
 
@@ -32,24 +33,30 @@ export default function SupportPage() {
   };
 
   const columns = [
-    { title: "Ticket ID", dataIndex: "id", key: "id", width: 90, render: (v) => `#${v}` },
+    { title: "Talep No", dataIndex: "id", key: "id", width: 90, render: (v) => `#${v}` },
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "user",
       width: 200,
       render: (_, r) => <EntityCell title={r.userEmail} subtitle={`#${r.userId}`} avatarColor="#2F6FED" />,
     },
-    { title: "Subject", dataIndex: "subject", key: "subject", width: 220 },
+    { title: "Konu", dataIndex: "subject", key: "subject", width: 220 },
     {
-      title: "Priority",
+      title: "Öncelik",
       dataIndex: "priority",
       key: "priority",
       width: 100,
-      render: (v) => <Tag color={PRIORITY_COLOR[v]}>{v}</Tag>,
+      render: (v) => <Tag color={PRIORITY_COLOR[v]}>{PRIORITY_LABELS[v] ?? v}</Tag>,
     },
-    { title: "Status", dataIndex: "status", key: "status", width: 120, render: (v) => <StatusTag status={v} /> },
     {
-      title: "Created At",
+      title: "Durum",
+      dataIndex: "status",
+      key: "status",
+      width: 120,
+      render: (v) => <StatusTag status={v}>{STATUS_LABELS[v] ?? v}</StatusTag>,
+    },
+    {
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 150,
@@ -57,7 +64,7 @@ export default function SupportPage() {
       render: (v) => dayjs(v).format("DD MMM YYYY"),
     },
     {
-      title: "Updated At",
+      title: "Güncellenme Tarihi",
       key: "updatedAt",
       width: 150,
       render: (_, r) => dayjs(r.closedAt ?? r.createdAt).format("DD MMM YYYY"),
@@ -67,9 +74,9 @@ export default function SupportPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Support" }]}
-        title="Support"
-        description="Manage user support tickets."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Destek" }]}
+        title="Destek"
+        description="Kullanıcı destek taleplerini yönetin."
       />
 
       <TicketsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
@@ -80,7 +87,7 @@ export default function SupportPage() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No support tickets match these filters."
+          emptyDescription="Bu filtrelerle eşleşen destek talebi bulunamadı."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

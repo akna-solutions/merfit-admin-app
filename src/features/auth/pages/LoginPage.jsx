@@ -29,8 +29,8 @@ export default function LoginPage() {
     } catch (err) {
       setError(
         err.code === "FORBIDDEN"
-          ? "This account doesn't have admin panel access."
-          : "Invalid email/username or password.",
+          ? "Bu hesabın yönetim paneline erişimi yok."
+          : "Geçersiz e-posta/kullanıcı adı veya şifre.",
       );
     } finally {
       setSubmitting(false);
@@ -47,10 +47,10 @@ export default function LoginPage() {
           <span className="merfit-login-brand-text">MERFIT</span>
         </div>
         <Title level={3} className="merfit-login-title">
-          Admin Panel
+          Yönetim Paneli
         </Title>
         <Text type="secondary" className="merfit-login-subtitle">
-          Sign in to manage the Merfit platform.
+          Merfit platformunu yönetmek için giriş yapın.
         </Text>
 
         {error && (
@@ -72,21 +72,21 @@ export default function LoginPage() {
         >
           <Form.Item
             name="emailOrUsername"
-            label="Email or Username"
-            rules={[{ required: true, message: "Email or username is required" }]}
+            label="E-posta veya Kullanıcı Adı"
+            rules={[{ required: true, message: "E-posta veya kullanıcı adı zorunludur" }]}
           >
             <Input prefix={<UserOutlined />} placeholder="admin@merfit.com" autoFocus />
           </Form.Item>
           <Form.Item
             name="password"
-            label="Password"
-            rules={[{ required: true, message: "Password is required" }]}
+            label="Şifre"
+            rules={[{ required: true, message: "Şifre zorunludur" }]}
           >
             <Input.Password prefix={<LockOutlined />} placeholder="••••••••" />
           </Form.Item>
           <div className="merfit-login-row">
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox>Beni hatırla</Checkbox>
             </Form.Item>
           </div>
           <Button
@@ -97,12 +97,12 @@ export default function LoginPage() {
             loading={submitting}
             style={{ marginTop: 8 }}
           >
-            Sign In
+            Giriş Yap
           </Button>
         </Form>
 
         <Text type="secondary" className="merfit-login-hint">
-          Demo credentials — admin@merfit.com / admin123
+          Demo bilgileri — admin@merfit.com / admin123
         </Text>
       </div>
     </div>

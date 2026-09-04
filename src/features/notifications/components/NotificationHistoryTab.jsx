@@ -21,27 +21,27 @@ export default function NotificationHistoryTab() {
   
   const handleDelete = async (record) => {
     await notificationService.deleteNotification(record.id);
-    message.success("Notification deleted.");
+    message.success("Bildirim silindi.");
     refetch();
   };
 
   const columns = [
     {
-      title: "Notification",
+      title: "Bildirim",
       key: "title",
       width: 280,
       render: (_, r) => <EntityCell title={r.title} subtitle={r.body} avatarColor="#2F6FED" />,
     },
-    { title: "User", dataIndex: "userEmail", key: "userEmail", width: 200 },
+    { title: "Kullanıcı", dataIndex: "userEmail", key: "userEmail", width: 200 },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isRead",
       key: "isRead",
       width: 100,
-      render: (v) => <StatusTag status={v ? "Read" : "Unread"} colorMap={{ read: "green", unread: "blue" }} />,
+      render: (v) => <StatusTag status={v ? "Read" : "Unread"} colorMap={{ read: "green", unread: "blue" }}>{v ? "Okundu" : "Okunmadı"}</StatusTag>,
     },
     {
-      title: "Sent At",
+      title: "Gönderilme Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 150,
@@ -49,7 +49,7 @@ export default function NotificationHistoryTab() {
       render: (v) => dayjs(v).format("DD MMM YYYY, HH:mm"),
     },
     {
-      title: "Expires At",
+      title: "Sona Erme Tarihi",
       dataIndex: "expiresAt",
       key: "expiresAt",
       width: 140,
@@ -65,10 +65,10 @@ export default function NotificationHistoryTab() {
           items={[
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: "Delete this notification?",
+              confirm: "Bu bildirim silinsin mi?",
               onClick: () => handleDelete(record),
             },
           ]}
@@ -86,7 +86,7 @@ export default function NotificationHistoryTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No notifications sent yet."
+          emptyDescription="Henüz bildirim gönderilmedi."
           pagination={{
             current: page,
             pageSize,

@@ -4,6 +4,15 @@ import dayjs from "dayjs";
 import { FormDrawer } from "../../../components/admin";
 import { CONTENT_TYPES } from "../data/contentMockData";
 
+// Kod değerleri API ile birebir eşleşir — yalnızca gösterilen etiketler Türkçeleştirilir.
+const CONTENT_TYPE_LABELS = {
+  Banner: "Banner",
+  Announcement: "Duyuru",
+  Campaign: "Kampanya",
+  FeatureCard: "Özellik Kartı",
+  Promotional: "Promosyon",
+};
+
 export default function ContentFormDrawer({ open, item, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
   const isEdit = Boolean(item);
@@ -36,8 +45,8 @@ export default function ContentFormDrawer({ open, item, submitting, onClose, onS
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${item?.title ?? item?.key}` : "Create Content"}
-      submitText={isEdit ? "Save Changes" : "Create Content"}
+      title={isEdit ? `Düzenle: ${item?.title ?? item?.key}` : "İçerik Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "İçerik Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -45,33 +54,33 @@ export default function ContentFormDrawer({ open, item, submitting, onClose, onS
       <Form form={form} layout="vertical">
         <Form.Item
           name="key"
-          label="Key"
+          label="Anahtar"
           rules={[
             { required: true, min: 2, max: 150 },
-            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Lowercase letters, numbers and hyphens only" },
+            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Yalnızca küçük harf, rakam ve tire kullanılabilir" },
           ]}
         >
-          <Input placeholder="e.g. summer-sale-2026" />
+          <Input placeholder="örn. summer-sale-2026" />
         </Form.Item>
-        <Form.Item name="type" label="Type" rules={[{ required: true }]}>
-          <Select options={CONTENT_TYPES.map((t) => ({ value: t, label: t }))} />
+        <Form.Item name="type" label="Tür" rules={[{ required: true }]}>
+          <Select options={CONTENT_TYPES.map((t) => ({ value: t, label: CONTENT_TYPE_LABELS[t] ?? t }))} />
         </Form.Item>
-        <Form.Item name="title" label="Title" rules={[{ max: 300 }]}>
-          <Input placeholder="Display title" />
+        <Form.Item name="title" label="Başlık" rules={[{ max: 300 }]}>
+          <Input placeholder="Görüntülenen başlık" />
         </Form.Item>
-        <Form.Item name="description" label="Description" rules={[{ max: 2000 }]}>
+        <Form.Item name="description" label="Açıklama" rules={[{ max: 2000 }]}>
           <Input.TextArea rows={3} />
         </Form.Item>
-        <Form.Item name="imageUrl" label="Image URL" rules={[{ type: "url" }]}>
+        <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
           <Input placeholder="https://..." />
         </Form.Item>
-        <Form.Item name="linkUrl" label="Link URL" rules={[{ max: 1000 }]}>
-          <Input placeholder="Optional destination link" />
+        <Form.Item name="linkUrl" label="Bağlantı URL" rules={[{ max: 1000 }]}>
+          <Input placeholder="İsteğe bağlı hedef bağlantı" />
         </Form.Item>
-        <Form.Item name="dateRange" label="Active Window">
+        <Form.Item name="dateRange" label="Yayın Aralığı">
           <DatePicker.RangePicker style={{ width: "100%" }} format="DD MMM YYYY" allowEmpty={[true, true]} />
         </Form.Item>
-        <Form.Item name="isActive" label="Active" valuePropName="checked">
+        <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Form>

@@ -23,13 +23,13 @@ export default function FaqsTab() {
 
   const handleDelete = async (record) => {
     await faqService.deleteFaq(record.id);
-    message.success("FAQ deleted.");
+    message.success("SSS silindi.");
     refetch();
   };
 
   const handleToggleStatus = async (record) => {
     await faqService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`FAQ is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`SSS artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
@@ -51,10 +51,10 @@ export default function FaqsTab() {
     try {
       if (formState.faq) {
         await faqService.updateFaq(formState.faq.id, values);
-        message.success("FAQ updated.");
+        message.success("SSS güncellendi.");
       } else {
         await faqService.createFaq(values);
-        message.success("FAQ created.");
+        message.success("SSS oluşturuldu.");
       }
       setFormState({ open: false, faq: null });
       refetch();
@@ -64,12 +64,18 @@ export default function FaqsTab() {
   };
 
   const columns = [
-    { title: "Question", dataIndex: "question", key: "question", width: 280 },
-    { title: "Category", dataIndex: "categoryName", key: "categoryName", width: 180 },
-    { title: "Sort Order", dataIndex: "sortOrder", key: "sortOrder", width: 100 },
-    { title: "Status", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"} /> },
+    { title: "Soru", dataIndex: "question", key: "question", width: 280 },
+    { title: "Kategori", dataIndex: "categoryName", key: "categoryName", width: 180 },
+    { title: "Sıra", dataIndex: "sortOrder", key: "sortOrder", width: 100 },
     {
-      title: "Reorder",
+      title: "Durum",
+      dataIndex: "isActive",
+      key: "isActive",
+      width: 100,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
+    },
+    {
+      title: "Sırala",
       key: "reorder",
       width: 100,
       render: (_, record) => (
@@ -87,19 +93,19 @@ export default function FaqsTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, faq: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, faq: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: "Delete this FAQ?",
+              confirm: "Bu SSS silinsin mi?",
               onClick: () => handleDelete(record),
             },
           ]}
@@ -112,7 +118,7 @@ export default function FaqsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, faq: null })}>
-          Create FAQ
+          SSS Oluştur
         </Button>
       </div>
 
@@ -122,7 +128,7 @@ export default function FaqsTab() {
             style={{ width: "100%" }}
             value={filters.categoryId ?? "all"}
             onChange={(v) => updateFilters({ categoryId: v === "all" ? undefined : v })}
-            options={[{ value: "all", label: "All categories" }, ...categories.map((c) => ({ value: c.id, label: c.name }))]}
+            options={[{ value: "all", label: "Tüm kategoriler" }, ...categories.map((c) => ({ value: c.id, label: c.name }))]}
           />
         </Col>
       </FilterBar>
@@ -133,7 +139,7 @@ export default function FaqsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={900}
-          emptyDescription="No FAQs match these filters."
+          emptyDescription="Bu filtrelerle eşleşen SSS bulunamadı."
           pagination={{
             current: page,
             pageSize,

@@ -9,7 +9,7 @@ export default function NotificationsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Search by title, body or user"
+          placeholder="Başlık, içerik veya kullanıcıya göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -21,9 +21,9 @@ export default function NotificationsFilterBar({ filters, onChange, onReset }) {
           value={filters.isRead === undefined ? "all" : String(filters.isRead)}
           onChange={(v) => onChange({ isRead: v === "all" ? undefined : v === "true" })}
           options={[
-            { value: "all", label: "All" },
-            { value: "true", label: "Read" },
-            { value: "false", label: "Unread" },
+            { value: "all", label: "Tümü" },
+            { value: "true", label: "Okundu" },
+            { value: "false", label: "Okunmadı" },
           ]}
         />
       </Col>

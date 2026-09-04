@@ -39,7 +39,7 @@ export default function DataTable({
           : {
               pageSize: DEFAULT_PAGE_SIZE,
               showSizeChanger: true,
-              showTotal: (total) => `${total} records`,
+              showTotal: (total) => `${total} kayıt`,
               ...pagination,
             }
       }

@@ -6,6 +6,7 @@ import { SectionCard, DataTable, EntityCell, StatusTag, RowActions, FilterBar } 
 import { useListQuery } from "../../../utils/useListQuery";
 import { workoutPlanService } from "../services/workoutService";
 import { FITNESS_GOAL } from "../../../constants/apiEnums";
+import { fitnessGoalLabel } from "../data/enumLabels";
 import WorkoutPlanDetailDrawer from "./WorkoutPlanDetailDrawer";
 
 const { Text } = Typography;
@@ -34,7 +35,7 @@ export default function WorkoutPlansTab() {
 
   const handleToggleStatus = async (record) => {
     await workoutPlanService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.name}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.name}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
@@ -47,39 +48,39 @@ export default function WorkoutPlansTab() {
       render: (_, r) => <EntityCell title={r.name} subtitle={r.userEmail} avatarColor="#FA8C16" />,
     },
     {
-      title: "Goal",
+      title: "Hedef",
       dataIndex: "goal",
       key: "goal",
       width: 150,
-      render: (v) => v ?? <Text type="secondary">—</Text>,
+      render: (v) => (v ? fitnessGoalLabel(v) : <Text type="secondary">—</Text>),
     },
     {
-      title: "Start Date",
+      title: "Başlangıç Tarihi",
       dataIndex: "startDate",
       key: "startDate",
       width: 130,
       render: (v) => (v ? dayjs(v).format("DD MMM YYYY") : "—"),
     },
     {
-      title: "End Date",
+      title: "Bitiş Tarihi",
       dataIndex: "endDate",
       key: "endDate",
       width: 130,
       render: (v) => (v ? dayjs(v).format("DD MMM YYYY") : <Text type="secondary">—</Text>),
     },
     {
-      title: "AI Generated",
+      title: "Yapay Zeka ile Oluşturuldu",
       dataIndex: "isAiGenerated",
       key: "isAiGenerated",
       width: 120,
-      render: (v) => (v ? <Tag icon={<RobotOutlined />} color="purple">AI</Tag> : <Text type="secondary">—</Text>),
+      render: (v) => (v ? <Tag icon={<RobotOutlined />} color="purple">YZ</Tag> : <Text type="secondary">—</Text>),
     },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
       title: "",
@@ -89,10 +90,10 @@ export default function WorkoutPlansTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "view", label: "View Days", icon: <EyeOutlined />, onClick: () => handleView(record) },
+            { key: "view", label: "Günleri Görüntüle", icon: <EyeOutlined />, onClick: () => handleView(record) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
@@ -108,7 +109,7 @@ export default function WorkoutPlansTab() {
         <Col xs={12} sm={8} lg={5}>
           <Input
             allowClear
-            placeholder="User ID"
+            placeholder="Kullanıcı ID"
             value={filters.userId}
             onChange={(e) => updateFilters({ userId: e.target.value ? Number(e.target.value) : undefined })}
           />
@@ -116,31 +117,31 @@ export default function WorkoutPlansTab() {
         <Col xs={12} sm={8} lg={6}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Goal"
+            placeholder="Hedef"
             allowClear
             value={filters.goal}
             onChange={(v) => updateFilters({ goal: v })}
-            options={FITNESS_GOAL.map((g) => ({ value: g, label: g }))}
+            options={FITNESS_GOAL.map((g) => ({ value: g, label: fitnessGoalLabel(g) }))}
           />
         </Col>
         <Col xs={12} sm={8} lg={5}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Status"
+            placeholder="Durum"
             allowClear
             value={filters.isActive}
             onChange={(v) => updateFilters({ isActive: v })}
-            options={[{ value: true, label: "Active" }, { value: false, label: "Inactive" }]}
+            options={[{ value: true, label: "Aktif" }, { value: false, label: "Pasif" }]}
           />
         </Col>
         <Col xs={12} sm={8} lg={5}>
           <Select
             style={{ width: "100%" }}
-            placeholder="Source"
+            placeholder="Kaynak"
             allowClear
             value={filters.isAiGenerated}
             onChange={(v) => updateFilters({ isAiGenerated: v })}
-            options={[{ value: true, label: "AI Generated" }, { value: false, label: "Manual" }]}
+            options={[{ value: true, label: "Yapay Zeka ile Oluşturuldu" }, { value: false, label: "Manuel" }]}
           />
         </Col>
       </FilterBar>
@@ -151,7 +152,7 @@ export default function WorkoutPlansTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1000}
-          emptyDescription="No workout plans match these filters."
+          emptyDescription="Bu filtrelerle eşleşen antrenman planı yok."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

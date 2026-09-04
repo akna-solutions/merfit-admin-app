@@ -10,17 +10,17 @@ export default function SubscriptionsPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Subscriptions" }]}
-        title="Subscriptions"
-        description="Manage subscription products and review user subscriptions and transactions."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "Abonelikler" }]}
+        title="Abonelikler"
+        description="Abonelik ürünlerini yönetin, kullanıcı aboneliklerini ve işlemlerini inceleyin."
       />
       <Tabs
         defaultActiveKey="products"
         items={[
-          { key: "products", label: "Products", children: <ProductsTab /> },
-          { key: "subscriptions", label: "Subscriptions", children: <SubscriptionsTab /> },
-          { key: "transactions", label: "Transactions", children: <TransactionsTab /> },
-          { key: "features", label: "Features", children: <FeaturesTab /> },
+          { key: "products", label: "Ürünler", children: <ProductsTab /> },
+          { key: "subscriptions", label: "Abonelikler", children: <SubscriptionsTab /> },
+          { key: "transactions", label: "İşlemler", children: <TransactionsTab /> },
+          { key: "features", label: "Özellikler", children: <FeaturesTab /> },
         ]}
       />
     </PageContainer>

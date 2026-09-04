@@ -12,7 +12,7 @@ export default function AppearanceSettingsTab() {
   return (
     <SectionCard>
       <Form layout="vertical" style={{ maxWidth: 480 }}>
-        <Form.Item label="Theme">
+        <Form.Item label="Tema">
           {/* Wired to the app's real theme system — flipping this actually
               switches the whole admin panel's light/dark mode. */}
           <Segmented
@@ -21,30 +21,30 @@ export default function AppearanceSettingsTab() {
               if (value !== mode) toggleMode();
             }}
             options={[
-              { label: "Light", value: "light" },
-              { label: "Dark", value: "dark" },
+              { label: "Açık", value: "light" },
+              { label: "Koyu", value: "dark" },
             ]}
           />
         </Form.Item>
-        <Form.Item label="Sidebar Collapsed by Default">
+        <Form.Item label="Kenar Çubuğu Varsayılan Olarak Daraltılmış">
           <Switch
             checked={sidebarCollapsed}
             onChange={(checked) => {
               setSidebarCollapsed(checked);
-              message.info("Saved (mock — no backend yet).");
+              message.info("Kaydedildi (mock — henüz backend yok).");
             }}
           />
         </Form.Item>
-        <Form.Item label="Density">
+        <Form.Item label="Yoğunluk">
           <Select
             value={density}
             onChange={(value) => {
               setDensity(value);
-              message.info("Saved (mock — no backend yet).");
+              message.info("Kaydedildi (mock — henüz backend yok).");
             }}
             options={[
-              { value: "compact", label: "Compact" },
-              { value: "comfortable", label: "Comfortable" },
+              { value: "compact", label: "Sıkışık" },
+              { value: "comfortable", label: "Rahat" },
             ]}
           />
         </Form.Item>

@@ -17,47 +17,63 @@ function seeded(seed) {
   return x - Math.floor(x);
 }
 
+// Turkish display names contain non-ASCII characters (ç, ğ, ı, ö, ş, ü) that
+// a plain lowercase + strip-non-alphanumeric pass would just drop, leaving
+// mangled slugs. Transliterate to ASCII first so slugs stay clean,
+// URL-safe technical identifiers.
+const TURKISH_ASCII_MAP = {
+  ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u",
+  Ç: "c", Ğ: "g", İ: "i", Ö: "o", Ş: "s", Ü: "u",
+};
+function slugify(text) {
+  return text
+    .replace(/[çğıöşüÇĞİÖŞÜ]/g, (ch) => TURKISH_ASCII_MAP[ch])
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 // AdminWorkoutCategoryDto[]
 export const workoutCategories = [
-  { id: 1, name: "Strength", slug: "strength" },
-  { id: 2, name: "Cardio", slug: "cardio" },
+  { id: 1, name: "Kuvvet", slug: "strength" },
+  { id: 2, name: "Kardiyo", slug: "cardio" },
   { id: 3, name: "HIIT", slug: "hiit" },
   { id: 4, name: "Yoga", slug: "yoga" },
-  { id: 5, name: "Mobility", slug: "mobility" },
+  { id: 5, name: "Hareketlilik", slug: "mobility" },
   { id: 6, name: "Core", slug: "core" },
 ];
 
 // AdminMuscleGroupDto[]
 export const muscleGroups = [
-  { id: 1, name: "Full Body", slug: "full-body" },
-  { id: 2, name: "Upper Body", slug: "upper-body" },
-  { id: 3, name: "Lower Body", slug: "lower-body" },
+  { id: 1, name: "Tüm Vücut", slug: "full-body" },
+  { id: 2, name: "Üst Vücut", slug: "upper-body" },
+  { id: 3, name: "Alt Vücut", slug: "lower-body" },
   { id: 4, name: "Core", slug: "core" },
-  { id: 5, name: "Back", slug: "back" },
-  { id: 6, name: "Glutes", slug: "glutes" },
+  { id: 5, name: "Sırt", slug: "back" },
+  { id: 6, name: "Kalça", slug: "glutes" },
 ];
 
 // AdminEquipmentDto[]
 export const equipmentList = [
-  { id: 1, name: "Dumbbell", slug: "dumbbell" },
-  { id: 2, name: "Barbell", slug: "barbell" },
+  { id: 1, name: "Dambıl", slug: "dumbbell" },
+  { id: 2, name: "Halter", slug: "barbell" },
   { id: 3, name: "Kettlebell", slug: "kettlebell" },
-  { id: 4, name: "Resistance Band", slug: "resistance-band" },
-  { id: 5, name: "Bodyweight", slug: "bodyweight" },
+  { id: 4, name: "Direnç Bandı", slug: "resistance-band" },
+  { id: 5, name: "Vücut Ağırlığı", slug: "bodyweight" },
   { id: 6, name: "Bench", slug: "bench" },
 ];
 
 // AdminExerciseListItemDto[] — DifficultyLevel is serialized as a plain
 // string by the API's own DTO (converted server-side), same as Workout's.
 const EXERCISE_NAMES = [
-  "Barbell Squat", "Push Up", "Dumbbell Row", "Plank", "Lunges",
-  "Deadlift", "Burpees", "Mountain Climbers", "Bicep Curl", "Shoulder Press",
-  "Jumping Jacks", "Russian Twist", "Glute Bridge", "Pull Up", "Bench Press",
+  "Halterle Squat", "Şınav", "Dambılla Kürek Çekme", "Plank", "Hamle",
+  "Ölü Kaldırma", "Burpee", "Dağcı Hareketi", "Biceps Curl", "Omuz Press",
+  "Yıldız Sıçraması", "Russian Twist", "Kalça Köprüsü", "Barfiks", "Bench Press",
 ];
 export const exerciseLibrary = EXERCISE_NAMES.map((name, i) => ({
   id: i + 1,
   name,
-  slug: name.toLowerCase().replace(/\s+/g, "-"),
+  slug: slugify(name),
   difficulty: ["Beginner", "Intermediate", "Advanced"][i % 3],
   primaryMuscleGroupId: muscleGroups[i % muscleGroups.length].id,
   primaryMuscleGroupName: muscleGroups[i % muscleGroups.length].name,
@@ -65,11 +81,11 @@ export const exerciseLibrary = EXERCISE_NAMES.map((name, i) => ({
 }));
 
 const TITLES = [
-  "Full Body Burn", "Upper Body Strength", "HIIT Cardio Blast", "Core Crusher",
-  "Leg Day Power", "Yoga Flow Flexibility", "Glute Activation", "Back & Biceps",
-  "Fat Burn Express", "Beginner Bodyweight", "Advanced Kettlebell", "Mobility Reset",
-  "Push Pull Legs", "Cardio Endurance", "Total Body Tone", "Ab Shredder",
-  "Speed & Agility", "Power Yoga", "Functional Strength", "Recovery Stretch",
+  "Tüm Vücut Yakımı", "Üst Vücut Gücü", "HIIT Kardiyo Patlaması", "Core Güçlendirme",
+  "Bacak Günü Gücü", "Esneklik İçin Yoga Akışı", "Kalça Aktivasyonu", "Sırt ve Biceps",
+  "Hızlı Yağ Yakımı", "Başlangıç Seviyesi Vücut Ağırlığı", "İleri Seviye Kettlebell", "Hareketlilik Sıfırlama",
+  "İtiş-Çekiş-Bacak", "Kardiyo Dayanıklılığı", "Tüm Vücut Sıkılaştırma", "Karın Kası Parçalayıcı",
+  "Hız ve Çeviklik", "Güç Yogası", "Fonksiyonel Güç", "Toparlanma Esnetmesi",
 ];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
@@ -102,7 +118,7 @@ function buildEquipmentFor(seed) {
 // AdminWorkoutListItemDto[] (+ the extra fields AdminWorkoutDetailDto adds)
 export const workoutsMockData = TITLES.map((title, i) => {
   const seed = i + 1;
-  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const slug = slugify(title);
   const category = workoutCategories[seed % workoutCategories.length];
   const muscleGroup = muscleGroups[seed % muscleGroups.length];
   const exercises = buildExercisesFor(seed);
@@ -126,9 +142,9 @@ export const workoutsMockData = TITLES.map((title, i) => {
     createdAt: daysAgo(90 + Math.floor(seeded(seed) * 200)),
 
     // AdminWorkoutDetailDto extras
-    tagline: "A results-driven session built by the Merfit coaching team.",
+    tagline: "Merfit koçluk ekibi tarafından hazırlanmış, sonuç odaklı bir antrenman.",
     description:
-      "A structured session combining compound movements and conditioning work designed to maximize results in minimal time.",
+      "Minimum sürede maksimum sonuç elde etmek için tasarlanmış, bileşik hareketleri ve kondisyon çalışmalarını bir araya getiren yapılandırılmış bir antrenman.",
     updatedAt: daysAgo(Math.floor(seeded(seed) * 45)),
     exerciseCount: exercises.length,
     equipmentCount: equipment.length,

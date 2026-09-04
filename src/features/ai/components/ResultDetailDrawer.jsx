@@ -5,17 +5,17 @@ import { DetailDrawer } from "../../../components/admin";
 
 export default function ResultDetailDrawer({ open, result, loading, onClose }) {
   return (
-    <DetailDrawer open={open} title={result ? `AI Result #${result.id}` : "AI Result"} onClose={onClose}>
+    <DetailDrawer open={open} title={result ? `Yapay Zeka Sonucu #${result.id}` : "Yapay Zeka Sonucu"} onClose={onClose}>
       {loading || !result ? (
         <Skeleton active paragraph={{ rows: 8 }} />
       ) : (
         <>
           <Descriptions column={1} bordered size="small" style={{ marginBottom: 16 }}>
-            <Descriptions.Item label="Request">#{result.requestId}</Descriptions.Item>
-            <Descriptions.Item label="User">{result.userEmail}</Descriptions.Item>
-            <Descriptions.Item label="Created At">{dayjs(result.createdAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
+            <Descriptions.Item label="İstek">#{result.requestId}</Descriptions.Item>
+            <Descriptions.Item label="Kullanıcı">{result.userEmail}</Descriptions.Item>
+            <Descriptions.Item label="Oluşturulma Tarihi">{dayjs(result.createdAt).format("DD MMM YYYY, HH:mm")}</Descriptions.Item>
           </Descriptions>
-          <Typography.Title level={5}>Result JSON</Typography.Title>
+          <Typography.Title level={5}>Sonuç JSON</Typography.Title>
           <pre
             style={{
               background: "rgba(16,24,40,0.03)",

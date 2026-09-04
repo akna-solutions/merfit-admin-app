@@ -15,8 +15,8 @@ export default function FeatureFormDrawer({ open, feature, submitting, onClose, 
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${feature?.name}` : "Create Feature"}
-      submitText={isEdit ? "Save Changes" : "Create Feature"}
+      title={isEdit ? `${feature?.name} Özelliğini Düzenle` : "Özellik Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Özellik Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -24,18 +24,18 @@ export default function FeatureFormDrawer({ open, feature, submitting, onClose, 
       <Form form={form} layout="vertical">
         <Form.Item
           name="code"
-          label="Code"
+          label="Kod"
           rules={[
             { required: true, min: 2, max: 100 },
-            { pattern: /^[A-Z0-9_]+$/, message: "Uppercase letters, numbers and underscores only" },
+            { pattern: /^[A-Z0-9_]+$/, message: "Sadece büyük harf, rakam ve alt çizgi kullanılabilir" },
           ]}
         >
-          <Input placeholder="e.g. AI_WORKOUT_PLANS" />
+          <Input placeholder="örn. AI_WORKOUT_PLANS" />
         </Form.Item>
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 200 }]}>
-          <Input placeholder="e.g. AI-Generated Workout Plans" />
+        <Form.Item name="name" label="İsim" rules={[{ required: true, min: 2, max: 200 }]}>
+          <Input placeholder="örn. Yapay Zeka Destekli Antrenman Planları" />
         </Form.Item>
-        <Form.Item name="description" label="Description" rules={[{ max: 1000 }]}>
+        <Form.Item name="description" label="Açıklama" rules={[{ max: 1000 }]}>
           <Input.TextArea rows={3} />
         </Form.Item>
       </Form>

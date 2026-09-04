@@ -22,13 +22,13 @@ export default function WorkoutCategoriesTab() {
 
   const handleToggleStatus = async (record) => {
     await workoutCategoryService.updateCategory(record.id, { ...record, isActive: !record.isActive });
-    message.success(`"${record.name}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.name}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await workoutCategoryService.deleteCategory(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -37,10 +37,10 @@ export default function WorkoutCategoriesTab() {
     try {
       if (formState.category) {
         await workoutCategoryService.updateCategory(formState.category.id, values);
-        message.success("Category updated.");
+        message.success("Kategori güncellendi.");
       } else {
         await workoutCategoryService.createCategory(values);
-        message.success("Category created.");
+        message.success("Kategori oluşturuldu.");
       }
       setFormState({ open: false, category: null });
       refetch();
@@ -51,24 +51,24 @@ export default function WorkoutCategoriesTab() {
 
   const columns = [
     {
-      title: "Category",
+      title: "Kategori",
       key: "name",
       width: 240,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#2F6FED" />,
     },
     {
-      title: "Description",
+      title: "Açıklama",
       dataIndex: "description",
       key: "description",
       width: 260,
       render: (v) => v || <Text type="secondary">—</Text>,
     },
     {
-      title: "Status",
+      title: "Durum",
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (v) => <StatusTag status={v ? "Active" : "Inactive"} />,
+      render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag>,
     },
     {
       title: "",
@@ -78,19 +78,19 @@ export default function WorkoutCategoriesTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, category: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, category: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? This cannot be undone.`,
+              confirm: `"${record.name}" silinsin mi? Bu işlem geri alınamaz.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -103,7 +103,7 @@ export default function WorkoutCategoriesTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, category: null })}>
-          Create Category
+          Kategori Oluştur
         </Button>
       </div>
 
@@ -114,9 +114,9 @@ export default function WorkoutCategoriesTab() {
             value={filters.isActive === undefined ? "all" : filters.isActive}
             onChange={(v) => updateFilters({ isActive: v === "all" ? undefined : v })}
             options={[
-              { value: "all", label: "All statuses" },
-              { value: true, label: "Active" },
-              { value: false, label: "Inactive" },
+              { value: "all", label: "Tüm durumlar" },
+              { value: true, label: "Aktif" },
+              { value: false, label: "Pasif" },
             ]}
           />
         </Col>
@@ -128,7 +128,7 @@ export default function WorkoutCategoriesTab() {
           dataSource={rows}
           loading={loading}
           scrollX={800}
-          emptyDescription="No workout categories yet."
+          emptyDescription="Henüz antrenman kategorisi yok."
           pagination={{
             current: page,
             pageSize,

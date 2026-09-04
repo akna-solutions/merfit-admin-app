@@ -24,11 +24,11 @@ export const workoutsAnalyticsMock = {
   workoutCompletionRatePercent: 84.3,
   averageWorkoutsPerActiveUser: 9.2,
   topWorkouts: [
-    { id: 1, name: "Full Body Burn", count: 3120 },
-    { id: 2, name: "HIIT Cardio Blast", count: 2870 },
-    { id: 3, name: "Upper Body Strength", count: 2410 },
-    { id: 4, name: "Core Crusher", count: 1980 },
-    { id: 5, name: "Yoga Flow Flexibility", count: 1640 },
+    { id: 1, name: "Tüm Vücut Yakımı", count: 3120 },
+    { id: 2, name: "HIIT Kardiyo Patlaması", count: 2870 },
+    { id: 3, name: "Üst Vücut Gücü", count: 2410 },
+    { id: 4, name: "Karın Kırıcı", count: 1980 },
+    { id: 5, name: "Yoga Akışı ve Esneklik", count: 1640 },
   ],
 };
 

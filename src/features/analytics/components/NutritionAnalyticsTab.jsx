@@ -11,10 +11,10 @@ export default function NutritionAnalyticsTab() {
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Meals Logged (30d)" value={d.totalMealsLast30Days} icon={<AppleOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Avg Meals / User" value={d.averageMealsPerUserLast30Days} precision={1} icon={<AppleOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Avg Calories / Meal" value={d.averageCaloriesPerMeal} icon={<FireOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12} lg={6}><MetricCard title="Users With Goal Set" value={d.usersWithNutritionGoal} icon={<AimOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Kaydedilen Öğün (30g)" value={d.totalMealsLast30Days} icon={<AppleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Ort. Öğün / Kullanıcı" value={d.averageMealsPerUserLast30Days} precision={1} icon={<AppleOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Ort. Kalori / Öğün" value={d.averageCaloriesPerMeal} icon={<FireOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12} lg={6}><MetricCard title="Hedef Belirlemiş Kullanıcı" value={d.usersWithNutritionGoal} icon={<AimOutlined />} loading={loading} /></Col>
     </Row>
   );
 }

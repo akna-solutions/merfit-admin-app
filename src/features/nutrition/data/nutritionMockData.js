@@ -17,10 +17,10 @@ function seeded(seed) {
 }
 
 const FOOD_NAMES = [
-  "Chicken Breast", "Brown Rice", "Greek Yogurt", "Banana", "Almonds",
-  "Salmon Fillet", "Broccoli", "Oatmeal", "Egg", "Avocado",
-  "Sweet Potato", "Whey Protein", "Cottage Cheese", "Spinach", "Quinoa",
-  "Peanut Butter", "Tuna", "Olive Oil", "Blueberries", "Lentils",
+  "Tavuk Göğsü", "Esmer Pirinç", "Yunan Yoğurdu", "Muz", "Badem",
+  "Somon Fileto", "Brokoli", "Yulaf Ezmesi", "Yumurta", "Avokado",
+  "Tatlı Patates", "Whey Protein", "Lor Peyniri", "Ispanak", "Kinoa",
+  "Fıstık Ezmesi", "Ton Balığı", "Zeytinyağı", "Yaban Mersini", "Mercimek",
 ];
 const BRANDS = [null, "Sütaş", "Pınar", "Eker", null, "Namet", null];
 const UNITS = ["g", "ml", "piece"];

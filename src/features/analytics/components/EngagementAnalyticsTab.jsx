@@ -11,11 +11,11 @@ export default function EngagementAnalyticsTab() {
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={8}><MetricCard title="Daily Active Users" value={d.dau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={8}><MetricCard title="Weekly Active Users" value={d.wau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={8}><MetricCard title="Monthly Active Users" value={d.mau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12}><MetricCard title="Stickiness (DAU/MAU)" value={d.stickinessPercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
-      <Col xs={24} sm={12}><MetricCard title="Avg Sessions / Active User (30d)" value={d.averageSessionsPerActiveUserLast30Days} precision={1} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Günlük Aktif Kullanıcı" value={d.dau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Haftalık Aktif Kullanıcı" value={d.wau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={8}><MetricCard title="Aylık Aktif Kullanıcı" value={d.mau} icon={<ThunderboltOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12}><MetricCard title="Kullanıcı Bağlılığı (DAU/MAU)" value={d.stickinessPercent} suffix="%" precision={1} icon={<PercentageOutlined />} loading={loading} /></Col>
+      <Col xs={24} sm={12}><MetricCard title="Ort. Oturum / Aktif Kullanıcı (30g)" value={d.averageSessionsPerActiveUserLast30Days} precision={1} loading={loading} /></Col>
     </Row>
   );
 }

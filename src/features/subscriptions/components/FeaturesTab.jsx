@@ -23,7 +23,7 @@ export default function FeaturesTab() {
 
   const handleDelete = async (record) => {
     await featureService.deleteFeature(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -32,10 +32,10 @@ export default function FeaturesTab() {
     try {
       if (formState.feature) {
         await featureService.updateFeature(formState.feature.id, values);
-        message.success("Feature updated.");
+        message.success("Özellik güncellendi.");
       } else {
         await featureService.createFeature(values);
-        message.success("Feature created.");
+        message.success("Özellik oluşturuldu.");
       }
       setFormState({ open: false, feature: null });
       refetch();
@@ -46,13 +46,13 @@ export default function FeaturesTab() {
 
   const columns = [
     {
-      title: "Feature",
+      title: "Özellik",
       key: "name",
       width: 260,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.code} avatarColor="#52C41A" />,
     },
     {
-      title: "Description",
+      title: "Açıklama",
       dataIndex: "description",
       key: "description",
       width: 320,
@@ -66,13 +66,13 @@ export default function FeaturesTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, feature: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, feature: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? Products using it will lose this feature.`,
+              confirm: `"${record.name}" silinsin mi? Bu özelliği kullanan ürünler bu özelliği kaybedecek.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -85,7 +85,7 @@ export default function FeaturesTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, feature: null })}>
-          Create Feature
+          Özellik Oluştur
         </Button>
       </div>
 
@@ -95,7 +95,7 @@ export default function FeaturesTab() {
           dataSource={rows}
           loading={loading}
           scrollX={700}
-          emptyDescription="No features yet."
+          emptyDescription="Henüz özellik yok."
           pagination={{
             current: page,
             pageSize,

@@ -15,25 +15,25 @@ export default function MuscleGroupFormDrawer({ open, muscleGroup, submitting, o
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${muscleGroup?.name}` : "Create Muscle Group"}
-      submitText={isEdit ? "Save Changes" : "Create Muscle Group"}
+      title={isEdit ? `"${muscleGroup?.name}" Düzenle` : "Kas Grubu Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Kas Grubu Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 150 }]}>
-          <Input placeholder="e.g. Chest" />
+        <Form.Item name="name" label="Ad" rules={[{ required: true, min: 2, max: 150 }]}>
+          <Input placeholder="örn. Göğüs" />
         </Form.Item>
         <Form.Item
           name="slug"
           label="Slug"
           rules={[
             { required: true, min: 2, max: 150 },
-            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Lowercase letters, numbers and hyphens only" },
+            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Yalnızca küçük harf, rakam ve tire kullanılabilir" },
           ]}
         >
-          <Input placeholder="e.g. chest" />
+          <Input placeholder="örn. gogus" />
         </Form.Item>
       </Form>
     </FormDrawer>

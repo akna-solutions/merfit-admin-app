@@ -12,7 +12,7 @@ export default function UsersFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Search by name, username or email"
+          placeholder="İsim, kullanıcı adı veya e-posta ile ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -26,9 +26,9 @@ export default function UsersFilterBar({ filters, onChange, onReset }) {
             onChange({ isActive: value === "all" ? undefined : value === "true" })
           }
           options={[
-            { value: "all", label: "All statuses" },
-            { value: "true", label: "Active" },
-            { value: "false", label: "Inactive" },
+            { value: "all", label: "Tüm durumlar" },
+            { value: "true", label: "Aktif" },
+            { value: "false", label: "Pasif" },
           ]}
         />
       </Col>
@@ -40,11 +40,11 @@ export default function UsersFilterBar({ filters, onChange, onReset }) {
             onChange({ subscriptionStatus: value === "all" ? undefined : value })
           }
           options={[
-            { value: "all", label: "All plans" },
-            { value: "active", label: "Active" },
-            { value: "expired", label: "Expired" },
-            { value: "cancelled", label: "Cancelled" },
-            { value: "none", label: "No subscription" },
+            { value: "all", label: "Tüm planlar" },
+            { value: "active", label: "Aktif" },
+            { value: "expired", label: "Süresi Doldu" },
+            { value: "cancelled", label: "İptal Edildi" },
+            { value: "none", label: "Aboneliği Yok" },
           ]}
         />
       </Col>

@@ -12,8 +12,8 @@ export default function RowActions({ items }) {
     label: item.confirm ? (
       <Popconfirm
         title={item.confirm}
-        okText="Yes"
-        cancelText="Cancel"
+        okText="Evet"
+        cancelText="Vazgeç"
         okButtonProps={{ danger: item.danger }}
         onConfirm={item.onClick}
       >
@@ -43,7 +43,7 @@ export default function RowActions({ items }) {
         shape="circle"
         icon={<MoreOutlined />}
         onClick={(e) => e.stopPropagation()}
-        aria-label="Row actions"
+        aria-label="Satır işlemleri"
       />
     </Dropdown>
   );

@@ -18,7 +18,7 @@ export default function WorkoutActivityChart({ data, loading }) {
 
   return (
     <Card
-      title="Workout Activity"
+      title="Antrenman Etkinliği"
       className="merfit-chart-card"
       bordered={false}
       loading={loading}

@@ -25,22 +25,22 @@ const USER_EMAILS = [
 ];
 
 const TITLES = [
-  "Time for your workout!", "You're close to your goal", "Keep your streak alive",
-  "Your weekly progress is in", "New leaderboard rankings", "Achievement unlocked!",
-  "New reward available", "Your subscription renews soon", "App update available",
-  "Don't miss out — Plus is 20% off",
+  "Antrenman zamanı!", "Hedefine çok yaklaştın", "Serini bozma",
+  "Haftalık ilerlemen hazır", "Yeni liderlik tablosu sıralaması", "Başarı kazanıldı!",
+  "Yeni ödül mevcut", "Aboneliğin yakında yenileniyor", "Uygulama güncellemesi mevcut",
+  "Kaçırma — Plus'ta %20 indirim",
 ];
 const BODIES = [
-  "It's been a while since your last session. Ready to get moving?",
-  "You're just a few workouts away from hitting your monthly goal.",
-  "Don't break your streak — log a workout today.",
-  "See how you did this week and what's next.",
-  "Check out this week's top performers.",
-  "Congratulations, you just earned a new achievement!",
-  "A new reward is waiting for you in the app.",
-  "Your Merfit Plus subscription renews in 3 days.",
-  "A new version of Merfit is available with bug fixes and improvements.",
-  "Upgrade to Merfit Plus and save 20% this week only.",
+  "Son seansından bu yana biraz zaman geçti. Harekete geçmeye hazır mısın?",
+  "Aylık hedefine ulaşmana sadece birkaç antrenman kaldı.",
+  "Serini bozma — bugün bir antrenman kaydet.",
+  "Bu hafta nasıl gittiğine ve sıradakine göz at.",
+  "Bu haftanın en iyi performans gösterenlerine göz at.",
+  "Tebrikler, yeni bir başarı kazandın!",
+  "Uygulamada seni bekleyen yeni bir ödül var.",
+  "Merfit Plus aboneliğin 3 gün içinde yenileniyor.",
+  "Hata düzeltmeleri ve iyileştirmelerle birlikte Merfit'in yeni bir sürümü mevcut.",
+  "Merfit Plus'a yükselt ve bu hafta sadece %20 tasarruf et.",
 ];
 
 // AdminNotificationListItemDto[] (+ AdminNotificationDetailDto.dataJson)

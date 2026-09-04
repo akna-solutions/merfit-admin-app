@@ -10,7 +10,7 @@ export default function FormDrawer({
   width = 480,
   onClose,
   onSubmit,
-  submitText = "Save",
+  submitText = "Kaydet",
   submitting,
   children,
   extra,
@@ -26,7 +26,7 @@ export default function FormDrawer({
       footer={
         <div className="merfit-drawer-footer">
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>Vazgeç</Button>
             <Button type="primary" loading={submitting} onClick={onSubmit}>
               {submitText}
             </Button>

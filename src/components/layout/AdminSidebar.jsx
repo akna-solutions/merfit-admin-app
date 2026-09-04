@@ -102,7 +102,7 @@ function SidebarContent({ collapsed, onNavigate }) {
             {
               key: "sign-out",
               icon: <LogoutOutlined />,
-              label: "Sign Out",
+              label: "Çıkış Yap",
               onClick: () => {
                 logout();
                 navigate("/login", { replace: true });

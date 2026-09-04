@@ -12,28 +12,28 @@ export default function NotificationsPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Notifications" }]}
-        title="Notifications"
-        description="Send push notifications and review notification history."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Bildirimler" }]}
+        title="Bildirimler"
+        description="Push bildirimleri gönderin ve bildirim geçmişini inceleyin."
       />
 
       <Row gutter={[20, 20]}>
         <Col xs={24} sm={8}>
-          <MetricCard title="Total Sent" value={stats.totalSent} icon={<SendOutlined />} loading={loading} />
+          <MetricCard title="Toplam Gönderilen" value={stats.totalSent} icon={<SendOutlined />} loading={loading} />
         </Col>
         <Col xs={24} sm={8}>
-          <MetricCard title="Sent Today" value={stats.sentToday} icon={<CalendarOutlined />} loading={loading} />
+          <MetricCard title="Bugün Gönderilen" value={stats.sentToday} icon={<CalendarOutlined />} loading={loading} />
         </Col>
         <Col xs={24} sm={8}>
-          <MetricCard title="Read Rate" value={stats.readRate} suffix="%" icon={<EyeOutlined />} loading={loading} />
+          <MetricCard title="Okunma Oranı" value={stats.readRate} suffix="%" icon={<EyeOutlined />} loading={loading} />
         </Col>
       </Row>
 
       <Tabs
         defaultActiveKey="history"
         items={[
-          { key: "history", label: "History", children: <NotificationHistoryTab /> },
-          { key: "send", label: "Send Notification", children: <SendNotificationTab /> },
+          { key: "history", label: "Geçmiş", children: <NotificationHistoryTab /> },
+          { key: "send", label: "Bildirim Gönder", children: <SendNotificationTab /> },
         ]}
       />
     </PageContainer>

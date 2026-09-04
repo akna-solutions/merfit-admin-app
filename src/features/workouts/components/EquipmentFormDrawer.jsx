@@ -15,25 +15,25 @@ export default function EquipmentFormDrawer({ open, equipment, submitting, onClo
   return (
     <FormDrawer
       open={open}
-      title={isEdit ? `Edit ${equipment?.name}` : "Create Equipment"}
-      submitText={isEdit ? "Save Changes" : "Create Equipment"}
+      title={isEdit ? `"${equipment?.name}" Düzenle` : "Ekipman Oluştur"}
+      submitText={isEdit ? "Değişiklikleri Kaydet" : "Ekipman Oluştur"}
       submitting={submitting}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="name" label="Name" rules={[{ required: true, min: 2, max: 150 }]}>
-          <Input placeholder="e.g. Dumbbell" />
+        <Form.Item name="name" label="Ad" rules={[{ required: true, min: 2, max: 150 }]}>
+          <Input placeholder="örn. Dambıl" />
         </Form.Item>
         <Form.Item
           name="slug"
           label="Slug"
           rules={[
             { required: true, min: 2, max: 150 },
-            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Lowercase letters, numbers and hyphens only" },
+            { pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, message: "Yalnızca küçük harf, rakam ve tire kullanılabilir" },
           ]}
         >
-          <Input placeholder="e.g. dumbbell" />
+          <Input placeholder="örn. dambil" />
         </Form.Item>
       </Form>
     </FormDrawer>

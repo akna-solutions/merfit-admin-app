@@ -11,7 +11,7 @@ export default function SubscriptionChart({ data, loading }) {
 
   return (
     <Card
-      title="Subscription Distribution"
+      title="Abonelik Dağılımı"
       className="merfit-chart-card"
       bordered={false}
       loading={loading}

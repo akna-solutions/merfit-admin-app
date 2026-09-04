@@ -9,16 +9,16 @@ export default function AiPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "AI" }]}
-        title="AI"
-        description="Review AI generation requests, results and usage statistics."
+        crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Yapay Zeka" }]}
+        title="Yapay Zeka"
+        description="Yapay zeka üretim isteklerini, sonuçlarını ve kullanım istatistiklerini inceleyin."
       />
       <Tabs
         defaultActiveKey="requests"
         items={[
-          { key: "requests", label: "Requests", children: <RequestsTab /> },
-          { key: "results", label: "Results", children: <ResultsTab /> },
-          { key: "statistics", label: "Statistics", children: <StatisticsTab /> },
+          { key: "requests", label: "İstekler", children: <RequestsTab /> },
+          { key: "results", label: "Sonuçlar", children: <ResultsTab /> },
+          { key: "statistics", label: "İstatistikler", children: <StatisticsTab /> },
         ]}
       />
     </PageContainer>

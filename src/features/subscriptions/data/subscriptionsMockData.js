@@ -17,7 +17,7 @@ export const subscriptionProductsMockData = [
   {
     id: 1,
     code: "plus_monthly",
-    name: "Merfit Plus — Monthly",
+    name: "Merfit Plus — Aylık",
     storeProductIdIos: "com.merfit.plus.monthly",
     storeProductIdAndroid: "plus_monthly",
     billingPeriod: "Monthly",
@@ -30,7 +30,7 @@ export const subscriptionProductsMockData = [
   {
     id: 2,
     code: "plus_yearly",
-    name: "Merfit Plus — Yearly",
+    name: "Merfit Plus — Yıllık",
     storeProductIdIos: "com.merfit.plus.yearly",
     storeProductIdAndroid: "plus_yearly",
     billingPeriod: "Yearly",
@@ -43,7 +43,7 @@ export const subscriptionProductsMockData = [
   {
     id: 3,
     code: "plus_monthly_promo",
-    name: "Merfit Plus — Promo Monthly",
+    name: "Merfit Plus — Promosyonlu Aylık",
     storeProductIdIos: "com.merfit.plus.promo",
     storeProductIdAndroid: "plus_monthly_promo",
     billingPeriod: "Monthly",
@@ -58,15 +58,15 @@ export const subscriptionProductsMockData = [
 // AdminSubscriptionProductFeatureItemDto[] keyed by productId
 export const productFeaturesMockData = {
   1: [
-    { featureId: 1, featureCode: "ai_workouts", featureName: "AI-Generated Workouts" },
-    { featureId: 2, featureCode: "no_ads", featureName: "Ad-Free Experience" },
+    { featureId: 1, featureCode: "ai_workouts", featureName: "Yapay Zeka Destekli Antrenmanlar" },
+    { featureId: 2, featureCode: "no_ads", featureName: "Reklamsız Deneyim" },
   ],
   2: [
-    { featureId: 1, featureCode: "ai_workouts", featureName: "AI-Generated Workouts" },
-    { featureId: 2, featureCode: "no_ads", featureName: "Ad-Free Experience" },
-    { featureId: 3, featureCode: "priority_support", featureName: "Priority Support" },
+    { featureId: 1, featureCode: "ai_workouts", featureName: "Yapay Zeka Destekli Antrenmanlar" },
+    { featureId: 2, featureCode: "no_ads", featureName: "Reklamsız Deneyim" },
+    { featureId: 3, featureCode: "priority_support", featureName: "Öncelikli Destek" },
   ],
-  3: [{ featureId: 2, featureCode: "no_ads", featureName: "Ad-Free Experience" }],
+  3: [{ featureId: 2, featureCode: "no_ads", featureName: "Reklamsız Deneyim" }],
 };
 
 const USER_EMAILS = [

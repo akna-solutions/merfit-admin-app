@@ -10,7 +10,7 @@ export default function SecuritySettingsTab() {
   return (
     <SectionCard>
       <Form layout="vertical" style={{ maxWidth: 480 }}>
-        <Form.Item label="Session Timeout (minutes)">
+        <Form.Item label="Oturum Zaman Aşımı (dakika)">
           <InputNumber
             style={{ width: "100%" }}
             min={5}
@@ -18,15 +18,15 @@ export default function SecuritySettingsTab() {
             value={sessionTimeout}
             onChange={(value) => {
               setSessionTimeout(value);
-              message.info("Saved (mock — no backend yet).");
+              message.info("Kaydedildi (mock — henüz backend yok).");
             }}
           />
         </Form.Item>
         <Form.Item
           label={
             <span>
-              Require MFA{" "}
-              <Tooltip title="Multi-factor authentication enforcement isn't implemented in the API yet.">
+              Çok Faktörlü Kimlik Doğrulama Zorunlu{" "}
+              <Tooltip title="Çok faktörlü kimlik doğrulama zorunluluğu API'de henüz uygulanmadı.">
                 <InfoCircleOutlined style={{ color: "#98A2B3" }} />
               </Tooltip>
             </span>

@@ -2,17 +2,17 @@ import React from "react";
 import { Card, Table, Tag } from "antd";
 
 const STATUS_COLOR = {
-  Completed: "green",
-  Active: "blue",
-  Cancelled: "red",
+  Tamamlandı: "green",
+  Aktif: "blue",
+  "İptal Edildi": "red",
 };
 
 const columns = [
-  { title: "User", dataIndex: "user", key: "user" },
-  { title: "Activity", dataIndex: "activity", key: "activity" },
-  { title: "Date", dataIndex: "date", key: "date" },
+  { title: "Kullanıcı", dataIndex: "user", key: "user" },
+  { title: "Etkinlik", dataIndex: "activity", key: "activity" },
+  { title: "Tarih", dataIndex: "date", key: "date" },
   {
-    title: "Status",
+    title: "Durum",
     dataIndex: "status",
     key: "status",
     render: (status) => (
@@ -24,7 +24,7 @@ const columns = [
 export default function RecentActivity({ data, loading }) {
   return (
     <Card
-      title="Recent Activity"
+      title="Son Etkinlikler"
       className="merfit-table-card"
       bordered={false}
     >

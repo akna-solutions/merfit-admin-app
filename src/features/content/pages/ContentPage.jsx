@@ -8,6 +8,15 @@ import { contentService } from "../services/contentService";
 import ContentFilterBar from "../components/ContentFilterBar";
 import ContentFormDrawer from "../components/ContentFormDrawer";
 
+// Kod değerleri API ile birebir eşleşir — yalnızca gösterilen etiketler Türkçeleştirilir.
+const CONTENT_TYPE_LABELS = {
+  Banner: "Banner",
+  Announcement: "Duyuru",
+  Campaign: "Kampanya",
+  FeatureCard: "Özellik Kartı",
+  Promotional: "Promosyon",
+};
+
 export default function ContentPage() {
   const { message } = App.useApp();
   const {
@@ -22,19 +31,19 @@ export default function ContentPage() {
 
   const handleToggleStatus = async (record) => {
     await contentService.updateStatus(record.id, { isActive: !record.isActive });
-    message.success(`"${record.title ?? record.key}" is now ${!record.isActive ? "active" : "inactive"}.`);
+    message.success(`"${record.title ?? record.key}" artık ${!record.isActive ? "aktif" : "pasif"}.`);
     refetch();
   };
 
   const handlePublish = async (record) => {
     await contentService.publish(record.id);
-    message.success(`"${record.title ?? record.key}" published.`);
+    message.success(`"${record.title ?? record.key}" yayınlandı.`);
     refetch();
   };
 
   const handleDelete = async (record) => {
     await contentService.deleteContent(record.id);
-    message.success(`"${record.title ?? record.key}" was deleted.`);
+    message.success(`"${record.title ?? record.key}" silindi.`);
     refetch();
   };
 
@@ -43,10 +52,10 @@ export default function ContentPage() {
     try {
       if (formState.item) {
         await contentService.updateContent(formState.item.id, values);
-        message.success("Content updated.");
+        message.success("İçerik güncellendi.");
       } else {
         await contentService.createContent(values);
-        message.success("Content created.");
+        message.success("İçerik oluşturuldu.");
       }
       setFormState({ open: false, item: null });
       refetch();
@@ -57,34 +66,38 @@ export default function ContentPage() {
 
   const columns = [
     {
-      title: "Title",
+      title: "Başlık",
       key: "title",
       width: 260,
       render: (_, r) => <EntityCell title={r.title ?? r.key} subtitle={r.key} avatarColor="#2F6FED" />,
     },
-    { title: "Type", dataIndex: "type", key: "type", width: 130, render: (v) => <Tag>{v}</Tag> },
+    { title: "Tür", dataIndex: "type", key: "type", width: 130, render: (v) => <Tag>{CONTENT_TYPE_LABELS[v] ?? v}</Tag> },
     {
-      title: "Status",
+      title: "Durum",
       key: "status",
       width: 130,
-      render: (_, r) => <StatusTag status={r.isCurrentlyLive ? "Live" : r.isActive ? "Active" : "Inactive"} colorMap={{ live: "green" }} />,
+      render: (_, r) => (
+        <StatusTag status={r.isCurrentlyLive ? "Live" : r.isActive ? "Active" : "Inactive"} colorMap={{ live: "green" }}>
+          {r.isCurrentlyLive ? "Yayında" : r.isActive ? "Aktif" : "Pasif"}
+        </StatusTag>
+      ),
     },
     {
-      title: "Start At",
+      title: "Başlangıç",
       dataIndex: "startAt",
       key: "startAt",
       width: 130,
       render: (v) => (v ? dayjs(v).format("DD MMM YYYY") : "—"),
     },
     {
-      title: "End At",
+      title: "Bitiş",
       dataIndex: "endAt",
       key: "endAt",
       width: 130,
       render: (v) => (v ? dayjs(v).format("DD MMM YYYY") : "—"),
     },
     {
-      title: "Updated At",
+      title: "Güncellenme",
       dataIndex: "updatedAt",
       key: "updatedAt",
       width: 140,
@@ -98,20 +111,20 @@ export default function ContentPage() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "publish", label: "Publish", icon: <CloudUploadOutlined />, onClick: () => handlePublish(record) },
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, item: record }) },
+            { key: "publish", label: "Yayınla", icon: <CloudUploadOutlined />, onClick: () => handlePublish(record) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, item: record }) },
             {
               key: "toggle",
-              label: record.isActive ? "Deactivate" : "Activate",
+              label: record.isActive ? "Pasifleştir" : "Aktifleştir",
               icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
               onClick: () => handleToggleStatus(record),
             },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.title ?? record.key}"?`,
+              confirm: `"${record.title ?? record.key}" silinsin mi?`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -123,12 +136,12 @@ export default function ContentPage() {
   return (
     <PageContainer>
       <PageHeader
-        crumbs={[{ label: "Dashboard", path: "/admin" }, { label: "Content" }]}
-        title="Content"
-        description="Manage banners, announcements, campaigns and feature cards."
+        crumbs={[{ label: "Panel", path: "/admin" }, { label: "İçerik" }]}
+        title="İçerik"
+        description="Banner, duyuru, kampanya ve özellik kartlarını yönetin."
         actions={
           <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, item: null })}>
-            Create Content
+            İçerik Oluştur
           </Button>
         }
       />
@@ -141,7 +154,7 @@ export default function ContentPage() {
           dataSource={rows}
           loading={loading}
           scrollX={1100}
-          emptyDescription="No content items match these filters."
+          emptyDescription="Bu filtrelerle eşleşen içerik bulunamadı."
           pagination={{
             current: page,
             pageSize,

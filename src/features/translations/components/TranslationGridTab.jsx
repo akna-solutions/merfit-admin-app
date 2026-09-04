@@ -23,14 +23,14 @@ export default function TranslationGridTab() {
   const handleSave = async () => {
     const result = await saveAll();
     message.success(
-      `Saved — ${result.data.createdCount} created, ${result.data.updatedCount} updated.`,
+      `Kaydedildi — ${result.data.createdCount} oluşturuldu, ${result.data.updatedCount} güncellendi.`,
     );
   };
 
   const columns = [
-    { title: "Resource Key", dataIndex: "resourceKey", key: "resourceKey", width: 220 },
+    { title: "Kaynak Anahtarı", dataIndex: "resourceKey", key: "resourceKey", width: 220 },
     {
-      title: languageA ? languageA.name : "Language A",
+      title: languageA ? languageA.name : "Dil A",
       key: "valueA",
       width: 260,
       render: (_, record) => (
@@ -42,7 +42,7 @@ export default function TranslationGridTab() {
       ),
     },
     {
-      title: languageB ? languageB.name : "Language B",
+      title: languageB ? languageB.name : "Dil B",
       key: "valueB",
       width: 260,
       render: (_, record) => (
@@ -54,7 +54,7 @@ export default function TranslationGridTab() {
       ),
     },
     {
-      title: "Updated At",
+      title: "Güncellenme Tarihi",
       dataIndex: "updatedAt",
       key: "updatedAt",
       width: 140,
@@ -66,7 +66,7 @@ export default function TranslationGridTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button icon={<ImportOutlined />} onClick={() => setImportOpen(true)} style={{ marginRight: 8 }}>
-          Import / Export
+          İçe / Dışa Aktar
         </Button>
         <Button
           type="primary"
@@ -75,7 +75,7 @@ export default function TranslationGridTab() {
           loading={saving}
           onClick={handleSave}
         >
-          Save Changes {dirtyCount > 0 ? `(${dirtyCount})` : ""}
+          Değişiklikleri Kaydet {dirtyCount > 0 ? `(${dirtyCount})` : ""}
         </Button>
       </div>
 
@@ -99,7 +99,7 @@ export default function TranslationGridTab() {
         <Col xs={24} sm={12} lg={8}>
           <Input
             allowClear
-            placeholder="Search resource key"
+            placeholder="Kaynak anahtarı ara"
             prefix={<SearchOutlined />}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -115,7 +115,7 @@ export default function TranslationGridTab() {
           loading={loading}
           scrollX={900}
           pagination={{ pageSize: 20 }}
-          emptyDescription="No translation keys match this search."
+          emptyDescription="Bu aramayla eşleşen çeviri anahtarı bulunamadı."
         />
       </SectionCard>
 

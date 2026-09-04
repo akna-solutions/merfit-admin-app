@@ -90,7 +90,7 @@ export const usersMockData = Array.from({ length: 42 }, (_, i) => {
     trainingLocation: TRAINING_LOCATION[seed % TRAINING_LOCATION.length],
     trainingDaysPerWeek: 2 + (seed % 5),
     unitSystem: UNIT_SYSTEM[seed % UNIT_SYSTEM.length],
-    currentSubscriptionProductName: subscriptionStatus ? "Merfit Plus — Monthly" : null,
+    currentSubscriptionProductName: subscriptionStatus ? "Merfit Plus — Aylık" : null,
     currentSubscriptionExpiresAt: subscriptionStatus ? daysAgo(-30 + (seed % 20)) : null,
     latestMerfitScore: 40 + Math.floor(seededRandom(seed * 5) * 60),
     currentStreak: Math.floor(seededRandom(seed * 13) * 30),
@@ -104,7 +104,7 @@ export const usersMockData = Array.from({ length: 42 }, (_, i) => {
 // AdminUserWorkoutSessionListItemDto[]
 export function getUserWorkoutSessions(userId) {
   const seed = Number(userId) || 1;
-  const titles = ["Full Body Burn", "Upper Body Strength", "HIIT Cardio", "Core Blast", "Leg Day", "Yoga Flow"];
+  const titles = ["Tüm Vücut Yakımı", "Üst Vücut Güçlendirme", "HIIT Kardiyo", "Karın Bölgesi Antrenmanı", "Bacak Günü", "Yoga Akışı"];
   return Array.from({ length: 6 }, (_, i) => ({
     id: seed * 100 + i,
     workoutId: 100 + ((seed + i) % 20),
@@ -162,9 +162,9 @@ export function getUserMeasurements(userId) {
 export function getUserScoreBreakdown(user) {
   const score = user.latestMerfitScore ?? 0;
   return [
-    { category: "Workout", points: Math.round(score * 0.4) },
-    { category: "Nutrition", points: Math.round(score * 0.35) },
-    { category: "Consistency", points: Math.round(score * 0.25) },
+    { category: "Antrenman", points: Math.round(score * 0.4) },
+    { category: "Beslenme", points: Math.round(score * 0.35) },
+    { category: "Süreklilik", points: Math.round(score * 0.25) },
   ];
 }
 
@@ -182,12 +182,12 @@ export function getUserScoreHistory(userId) {
 export function getUserAchievementsList(userId) {
   const seed = Number(userId) || 1;
   const pool = [
-    { achievementId: 1, code: "FIRST_WORKOUT", title: "First Workout", points: 10, icon: "🏁" },
-    { achievementId: 2, code: "STREAK_7", title: "7 Day Streak", points: 25, icon: "🔥" },
-    { achievementId: 3, code: "WORKOUTS_50", title: "50 Workouts", points: 50, icon: "💪" },
-    { achievementId: 4, code: "NUTRITION_PRO", title: "Nutrition Pro", points: 30, icon: "🥗" },
-    { achievementId: 5, code: "EARLY_BIRD", title: "Early Bird", points: 15, icon: "🌅" },
-    { achievementId: 6, code: "SCORE_90", title: "Score 90+", points: 40, icon: "🏆" },
+    { achievementId: 1, code: "FIRST_WORKOUT", title: "İlk Antrenman", points: 10, icon: "🏁" },
+    { achievementId: 2, code: "STREAK_7", title: "7 Günlük Seri", points: 25, icon: "🔥" },
+    { achievementId: 3, code: "WORKOUTS_50", title: "50 Antrenman", points: 50, icon: "💪" },
+    { achievementId: 4, code: "NUTRITION_PRO", title: "Beslenme Uzmanı", points: 30, icon: "🥗" },
+    { achievementId: 5, code: "EARLY_BIRD", title: "Erkenci Kuş", points: 15, icon: "🌅" },
+    { achievementId: 6, code: "SCORE_90", title: "90+ Skor", points: 40, icon: "🏆" },
   ];
   return pool.slice(0, 2 + (seed % 4)).map((a, i) => ({
     ...a,
@@ -224,7 +224,7 @@ export function getUserSubscriptions(userId) {
     {
       id: seed * 10,
       subscriptionProductId: 1,
-      productName: "Merfit Plus — Monthly",
+      productName: "Merfit Plus — Aylık",
       provider: seed % 2 === 0 ? "AppStore" : "GooglePlay",
       status: seed % 4 === 0 ? "cancelled" : seed % 3 === 0 ? "expired" : "active",
       startedAt: daysAgo(60),

@@ -21,7 +21,7 @@ export default function MuscleGroupsTab() {
 
   const handleDelete = async (record) => {
     await muscleGroupService.deleteMuscleGroup(record.id);
-    message.success(`"${record.name}" was deleted.`);
+    message.success(`"${record.name}" silindi.`);
     refetch();
   };
 
@@ -30,10 +30,10 @@ export default function MuscleGroupsTab() {
     try {
       if (formState.muscleGroup) {
         await muscleGroupService.updateMuscleGroup(formState.muscleGroup.id, values);
-        message.success("Muscle group updated.");
+        message.success("Kas grubu güncellendi.");
       } else {
         await muscleGroupService.createMuscleGroup(values);
-        message.success("Muscle group created.");
+        message.success("Kas grubu oluşturuldu.");
       }
       setFormState({ open: false, muscleGroup: null });
       refetch();
@@ -44,7 +44,7 @@ export default function MuscleGroupsTab() {
 
   const columns = [
     {
-      title: "Muscle Group",
+      title: "Kas Grubu",
       key: "name",
       width: 260,
       render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#F5222D" />,
@@ -57,13 +57,13 @@ export default function MuscleGroupsTab() {
       render: (_, record) => (
         <RowActions
           items={[
-            { key: "edit", label: "Edit", icon: <EditOutlined />, onClick: () => setFormState({ open: true, muscleGroup: record }) },
+            { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, muscleGroup: record }) },
             {
               key: "delete",
-              label: "Delete",
+              label: "Sil",
               icon: <DeleteOutlined />,
               danger: true,
-              confirm: `Delete "${record.name}"? Exercises using it may be affected.`,
+              confirm: `"${record.name}" silinsin mi? Bunu kullanan egzersizler etkilenebilir.`,
               onClick: () => handleDelete(record),
             },
           ]}
@@ -76,7 +76,7 @@ export default function MuscleGroupsTab() {
     <div className="merfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, muscleGroup: null })}>
-          Create Muscle Group
+          Kas Grubu Oluştur
         </Button>
       </div>
 
@@ -86,7 +86,7 @@ export default function MuscleGroupsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={500}
-          emptyDescription="No muscle groups yet."
+          emptyDescription="Henüz kas grubu yok."
           pagination={{
             current: page,
             pageSize,

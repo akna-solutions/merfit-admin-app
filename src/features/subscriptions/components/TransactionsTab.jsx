@@ -24,23 +24,23 @@ export default function TransactionsTab() {
 
   const columns = [
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "user",
       width: 220,
       render: (_, r) => <EntityCell title={r.userEmail} subtitle={r.transactionId} avatarColor="#7C3AED" />,
     },
-    { title: "Product", dataIndex: "productId", key: "productId", width: 160 },
-    { title: "Provider", dataIndex: "provider", key: "provider", width: 100 },
+    { title: "Ürün", dataIndex: "productId", key: "productId", width: 160 },
+    { title: "Sağlayıcı", dataIndex: "provider", key: "provider", width: 100 },
     {
-      title: "Amount",
+      title: "Tutar",
       key: "amount",
       width: 120,
       sorter: (a, b) => a.amount - b.amount,
       render: (_, r) => `${r.amount.toFixed(2)} ${r.currency}`,
     },
-    { title: "Purchased At", dataIndex: "purchasedAt", key: "purchasedAt", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
+    { title: "Satın Alma Tarihi", dataIndex: "purchasedAt", key: "purchasedAt", width: 140, render: (v) => dayjs(v).format("DD MMM YYYY") },
     {
-      title: "Expiry",
+      title: "Bitiş",
       dataIndex: "expiresAt",
       key: "expiresAt",
       width: 130,
@@ -58,7 +58,7 @@ export default function TransactionsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={950}
-          emptyDescription="No transactions match these filters."
+          emptyDescription="Bu filtrelere uyan işlem yok."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

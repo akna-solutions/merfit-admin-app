@@ -9,7 +9,7 @@ export default function RequestsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={7}>
         <Input
           allowClear
-          placeholder="Search by user"
+          placeholder="Kullanıcıya göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -21,10 +21,10 @@ export default function RequestsFilterBar({ filters, onChange, onReset }) {
           value={filters.type ?? "all"}
           onChange={(v) => onChange({ type: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All types" },
-            { value: "Workout", label: "Workout" },
-            { value: "Nutrition", label: "Nutrition" },
-            { value: "Insight", label: "Insight" },
+            { value: "all", label: "Tüm türler" },
+            { value: "Workout", label: "Antrenman" },
+            { value: "Nutrition", label: "Beslenme" },
+            { value: "Insight", label: "İçgörü" },
           ]}
         />
       </Col>
@@ -34,11 +34,11 @@ export default function RequestsFilterBar({ filters, onChange, onReset }) {
           value={filters.status ?? "all"}
           onChange={(v) => onChange({ status: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All statuses" },
-            { value: "Pending", label: "Pending" },
-            { value: "Processing", label: "Processing" },
-            { value: "Completed", label: "Completed" },
-            { value: "Failed", label: "Failed" },
+            { value: "all", label: "Tüm durumlar" },
+            { value: "Pending", label: "Beklemede" },
+            { value: "Processing", label: "İşleniyor" },
+            { value: "Completed", label: "Tamamlandı" },
+            { value: "Failed", label: "Başarısız" },
           ]}
         />
       </Col>

@@ -19,13 +19,13 @@ export default function ResultsTab() {
 
   const columns = [
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "user",
       width: 240,
-      render: (_, r) => <EntityCell title={r.userEmail} subtitle={`Request #${r.requestId}`} avatarColor="#22C55E" />,
+      render: (_, r) => <EntityCell title={r.userEmail} subtitle={`İstek #${r.requestId}`} avatarColor="#22C55E" />,
     },
     {
-      title: "Created At",
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 170,
@@ -41,7 +41,7 @@ export default function ResultsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={600}
-          emptyDescription="No AI results yet."
+          emptyDescription="Henüz yapay zeka sonucu yok."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,

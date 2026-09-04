@@ -30,13 +30,13 @@ function statusToCode(status) {
 function defaultMessage(status) {
   switch (status) {
     case 401:
-      return "Your session has expired. Please sign in again.";
+      return "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.";
     case 403:
-      return "You don't have permission to do that.";
+      return "Bu işlemi yapmak için izniniz yok.";
     case 404:
-      return "The requested resource was not found.";
+      return "İstenen kaynak bulunamadı.";
     default:
-      return "Something went wrong. Please try again.";
+      return "Bir şeyler ters gitti. Lütfen tekrar deneyin.";
   }
 }
 
@@ -60,7 +60,7 @@ async function request(path, { method = "GET", body, token, headers } = {}) {
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (networkError) {
-    const error = new Error("Could not reach the server. Is the API running on localhost:5000?");
+    const error = new Error("Sunucuya ulaşılamadı. API localhost:5000 üzerinde çalışıyor mu?");
     error.code = "NETWORK_ERROR";
     throw error;
   }

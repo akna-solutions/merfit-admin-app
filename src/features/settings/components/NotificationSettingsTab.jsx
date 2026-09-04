@@ -9,16 +9,16 @@ export default function NotificationSettingsTab() {
 
   const handleToggle = (setter) => (checked) => {
     setter(checked);
-    message.info("Saved (mock — no backend yet).");
+    message.info("Kaydedildi (mock — henüz backend yok).");
   };
 
   return (
     <SectionCard>
       <Form layout="vertical" style={{ maxWidth: 480 }}>
-        <Form.Item label="Email Notifications" extra="Receive admin alerts and reports by email.">
+        <Form.Item label="E-posta Bildirimleri" extra="Yönetici uyarılarını ve raporlarını e-posta ile alın.">
           <Switch checked={emailNotifications} onChange={handleToggle(setEmailNotifications)} />
         </Form.Item>
-        <Form.Item label="System Notifications" extra="Show in-app notifications for critical events.">
+        <Form.Item label="Sistem Bildirimleri" extra="Kritik olaylar için uygulama içi bildirimler gösterin.">
           <Switch checked={systemNotifications} onChange={handleToggle(setSystemNotifications)} />
         </Form.Item>
       </Form>

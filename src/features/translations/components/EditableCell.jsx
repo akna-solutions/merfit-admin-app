@@ -38,7 +38,7 @@ export default function EditableCell({ value, onChange, languageId }) {
       style={{ cursor: "pointer", minHeight: 22, padding: "2px 4px", borderRadius: 4 }}
       className="merfit-editable-cell"
     >
-      {value || <Text type="secondary" italic>Click to add…</Text>}
+      {value || <Text type="secondary" italic>Eklemek için tıklayın…</Text>}
     </div>
   );
 }

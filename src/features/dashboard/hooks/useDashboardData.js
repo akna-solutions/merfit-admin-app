@@ -69,12 +69,12 @@ export function useDashboardData(dateRange) {
       const retentionAnalytics = retentionAnalyticsRes.data;
 
       const kpiMetrics = [
-        { id: "total-users", title: "Total Users", value: summary.totalUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "users" },
-        { id: "active-users", title: "Active Users", value: summary.activeUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "active" },
-        { id: "plus-subscribers", title: "Plus Subscribers", value: summary.plusSubscribers.toLocaleString(), trend: 0, trendLabel: "", icon: "crown" },
-        { id: "monthly-revenue", title: "Monthly Revenue", value: formatMoney(summary.revenueThisMonth), trend: 0, trendLabel: "", icon: "revenue" },
-        { id: "workouts-completed", title: "Workouts Completed", value: summary.workoutsCompleted.toLocaleString(), trend: 0, trendLabel: "", icon: "workout" },
-        { id: "new-users", title: "New Users", value: summary.newUsersThisMonth.toLocaleString(), trend: 0, trendLabel: "this month", icon: "new" },
+        { id: "total-users", title: "Toplam Kullanıcı", value: summary.totalUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "users" },
+        { id: "active-users", title: "Aktif Kullanıcı", value: summary.activeUsers.toLocaleString(), trend: 0, trendLabel: "", icon: "active" },
+        { id: "plus-subscribers", title: "Plus Abonesi", value: summary.plusSubscribers.toLocaleString(), trend: 0, trendLabel: "", icon: "crown" },
+        { id: "monthly-revenue", title: "Aylık Gelir", value: formatMoney(summary.revenueThisMonth), trend: 0, trendLabel: "", icon: "revenue" },
+        { id: "workouts-completed", title: "Tamamlanan Antrenman", value: summary.workoutsCompleted.toLocaleString(), trend: 0, trendLabel: "", icon: "workout" },
+        { id: "new-users", title: "Yeni Kullanıcı", value: summary.newUsersThisMonth.toLocaleString(), trend: 0, trendLabel: "bu ay", icon: "new" },
       ];
 
       const userGrowth = (userGrowthRes.data.points ?? []).map((p) => ({
@@ -103,20 +103,20 @@ export function useDashboardData(dateRange) {
       const recentActivity = [];
 
       const quickStats = [
-        { id: "active-subs", label: "Active Subscriptions", value: subscriptions.activeCount?.toLocaleString() ?? "0" },
+        { id: "active-subs", label: "Aktif Abonelikler", value: subscriptions.activeCount?.toLocaleString() ?? "0" },
         {
           id: "workout-completion",
-          label: "Workout Completion",
+          label: "Antrenman Tamamlama Oranı",
           value: `${workoutsAnalytics.workoutCompletionRatePercent.toFixed(1)}%`,
           progress: workoutsAnalytics.workoutCompletionRatePercent,
         },
         {
           id: "retention",
-          label: "7 Day Retention",
+          label: "7 Günlük Elde Tutma",
           value: `${retentionAnalytics.retention7DayPercent.toFixed(1)}%`,
           progress: retentionAnalytics.retention7DayPercent,
         },
-        { id: "open-tickets", label: "Open Support Tickets", value: summary.openSupportTickets?.toLocaleString() ?? "0" },
+        { id: "open-tickets", label: "Açık Destek Talepleri", value: summary.openSupportTickets?.toLocaleString() ?? "0" },
       ];
 
       setData({

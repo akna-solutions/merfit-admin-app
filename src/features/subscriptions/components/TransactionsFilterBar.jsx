@@ -9,7 +9,7 @@ export default function TransactionsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Search by user, transaction or product"
+          placeholder="Kullanıcıya, işleme veya ürüne göre ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -21,7 +21,7 @@ export default function TransactionsFilterBar({ filters, onChange, onReset }) {
           value={filters.provider ?? "all"}
           onChange={(v) => onChange({ provider: v === "all" ? undefined : v })}
           options={[
-            { value: "all", label: "All providers" },
+            { value: "all", label: "Tüm sağlayıcılar" },
             { value: "Apple", label: "Apple" },
             { value: "Google", label: "Google" },
           ]}

@@ -7,6 +7,12 @@ import { aiService } from "../services/aiService";
 import RequestsFilterBar from "./RequestsFilterBar";
 import RequestDetailDrawer from "./RequestDetailDrawer";
 
+// Display-only labels for the underlying request type/status values (values
+// used for filtering and matching stay in English — only the rendered text
+// is translated here).
+const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İçgörü" };
+const STATUS_LABELS = { Pending: "Beklemede", Processing: "İşleniyor", Completed: "Tamamlandı", Failed: "Başarısız" };
+
 export default function RequestsTab() {
   const {
     rows, total, loading, filters, page, pageSize,
@@ -25,16 +31,22 @@ export default function RequestsTab() {
 
   const columns = [
     {
-      title: "User",
+      title: "Kullanıcı",
       key: "user",
       width: 220,
       render: (_, r) => <EntityCell title={r.userEmail} subtitle={`#${r.userId}`} avatarColor="#7C3AED" />,
     },
-    { title: "Type", dataIndex: "type", key: "type", width: 110, render: (v) => <Tag>{v}</Tag> },
+    { title: "Tür", dataIndex: "type", key: "type", width: 110, render: (v) => <Tag>{TYPE_LABELS[v] ?? v}</Tag> },
     { title: "Model", dataIndex: "model", key: "model", width: 150 },
-    { title: "Status", dataIndex: "status", key: "status", width: 120, render: (v) => <StatusTag status={v} /> },
     {
-      title: "Created At",
+      title: "Durum",
+      dataIndex: "status",
+      key: "status",
+      width: 120,
+      render: (v) => <StatusTag status={v}>{STATUS_LABELS[v] ?? v}</StatusTag>,
+    },
+    {
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 150,
@@ -42,14 +54,14 @@ export default function RequestsTab() {
       render: (v) => dayjs(v).format("DD MMM YYYY, HH:mm"),
     },
     {
-      title: "Started At",
+      title: "Başlangıç Tarihi",
       dataIndex: "startedAt",
       key: "startedAt",
       width: 150,
       render: (v) => (v ? dayjs(v).format("DD MMM, HH:mm") : "—"),
     },
     {
-      title: "Duration",
+      title: "Süre",
       key: "duration",
       width: 100,
       render: (_, r) =>
@@ -68,7 +80,7 @@ export default function RequestsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1050}
-          emptyDescription="No AI requests match these filters."
+          emptyDescription="Bu filtrelerle eşleşen yapay zeka isteği bulunamadı."
           onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
