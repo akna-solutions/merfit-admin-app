@@ -1,5 +1,5 @@
-// Mirrors MerfitApi.Domain.Entities.Enums (see MerfitApi repo, Domain/Enums/*.cs).
-// IMPORTANT: MerfitApi.Api/Program.cs does not register a JsonStringEnumConverter,
+// Mirrors MBFitApi.Domain.Entities.Enums (see MBFitApi repo, Domain/Enums/*.cs).
+// IMPORTANT: MBFitApi.Api/Program.cs does not register a JsonStringEnumConverter,
 // so ASP.NET Core's default System.Text.Json behavior applies: enums serialize as
 // their underlying INTEGER value, not their name. The arrays below are ordered to
 // match each C# enum's declaration order exactly, so `label[apiValue]` round-trips

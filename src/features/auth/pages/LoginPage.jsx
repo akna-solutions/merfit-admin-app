@@ -100,10 +100,6 @@ export default function LoginPage() {
             Giriş Yap
           </Button>
         </Form>
-
-        <Text type="secondary" className="merfit-login-hint">
-          Demo bilgileri — admin@merfit.com / admin123
-        </Text>
       </div>
     </div>
   );

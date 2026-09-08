@@ -82,7 +82,26 @@ export const darkThemeTokens = {
   colorBorder: merfitColors.darkBorder,
   colorBorderSecondary: merfitColors.darkBorder,
 };
-
+// mode'dan bağımsız, sidebar için sabit dark ayarlar
+export const sidebarForcedDarkComponents = {
+  Layout: {
+    siderBg: merfitColors.siderBgDark,
+  },
+  Menu: {
+    itemBorderRadius: merfitRadius.sm,
+    itemHeight: 42,
+    itemMarginInline: 8,
+    itemMarginBlock: 4,
+    iconSize: 17,
+    collapsedIconSize: 18,
+    itemSelectedBg: "rgba(47,111,237,0.18)",
+    itemSelectedColor: merfitColors.primary,
+    itemHoverBg: "rgba(255,255,255,0.04)",
+    itemColor: merfitColors.darkTextSecondary,
+    groupTitleColor: "#5B6579",
+    groupTitleFontSize: 11,
+  },
+};
 // Component-level token overrides so we move away from "default AntD" look.
 export const componentTokens = (mode) => ({
   Layout: {

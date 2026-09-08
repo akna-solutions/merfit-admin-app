@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import { Layout, Menu, Drawer } from "antd";
+import { Layout, Menu, Drawer, ConfigProvider, theme as antdTheme } from "antd";
+import { darkThemeTokens, sidebarForcedDarkComponents } from "../../theme/themeTokens";
 import { LogoutOutlined, ThunderboltFilled } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -39,10 +40,7 @@ function buildMenuItems(navigate) {
 function SidebarBrand({ collapsed }) {
   return (
     <div className="merfit-sidebar-brand">
-      <span className="merfit-sidebar-brand-mark">
-        <ThunderboltFilled />
-      </span>
-      {!collapsed && <span className="merfit-sidebar-brand-text">MERFIT</span>}
+        <img src={"https://kcxewftcfitahxefmuwz.supabase.co/storage/v1/object/public/mbfit/mbfit-logo-withoutback.png"} alt="Merfit" className="merfit-sidebar-logo" />
     </div>
   );
 }
@@ -121,6 +119,13 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile }) {
   return (
     <>
       {/* Desktop / tablet: persistent collapsible sider */}
+          <ConfigProvider
+      theme={{
+        algorithm: antdTheme.darkAlgorithm,
+        token: darkThemeTokens,
+        components: sidebarForcedDarkComponents,
+      }}
+    >
       <Sider
         className="merfit-sidebar merfit-sidebar-desktop"
         width={248}
@@ -144,6 +149,7 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile }) {
       >
         <SidebarContent collapsed={false} onNavigate={onCloseMobile} />
       </Drawer>
+      </ConfigProvider>
     </>
   );
 }
