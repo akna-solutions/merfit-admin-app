@@ -78,7 +78,7 @@ export default function NotificationHistoryTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <NotificationsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
       <SectionCard>
         <DataTable

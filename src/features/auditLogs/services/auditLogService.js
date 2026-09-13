@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminAuditLogController.cs. Fully
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminAuditLogController.cs. Fully
 // read-only — audit records can never be edited or deleted from the panel.
 import { apiClient, buildQuery } from "../../../utils/apiClient";
 

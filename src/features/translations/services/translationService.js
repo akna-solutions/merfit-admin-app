@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminLanguageController.cs and
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminLanguageController.cs and
 // AdminTranslationController.cs.
 import { apiClient, buildQuery } from "../../../utils/apiClient";
 import { ALL_RESOURCE_KEYS } from "../data/translationsMockData";

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { userService } from "../services/userService";
 
-// Filter shape mirrors AdminUserListRequest (MerfitApi.Business.Dtos.Admin.
+// Filter shape mirrors AdminUserListRequest (MBFitApi.Business.Dtos.Admin.
 // Users.AdminUserListRequest): isActive (bool|undefined), subscriptionStatus
 // ("active"|"expired"|"cancelled"|undefined), dateRange -> createdFrom/To.
 const DEFAULT_FILTERS = {

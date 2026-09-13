@@ -23,7 +23,7 @@ function formatDay(dateOnly) {
 }
 
 // Single abstraction dashboard components pull data through (spec §18).
-// Talks to the real MerfitApi admin endpoints (see dashboardService.js) and
+// Talks to the real MBFitApi admin endpoints (see dashboardService.js) and
 // reshapes their DTOs into the flat { month, users }/{ day, workouts }/etc.
 // shapes the existing chart components (UserGrowthChart, RevenueChart, ...)
 // already expect, so no chart/component changes are needed.

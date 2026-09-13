@@ -19,7 +19,7 @@ export default function RevenueChart({ data, loading }) {
   return (
     <Card
       title="Gelir"
-      className="merfit-chart-card"
+      className="mbfit-chart-card"
       bordered={false}
       loading={loading}
     >

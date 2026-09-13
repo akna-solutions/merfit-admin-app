@@ -6,7 +6,7 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { equipmentService } from "../services/workoutService";
 import EquipmentFormDrawer from "./EquipmentFormDrawer";
 
-// MerfitApi.Api/Controllers/Admin/AdminEquipmentController.cs — full CRUD
+// MBFitApi.Api/Controllers/Admin/AdminEquipmentController.cs — full CRUD
 // existed in equipmentService but was only ever used as a read-only lookup
 // (e.g. attaching equipment to a workout). This tab is the actual manager.
 export default function EquipmentTab() {
@@ -72,7 +72,7 @@ export default function EquipmentTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, equipment: null })}>
           Ekipman Oluştur

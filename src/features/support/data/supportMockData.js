@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Support/AdminSupportTicketDtos.cs).
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Support/AdminSupportTicketDtos.cs).
 
 function daysAgo(n) {
   const d = new Date();
@@ -81,7 +81,7 @@ export function buildTicketMessages(ticket) {
       id: ticket.id * 100 + i + 1,
       ticketId: ticket.id,
       senderUserId: isFromAdmin ? 0 : ticket.userId,
-      senderEmail: isFromAdmin ? "admin@merfit.com" : ticket.userEmail,
+      senderEmail: isFromAdmin ? "admin@mbfit.com" : ticket.userEmail,
       isFromAdmin,
       message: isFromAdmin
         ? "Merhaba, konuyu inceliyoruz, en kısa sürede dönüş yapacağız."

@@ -1,7 +1,7 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Workouts/AdminWorkoutDtos.cs, .../WorkoutCategories,
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Workouts/AdminWorkoutDtos.cs, .../WorkoutCategories,
 // .../MuscleGroups, .../Equipment, .../Exercises, and
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutController.cs). Categories,
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutController.cs). Categories,
 // muscle groups, equipment and exercises are managed by their own
 // controllers in the real API; here they're simple lookup tables used to
 // populate the Workout form's selects, since this phase only ships the
@@ -142,7 +142,7 @@ export const workoutsMockData = TITLES.map((title, i) => {
     createdAt: daysAgo(90 + Math.floor(seeded(seed) * 200)),
 
     // AdminWorkoutDetailDto extras
-    tagline: "Merfit koçluk ekibi tarafından hazırlanmış, sonuç odaklı bir antrenman.",
+    tagline: "MB Fit koçluk ekibi tarafından hazırlanmış, sonuç odaklı bir antrenman.",
     description:
       "Minimum sürede maksimum sonuç elde etmek için tasarlanmış, bileşik hareketleri ve kondisyon çalışmalarını bir araya getiren yapılandırılmış bir antrenman.",
     updatedAt: daysAgo(Math.floor(seeded(seed) * 45)),

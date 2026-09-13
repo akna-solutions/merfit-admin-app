@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTO (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Content/AdminContentDtos.cs). Type is a free-text
+// Mock data shaped to match MBFitApi's real DTO (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Content/AdminContentDtos.cs). Type is a free-text
 // string server-side; these are the API doc's recommended values.
 
 function daysAgo(n) {
@@ -24,7 +24,7 @@ function isCurrentlyLive(isActive, startAt, endAt) {
 }
 
 const RAW = [
-  { key: "summer-sale-2026", type: "Campaign", title: "Yaz İndirimi", description: "Bu yaz Merfit Plus'ta %20 indirim.", startAt: daysAgo(5), endAt: daysFromNow(10), isActive: true },
+  { key: "summer-sale-2026", type: "Campaign", title: "Yaz İndirimi", description: "Bu yaz MB Fit Plus'ta %20 indirim.", startAt: daysAgo(5), endAt: daysFromNow(10), isActive: true },
   { key: "new-ai-workouts", type: "Announcement", title: "Yapay Zekâ Antrenmanları Yayında", description: "Yeni yapay zekâ destekli antrenman planlarını deneyin.", startAt: daysAgo(10), endAt: null, isActive: true },
   { key: "home-banner-main", type: "Banner", title: "Hedeflerinize Daha Hızlı Ulaşın", description: "Kişiselleştirilmiş planlar için Plus'a yükseltin.", startAt: null, endAt: null, isActive: true },
   { key: "referral-campaign", type: "Campaign", title: "Bir Arkadaşını Davet Et", description: "Bir ay ver, bir ay kazan.", startAt: daysAgo(30), endAt: daysAgo(2), isActive: false },

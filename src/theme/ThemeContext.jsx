@@ -13,7 +13,7 @@ import {
   componentTokens,
 } from "./themeTokens";
 
-const STORAGE_KEY = "merfit-admin-theme";
+const STORAGE_KEY = "mbfit-admin-theme";
 
 const ThemeModeContext = createContext({
   mode: "light",

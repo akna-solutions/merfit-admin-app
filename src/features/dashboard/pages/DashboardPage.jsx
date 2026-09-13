@@ -24,22 +24,22 @@ export default function DashboardPage() {
   } = useDashboardData();
 
   return (
-    <div className="merfit-dashboard">
+    <div className="mbfit-dashboard">
       {/* KPI row */}
-      <Row gutter={CARD_GAP} className="merfit-dashboard-row">
+      <Row gutter={CARD_GAP} className="mbfit-dashboard-row">
         {(loading ? Array.from({ length: 6 }) : kpiMetrics).map((metric, index) => (
           <Col key={metric?.id ?? index} xs={24} sm={12} lg={8} xl={4}>
             {metric ? (
               <KpiCard {...metric} />
             ) : (
-              <div className="merfit-kpi-card merfit-kpi-card-skeleton" />
+              <div className="mbfit-kpi-card mbfit-kpi-card-skeleton" />
             )}
           </Col>
         ))}
       </Row>
 
       {/* User growth + subscription distribution */}
-      <Row gutter={CARD_GAP} className="merfit-dashboard-row">
+      <Row gutter={CARD_GAP} className="mbfit-dashboard-row">
         <Col xs={24} xl={16}>
           <UserGrowthChart data={userGrowth} loading={loading} />
         </Col>
@@ -49,7 +49,7 @@ export default function DashboardPage() {
       </Row>
 
       {/* Revenue + workout activity */}
-      <Row gutter={CARD_GAP} className="merfit-dashboard-row">
+      <Row gutter={CARD_GAP} className="mbfit-dashboard-row">
         <Col xs={24} xl={16}>
           <RevenueChart data={revenue} loading={loading} />
         </Col>
@@ -59,7 +59,7 @@ export default function DashboardPage() {
       </Row>
 
       {/* Recent activity + quick stats */}
-      <Row gutter={CARD_GAP} className="merfit-dashboard-row">
+      <Row gutter={CARD_GAP} className="mbfit-dashboard-row">
         <Col xs={24} xl={16}>
           <RecentActivity data={recentActivity} loading={loading} />
         </Col>

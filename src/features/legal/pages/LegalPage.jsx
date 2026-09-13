@@ -4,7 +4,7 @@ import { PageHeader, PageContainer } from "../../../components/admin";
 import DocumentsTab from "../components/DocumentsTab";
 import ConsentsTab from "../components/ConsentsTab";
 
-// MerfitApi.Api/Controllers/Admin/AdminLegalController.cs had no admin
+// MBFitApi.Api/Controllers/Admin/AdminLegalController.cs had no admin
 // screen at all: legal documents (Privacy Policy / Terms of Service)
 // couldn't be created, edited or published, and user consent records
 // couldn't be reviewed.

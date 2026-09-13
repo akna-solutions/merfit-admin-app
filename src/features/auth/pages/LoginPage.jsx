@@ -38,19 +38,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`merfit-login-page ${mode === "dark" ? "is-dark" : ""}`}>
-      <div className="merfit-login-card">
-        <div className="merfit-login-brand">
-          <span className="merfit-sidebar-brand-mark">
+    <div className={`mbfit-login-page ${mode === "dark" ? "is-dark" : ""}`}>
+      <div className="mbfit-login-card">
+        <div className="mbfit-login-brand">
+          <span className="mbfit-sidebar-brand-mark">
             <ThunderboltFilled />
           </span>
-          <span className="merfit-login-brand-text">MERFIT</span>
+          <span className="mbfit-login-brand-text">MB FIT</span>
         </div>
-        <Title level={3} className="merfit-login-title">
+        <Title level={3} className="mbfit-login-title">
           Yönetim Paneli
         </Title>
-        <Text type="secondary" className="merfit-login-subtitle">
-          Merfit platformunu yönetmek için giriş yapın.
+        <Text type="secondary" className="mbfit-login-subtitle">
+          MB Fit platformunu yönetmek için giriş yapın.
         </Text>
 
         {error && (
@@ -75,7 +75,7 @@ export default function LoginPage() {
             label="E-posta veya Kullanıcı Adı"
             rules={[{ required: true, message: "E-posta veya kullanıcı adı zorunludur" }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="admin@merfit.com" autoFocus />
+            <Input prefix={<UserOutlined />} placeholder="admin@mbfit.com" autoFocus />
           </Form.Item>
           <Form.Item
             name="password"
@@ -84,7 +84,7 @@ export default function LoginPage() {
           >
             <Input.Password prefix={<LockOutlined />} placeholder="••••••••" />
           </Form.Item>
-          <div className="merfit-login-row">
+          <div className="mbfit-login-row">
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Beni hatırla</Checkbox>
             </Form.Item>

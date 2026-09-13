@@ -105,7 +105,7 @@ export default function TicketDetailDrawer({ open, ticket, loading, onClose, onC
                     {m.senderEmail.charAt(0).toUpperCase()}
                   </Avatar>
                   <div
-                    className={`merfit-timeline-message ${m.isFromAdmin ? "is-admin" : ""}`}
+                    className={`mbfit-timeline-message ${m.isFromAdmin ? "is-admin" : ""}`}
                     style={{ maxWidth: "80%" }}
                   >
                     {m.message}

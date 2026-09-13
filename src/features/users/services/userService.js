@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminUserController.cs. Method names mirror
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminUserController.cs. Method names mirror
 // the real endpoints one to one:
 //
 //   GET    /api/admin/users                     -> getUsers(params)

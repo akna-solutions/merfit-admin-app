@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminDashboardController.cs.
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminDashboardController.cs.
 //
 //   GET /api/admin/dashboard/summary        -> getSummary()
 //   GET /api/admin/dashboard/user-growth     -> getUserGrowth(dateRange)

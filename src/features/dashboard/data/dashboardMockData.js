@@ -1,4 +1,4 @@
-// Typed-shape mock data for the Merfit dashboard.
+// Typed-shape mock data for the MB Fit dashboard.
 // Kept isolated from components per spec §18 — components consume this
 // only through the dashboardService / useDashboardData hook, never
 // directly, so swapping in a real API later is a one-file change.

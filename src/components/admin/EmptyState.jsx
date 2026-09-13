@@ -9,7 +9,7 @@ export default function EmptyState({
 }) {
   return (
     <Empty
-      className="merfit-empty-state"
+      className="mbfit-empty-state"
       image={Empty.PRESENTED_IMAGE_SIMPLE}
       description={description}
     >

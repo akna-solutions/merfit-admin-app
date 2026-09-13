@@ -12,7 +12,7 @@ import ExerciseFormDrawer from "./ExerciseFormDrawer";
 
 const { Text } = Typography;
 
-// MerfitApi.Api/Controllers/Admin/AdminExerciseController.cs — exerciseService
+// MBFitApi.Api/Controllers/Admin/AdminExerciseController.cs — exerciseService
 // already covered every endpoint (list/create/update/delete/status), but it
 // was only ever called for the Workout form's exercise picker. This tab is
 // the actual exercise library manager.
@@ -124,7 +124,7 @@ export default function ExercisesTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, exercise: null })}>
           Egzersiz Oluştur

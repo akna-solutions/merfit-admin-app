@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Analytics/AdminAnalyticsDtos.cs). IMPORTANT: every
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Analytics/AdminAnalyticsDtos.cs). IMPORTANT: every
 // AdminAnalyticsController endpoint returns a single current-snapshot object
 // with NO date-range or granularity query parameters — there is no
 // day/week/month time-series endpoint to draw a trend line from. That's why

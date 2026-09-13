@@ -9,10 +9,10 @@ import { ReloadOutlined } from "@ant-design/icons";
 // stay identical everywhere.
 export default function FilterBar({ children, onReset, extra }) {
   return (
-    <Card className="merfit-filter-bar" bordered={false}>
+    <Card className="mbfit-filter-bar" bordered={false}>
       <Row gutter={[12, 12]} align="middle">
         {children}
-        <Col flex="none" className="merfit-filter-bar-actions">
+        <Col flex="none" className="mbfit-filter-bar-actions">
           <Button icon={<ReloadOutlined />} onClick={onReset}>
             Sıfırla
           </Button>

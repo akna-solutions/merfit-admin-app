@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs exactly (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Users/AdminUserDtos.cs, MerfitApi.Api/Controllers/Admin/
+// Mock data shaped to match MBFitApi's real DTOs exactly (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Users/AdminUserDtos.cs, MBFitApi.Api/Controllers/Admin/
 // AdminUserController.cs). Field names/casing mirror what `GET /api/admin/users`
 // and `GET /api/admin/users/{id}` will return once this is wired to the real API
 // (System.Text.Json's default camelCase policy). Kept isolated from
@@ -90,9 +90,9 @@ export const usersMockData = Array.from({ length: 42 }, (_, i) => {
     trainingLocation: TRAINING_LOCATION[seed % TRAINING_LOCATION.length],
     trainingDaysPerWeek: 2 + (seed % 5),
     unitSystem: UNIT_SYSTEM[seed % UNIT_SYSTEM.length],
-    currentSubscriptionProductName: subscriptionStatus ? "Merfit Plus — Aylık" : null,
+    currentSubscriptionProductName: subscriptionStatus ? "MB Fit Plus — Aylık" : null,
     currentSubscriptionExpiresAt: subscriptionStatus ? daysAgo(-30 + (seed % 20)) : null,
-    latestMerfitScore: 40 + Math.floor(seededRandom(seed * 5) * 60),
+    latestMBFitScore: 40 + Math.floor(seededRandom(seed * 5) * 60),
     currentStreak: Math.floor(seededRandom(seed * 13) * 30),
     longestStreak: 10 + Math.floor(seededRandom(seed * 14) * 60),
     totalWorkoutSessions: Math.floor(seededRandom(seed * 6) * 220),
@@ -160,7 +160,7 @@ export function getUserMeasurements(userId) {
 
 // AdminUserScoreBreakdownItemDto[]
 export function getUserScoreBreakdown(user) {
-  const score = user.latestMerfitScore ?? 0;
+  const score = user.latestMBFitScore ?? 0;
   return [
     { category: "Antrenman", points: Math.round(score * 0.4) },
     { category: "Beslenme", points: Math.round(score * 0.35) },
@@ -224,7 +224,7 @@ export function getUserSubscriptions(userId) {
     {
       id: seed * 10,
       subscriptionProductId: 1,
-      productName: "Merfit Plus — Aylık",
+      productName: "MB Fit Plus — Aylık",
       provider: seed % 2 === 0 ? "AppStore" : "GooglePlay",
       status: seed % 4 === 0 ? "cancelled" : seed % 3 === 0 ? "expired" : "active",
       startedAt: daysAgo(60),

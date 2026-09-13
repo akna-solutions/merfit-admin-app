@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminSupportTicketController.cs
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminSupportTicketController.cs
 //
 //   GET   /api/admin/support/tickets                  -> getTickets(params)
 //   GET   /api/admin/support/tickets/{id}              -> getTicketById(id)

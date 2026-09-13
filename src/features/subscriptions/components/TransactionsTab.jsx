@@ -49,7 +49,7 @@ export default function TransactionsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <TransactionsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
 
       <SectionCard>
@@ -59,7 +59,7 @@ export default function TransactionsTab() {
           loading={loading}
           scrollX={950}
           emptyDescription="Bu filtrelere uyan işlem yok."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

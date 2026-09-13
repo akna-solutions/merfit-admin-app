@@ -1,4 +1,4 @@
-/* Merfit Admin Panel — layout & component skin.
+/* MB Fit Admin Panel — layout & component skin.
    Ant Design tokens (theme/themeTokens.js) handle color/radius at the
    component-prop level; this file handles structural layout, spacing,
    and the handful of visual details tokens can't reach. */
@@ -15,48 +15,48 @@ body {
 }
 
 /* ---------- Shell ---------- */
-.merfit-admin-shell {
+.mbfit-admin-shell {
   min-height: 100vh;
 }
-.merfit-admin-body {
+.mbfit-admin-body {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
-.merfit-admin-content {
+.mbfit-admin-content {
   padding: 24px;
   max-width: 1600px;
   width: 100%;
   margin: 0 auto;
 }
 @media (max-width: 576px) {
-  .merfit-admin-content {
+  .mbfit-admin-content {
     padding: 16px;
   }
 }
 
 /* ---------- Sidebar ---------- */
-.merfit-sidebar-desktop {
+.mbfit-sidebar-desktop {
   position: sticky;
   top: 0;
   height: 100vh;
   overflow: hidden;
   border-right: 1px solid rgba(16, 24, 40, 0.06);
 }
-[data-theme="dark"] .merfit-sidebar-desktop {
+[data-theme="dark"] .mbfit-sidebar-desktop {
   border-right-color: rgba(255, 255, 255, 0.06);
 }
 @media (max-width: 991px) {
-  .merfit-sidebar-desktop {
+  .mbfit-sidebar-desktop {
     display: none;
   }
 }
-.merfit-sidebar-inner {
+.mbfit-sidebar-inner {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.merfit-sidebar-menu-scroll {
+.mbfit-sidebar-menu-scroll {
   flex: 1;
   overflow-y: auto;
   padding-top: 4px;
@@ -65,16 +65,16 @@ body {
   scrollbar-width: none;       /* Firefox */
   -ms-overflow-style: none;    /* IE / eski Edge */
 }
-.merfit-sidebar-logo {
+.mbfit-sidebar-logo {
   width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: inherit;
 }
-.merfit-sidebar-menu-scroll::-webkit-scrollbar {
+.mbfit-sidebar-menu-scroll::-webkit-scrollbar {
   display: none;               /* Chrome, Safari, yeni Edge */
 }
-.merfit-sidebar-brand {
+.mbfit-sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -82,7 +82,7 @@ body {
   padding: 0 20px;
   flex-shrink: 0;
 }
-.merfit-sidebar-brand-mark {
+.mbfit-sidebar-brand-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -94,43 +94,43 @@ body {
   font-size: 16px;
   flex-shrink: 0;
 }
-.merfit-sidebar-brand-text {
+.mbfit-sidebar-brand-text {
   font-weight: 700;
   font-size: 17px;
   letter-spacing: 0.4px;
 }
-.merfit-sidebar-menu-scroll {
+.mbfit-sidebar-menu-scroll {
   flex: 1;
   overflow-y: auto;
   padding-top: 4px;
 }
-.merfit-sidebar-menu.ant-menu {
+.mbfit-sidebar-menu.ant-menu {
   border-inline-end: none !important;
   background: transparent;
 }
-.merfit-sidebar-menu .ant-menu-item,
-.merfit-sidebar-menu .ant-menu-submenu-title {
+.mbfit-sidebar-menu .ant-menu-item,
+.mbfit-sidebar-menu .ant-menu-submenu-title {
   transition:
     background-color 0.15s ease,
     color 0.15s ease;
 }
-.merfit-sidebar-footer {
+.mbfit-sidebar-footer {
   flex-shrink: 0;
   border-top: 1px solid rgba(16, 24, 40, 0.06);
   padding: 8px 0 12px;
 }
-[data-theme="dark"] .merfit-sidebar-footer {
+[data-theme="dark"] .mbfit-sidebar-footer {
   border-top-color: rgba(255, 255, 255, 0.06);
 }
-.merfit-sidebar-signout .ant-menu-item {
+.mbfit-sidebar-signout .ant-menu-item {
   color: #98a2b3;
 }
-.merfit-sidebar-drawer .ant-drawer-body {
+.mbfit-sidebar-drawer .ant-drawer-body {
   padding: 0;
 }
 
 /* ---------- Header ---------- */
-.merfit-header {
+.mbfit-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -141,120 +141,120 @@ body {
   top: 0;
   z-index: 10;
 }
-[data-theme="dark"] .merfit-header {
+[data-theme="dark"] .mbfit-header {
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
-.merfit-header-left {
+.mbfit-header-left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
-.merfit-header-title {
+.mbfit-header-title {
   margin: 0 !important;
   white-space: nowrap;
 }
-.merfit-header-menu-btn {
+.mbfit-header-menu-btn {
   display: none;
 }
 @media (max-width: 991px) {
-  .merfit-header-menu-btn {
+  .mbfit-header-menu-btn {
     display: inline-flex;
   }
 }
-.merfit-header-right {
+.mbfit-header-right {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
 }
-.merfit-header-range {
+.mbfit-header-range {
   display: inline-flex;
 }
 @media (max-width: 768px) {
-  .merfit-header-range {
+  .mbfit-header-range {
     display: none;
   }
 }
-.merfit-theme-toggle {
+.mbfit-theme-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
-.merfit-theme-toggle-icon {
+.mbfit-theme-toggle-icon {
   font-size: 14px;
   color: #98a2b3;
 }
-.merfit-header-icon-btn {
+.mbfit-header-icon-btn {
   font-size: 17px;
 }
-.merfit-header-profile {
+.mbfit-header-profile {
   cursor: pointer;
   padding: 4px 8px 4px 4px;
   border-radius: 999px;
   transition: background-color 0.15s ease;
 }
-.merfit-header-profile:hover {
+.mbfit-header-profile:hover {
   background: rgba(16, 24, 40, 0.04);
 }
-[data-theme="dark"] .merfit-header-profile:hover {
+[data-theme="dark"] .mbfit-header-profile:hover {
   background: rgba(255, 255, 255, 0.06);
 }
-.merfit-header-profile-name {
+.mbfit-header-profile-name {
   font-weight: 500;
   font-size: 14px;
 }
 @media (max-width: 480px) {
-  .merfit-header-profile-name {
+  .mbfit-header-profile-name {
     display: none;
   }
 }
 
 /* ---------- Dashboard grid ---------- */
-.merfit-dashboard-row {
+.mbfit-dashboard-row {
   margin-bottom: 20px;
 }
-.merfit-dashboard-row:last-child {
+.mbfit-dashboard-row:last-child {
   margin-bottom: 0;
 }
-.merfit-dashboard-row .ant-col {
+.mbfit-dashboard-row .ant-col {
   margin-bottom: 0;
 }
 @media (max-width: 991px) {
-  .merfit-dashboard-row {
+  .mbfit-dashboard-row {
     row-gap: 20px !important;
   }
 }
 
 /* ---------- KPI cards ---------- */
-.merfit-kpi-card {
+.mbfit-kpi-card {
   height: 100%;
 }
-.merfit-kpi-card .ant-card-body {
+.mbfit-kpi-card .ant-card-body {
   padding: 20px;
 }
-.merfit-kpi-card-skeleton {
+.mbfit-kpi-card-skeleton {
   height: 128px;
   border-radius: 16px;
   background: rgba(16, 24, 40, 0.04);
 }
-[data-theme="dark"] .merfit-kpi-card-skeleton {
+[data-theme="dark"] .mbfit-kpi-card-skeleton {
   background: rgba(255, 255, 255, 0.04);
 }
-.merfit-kpi-card-top {
+.mbfit-kpi-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.merfit-kpi-card-title {
+.mbfit-kpi-card-title {
   font-size: 13px;
   color: #667085;
 }
-[data-theme="dark"] .merfit-kpi-card-title {
+[data-theme="dark"] .mbfit-kpi-card-title {
   color: #93a0b4;
 }
-.merfit-kpi-card-icon {
+.mbfit-kpi-card-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -266,11 +266,11 @@ body {
   font-size: 15px;
   flex-shrink: 0;
 }
-.merfit-kpi-card-value .ant-statistic-content {
+.mbfit-kpi-card-value .ant-statistic-content {
   font-size: 24px;
   font-weight: 700;
 }
-.merfit-kpi-card-trend {
+.mbfit-kpi-card-trend {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -278,76 +278,76 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
-.merfit-kpi-card-trend.is-positive {
+.mbfit-kpi-card-trend.is-positive {
   color: #22c55e;
 }
-.merfit-kpi-card-trend.is-negative {
+.mbfit-kpi-card-trend.is-negative {
   color: #ef4444;
 }
-.merfit-kpi-card-trend-label {
+.mbfit-kpi-card-trend-label {
   font-weight: 400;
   margin-left: 2px;
   font-size: 12px;
 }
 
 /* ---------- Chart / table cards ---------- */
-.merfit-chart-card,
-.merfit-table-card,
-.merfit-quickstats-card {
+.mbfit-chart-card,
+.mbfit-table-card,
+.mbfit-quickstats-card {
   height: 100%;
 }
-.merfit-chart-card .ant-card-head,
-.merfit-table-card .ant-card-head,
-.merfit-quickstats-card .ant-card-head {
+.mbfit-chart-card .ant-card-head,
+.mbfit-table-card .ant-card-head,
+.mbfit-quickstats-card .ant-card-head {
   border-bottom: none;
   padding: 20px 20px 0;
   min-height: unset;
 }
-.merfit-chart-card .ant-card-head-title,
-.merfit-table-card .ant-card-head-title,
-.merfit-quickstats-card .ant-card-head-title {
+.mbfit-chart-card .ant-card-head-title,
+.mbfit-table-card .ant-card-head-title,
+.mbfit-quickstats-card .ant-card-head-title {
   font-size: 15px;
   font-weight: 600;
   padding: 0;
 }
-.merfit-chart-card .ant-card-body,
-.merfit-table-card .ant-card-body,
-.merfit-quickstats-card .ant-card-body {
+.mbfit-chart-card .ant-card-body,
+.mbfit-table-card .ant-card-body,
+.mbfit-quickstats-card .ant-card-body {
   padding: 16px 20px 20px;
 }
-.merfit-donut-wrap {
+.mbfit-donut-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.merfit-donut-legend {
+.mbfit-donut-legend {
   width: 100%;
   margin-top: 4px;
 }
-.merfit-donut-legend-row {
+.mbfit-donut-legend-row {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
 }
-.merfit-donut-legend-dot {
+.mbfit-donut-legend-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.merfit-donut-legend-label {
+.mbfit-donut-legend-label {
   flex: 1;
 }
-.merfit-donut-legend-pct {
+.mbfit-donut-legend-pct {
   font-weight: 600;
 }
-.merfit-quickstat-row {
+.mbfit-quickstat-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.merfit-table-card .ant-table-thead > tr > th {
+.mbfit-table-card .ant-table-thead > tr > th {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -355,125 +355,125 @@ body {
 }
 
 /* ---------- Shared feature-page scaffolding ---------- */
-.merfit-page {
+.mbfit-page {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.merfit-page-header {
+.mbfit-page-header {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.merfit-page-breadcrumb {
+.mbfit-page-breadcrumb {
   font-size: 13px;
 }
-.merfit-page-header-row {
+.mbfit-page-header-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
 }
-.merfit-page-title {
+.mbfit-page-title {
   margin: 0 !important;
 }
-.merfit-page-description {
+.mbfit-page-description {
   display: block;
   margin-top: 2px;
 }
-.merfit-page-header-actions {
+.mbfit-page-header-actions {
   flex-shrink: 0;
 }
 
-.merfit-filter-bar .ant-card-body {
+.mbfit-filter-bar .ant-card-body {
   padding: 16px 20px;
 }
-.merfit-filter-bar-actions {
+.mbfit-filter-bar-actions {
   display: flex;
   gap: 8px;
   margin-left: auto;
 }
 
-.merfit-data-table .ant-table-thead > tr > th {
+.mbfit-data-table .ant-table-thead > tr > th {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   font-weight: 600;
 }
-.merfit-data-table .ant-table-tbody > tr > td {
+.mbfit-data-table .ant-table-tbody > tr > td {
   cursor: default;
 }
-.merfit-data-table .ant-table-tbody > tr.merfit-row-clickable {
+.mbfit-data-table .ant-table-tbody > tr.mbfit-row-clickable {
   cursor: pointer;
 }
 
-.merfit-empty-state {
+.mbfit-empty-state {
   padding: 32px 0;
 }
 
-.merfit-drawer-footer {
+.mbfit-drawer-footer {
   display: flex;
   justify-content: flex-end;
 }
 
-.merfit-entity-cell {
+.mbfit-entity-cell {
   display: flex;
   align-items: center;
   gap: 10px;
   min-width: 0;
 }
-.merfit-entity-cell-text {
+.mbfit-entity-cell-text {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
-.merfit-entity-cell-title {
+.mbfit-entity-cell-title {
   font-weight: 500;
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.merfit-entity-cell-sub {
+.mbfit-entity-cell-sub {
   font-size: 12px;
   color: #98a2b3;
   line-height: 1.3;
 }
 
-.merfit-detail-header {
+.mbfit-detail-header {
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 20px;
 }
-.merfit-detail-header-text {
+.mbfit-detail-header-text {
   min-width: 0;
 }
-.merfit-detail-header-title {
+.mbfit-detail-header-title {
   font-size: 17px;
   font-weight: 600;
 }
-.merfit-detail-header-sub {
+.mbfit-detail-header-sub {
   font-size: 13px;
   color: #98a2b3;
 }
 
-.merfit-timeline-message {
+.mbfit-timeline-message {
   padding: 10px 14px;
   border-radius: 12px;
   background: rgba(16, 24, 40, 0.03);
   font-size: 13px;
   line-height: 1.5;
 }
-[data-theme="dark"] .merfit-timeline-message {
+[data-theme="dark"] .mbfit-timeline-message {
   background: rgba(255, 255, 255, 0.04);
 }
-.merfit-timeline-message.is-admin {
+.mbfit-timeline-message.is-admin {
   background: rgba(47, 111, 237, 0.08);
 }
 
-.merfit-editable-cell:hover {
+.mbfit-editable-cell:hover {
   background: rgba(47, 111, 237, 0.06);
 }
 
@@ -483,7 +483,7 @@ body {
    it — the old min-height:100vh + content-box padding pushed the page a
    few pixels taller/wider than the viewport, which is what let it scroll
    left-right instead of sitting still filling the screen. */
-.merfit-login-page {
+.mbfit-login-page {
   height: 100vh;
   width: 100%;
   box-sizing: border-box;
@@ -494,10 +494,10 @@ body {
   background: linear-gradient(160deg, #eef3ff 0%, #f7f9fc 60%);
   padding: 24px;
 }
-.merfit-login-page.is-dark {
+.mbfit-login-page.is-dark {
   background: linear-gradient(160deg, #0f1420 0%, #151b2c 60%);
 }
-.merfit-login-card {
+.mbfit-login-card {
   width: 100%;
   max-width: 400px;
   max-height: 100%;
@@ -508,35 +508,35 @@ body {
   box-shadow: 0 20px 60px rgba(16, 24, 40, 0.12);
   padding: 36px 32px 28px;
 }
-.merfit-login-page.is-dark .merfit-login-card {
+.mbfit-login-page.is-dark .mbfit-login-card {
   background: #1a2133;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
-.merfit-login-brand {
+.mbfit-login-brand {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
 }
-.merfit-login-brand-text {
+.mbfit-login-brand-text {
   font-weight: 700;
   font-size: 15px;
   letter-spacing: 0.06em;
 }
-.merfit-login-title {
+.mbfit-login-title {
   margin: 0 !important;
 }
-.merfit-login-subtitle {
+.mbfit-login-subtitle {
   display: block;
   margin-top: 4px;
 }
-.merfit-login-row {
+.mbfit-login-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
-.merfit-login-hint {
+.mbfit-login-hint {
   display: block;
   text-align: center;
   margin-top: 20px;

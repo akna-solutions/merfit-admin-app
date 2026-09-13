@@ -83,7 +83,7 @@ export default function LeaderboardTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, period: null })}>
           Dönem Oluştur
@@ -97,7 +97,7 @@ export default function LeaderboardTab() {
           loading={loading}
           scrollX={700}
           emptyDescription="Henüz liderlik tablosu dönemi yok."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => loadEntries(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => loadEntries(record) })}
           pagination={{
             current: page,
             pageSize,

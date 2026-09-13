@@ -6,7 +6,7 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { muscleGroupService } from "../services/workoutService";
 import MuscleGroupFormDrawer from "./MuscleGroupFormDrawer";
 
-// MerfitApi.Api/Controllers/Admin/AdminMuscleGroupController.cs — the
+// MBFitApi.Api/Controllers/Admin/AdminMuscleGroupController.cs — the
 // screen the user specifically flagged as missing. muscleGroupService's
 // full CRUD already existed (used only as a read-only lookup elsewhere);
 // this tab is the first place it's actually managed.
@@ -73,7 +73,7 @@ export default function MuscleGroupsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, muscleGroup: null })}>
           Kas Grubu Oluştur

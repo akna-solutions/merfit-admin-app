@@ -3,7 +3,7 @@ import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar, DateRangeFilter } from "../../../components/admin";
 
-// Kod değerleri API ile birebir eşleşir (bkz. MerfitApi DTO'ları) — değiştirilmez;
+// Kod değerleri API ile birebir eşleşir (bkz. MBFitApi DTO'ları) — değiştirilmez;
 // yalnızca kullanıcıya gösterilen etiketler Türkçeleştirilir.
 const ACTIONS = ["Create", "Update", "Delete", "StatusChange", "Login", "Publish"];
 const ENTITIES = ["User", "Workout", "Food", "SubscriptionProduct", "Content", "Faq", "Achievement", "SupportTicket"];

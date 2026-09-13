@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { authService } from "../services/authService";
 
-const STORAGE_KEY = "merfit_admin_access_token";
+const STORAGE_KEY = "mbfit_admin_access_token";
 
 const AuthContext = createContext(null);
 

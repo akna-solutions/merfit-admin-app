@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminLegalController.cs.
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminLegalController.cs.
 // This controller had NO service and NO screen anywhere in the admin app —
 // legal documents (Privacy Policy / Terms of Service) could not be managed,
 // and user consent records could not be reviewed, from the UI at all.
@@ -55,7 +55,7 @@ export const consentService = {
   },
 };
 
-// MerfitApi.Domain.Entities.Enums.LegalDocumentType — enum ordinal order
+// MBFitApi.Domain.Entities.Enums.LegalDocumentType — enum ordinal order
 // matters (see constants/apiEnums.js note re: default System.Text.Json
 // integer serialization for request-side enum fields).
 export const LEGAL_DOCUMENT_TYPE = ["PrivacyPolicy", "TermsOfService"];

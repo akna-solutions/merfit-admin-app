@@ -1,10 +1,10 @@
-// Merfit Admin Panel — central design tokens.
+// MB Fit Admin Panel — central design tokens.
 // These feed Ant Design's ConfigProvider theme system (v5 token API).
 // Keep this file as the single source of truth for brand colors & spacing
 // so light/dark mode and any future re-skin only touch one place.
 
-export const merfitColors = {
-  primary: "#2F6FED", // modern blue — Merfit brand primary
+export const mbfitColors = {
+  primary: "#2F6FED", // modern blue — MB Fit brand primary
   primaryHover: "#1D5FE0",
   primaryActive: "#154DBF",
   success: "#22C55E",
@@ -33,25 +33,25 @@ export const merfitColors = {
   siderBgDark: "#121826",
 };
 
-export const merfitRadius = {
+export const mbfitRadius = {
   sm: 8,
   md: 12,
   lg: 16,
 };
 
-export const merfitSpacing = {
+export const mbfitSpacing = {
   cardGap: 20, // 16-24px band requested by design spec
   pagePadding: 24,
 };
 
 // Shared tokens that apply regardless of light/dark algorithm.
 export const baseThemeTokens = {
-  colorPrimary: merfitColors.primary,
-  colorSuccess: merfitColors.success,
-  colorWarning: merfitColors.warning,
-  colorError: merfitColors.error,
-  colorInfo: merfitColors.info,
-  borderRadius: merfitRadius.sm,
+  colorPrimary: mbfitColors.primary,
+  colorSuccess: mbfitColors.success,
+  colorWarning: mbfitColors.warning,
+  colorError: mbfitColors.error,
+  colorInfo: mbfitColors.info,
+  borderRadius: mbfitRadius.sm,
   controlHeight: 38,
   fontSize: 14,
   fontFamily:
@@ -61,43 +61,43 @@ export const baseThemeTokens = {
 
 export const lightThemeTokens = {
   ...baseThemeTokens,
-  colorBgBase: merfitColors.lightBgLayout,
-  colorBgContainer: merfitColors.lightBgContainer,
-  colorBgElevated: merfitColors.lightBgElevated,
-  colorBgLayout: merfitColors.lightBgLayout,
-  colorText: merfitColors.lightTextBase,
-  colorTextSecondary: merfitColors.lightTextSecondary,
-  colorBorder: merfitColors.lightBorder,
-  colorBorderSecondary: merfitColors.lightBorder,
+  colorBgBase: mbfitColors.lightBgLayout,
+  colorBgContainer: mbfitColors.lightBgContainer,
+  colorBgElevated: mbfitColors.lightBgElevated,
+  colorBgLayout: mbfitColors.lightBgLayout,
+  colorText: mbfitColors.lightTextBase,
+  colorTextSecondary: mbfitColors.lightTextSecondary,
+  colorBorder: mbfitColors.lightBorder,
+  colorBorderSecondary: mbfitColors.lightBorder,
 };
 
 export const darkThemeTokens = {
   ...baseThemeTokens,
-  colorBgBase: merfitColors.darkBgLayout,
-  colorBgContainer: merfitColors.darkBgContainer,
-  colorBgElevated: merfitColors.darkBgElevated,
-  colorBgLayout: merfitColors.darkBgLayout,
-  colorText: merfitColors.darkTextBase,
-  colorTextSecondary: merfitColors.darkTextSecondary,
-  colorBorder: merfitColors.darkBorder,
-  colorBorderSecondary: merfitColors.darkBorder,
+  colorBgBase: mbfitColors.darkBgLayout,
+  colorBgContainer: mbfitColors.darkBgContainer,
+  colorBgElevated: mbfitColors.darkBgElevated,
+  colorBgLayout: mbfitColors.darkBgLayout,
+  colorText: mbfitColors.darkTextBase,
+  colorTextSecondary: mbfitColors.darkTextSecondary,
+  colorBorder: mbfitColors.darkBorder,
+  colorBorderSecondary: mbfitColors.darkBorder,
 };
 // mode'dan bağımsız, sidebar için sabit dark ayarlar
 export const sidebarForcedDarkComponents = {
   Layout: {
-    siderBg: merfitColors.siderBgDark,
+    siderBg: mbfitColors.siderBgDark,
   },
   Menu: {
-    itemBorderRadius: merfitRadius.sm,
+    itemBorderRadius: mbfitRadius.sm,
     itemHeight: 42,
     itemMarginInline: 8,
     itemMarginBlock: 4,
     iconSize: 17,
     collapsedIconSize: 18,
     itemSelectedBg: "rgba(47,111,237,0.18)",
-    itemSelectedColor: merfitColors.primary,
+    itemSelectedColor: mbfitColors.primary,
     itemHoverBg: "rgba(255,255,255,0.04)",
-    itemColor: merfitColors.darkTextSecondary,
+    itemColor: mbfitColors.darkTextSecondary,
     groupTitleColor: "#5B6579",
     groupTitleFontSize: 11,
   },
@@ -107,17 +107,17 @@ export const componentTokens = (mode) => ({
   Layout: {
     headerBg:
       mode === "dark"
-        ? merfitColors.darkBgContainer
-        : merfitColors.lightBgContainer,
+        ? mbfitColors.darkBgContainer
+        : mbfitColors.lightBgContainer,
     siderBg:
-      mode === "dark" ? merfitColors.siderBgDark : merfitColors.siderBgLight,
+      mode === "dark" ? mbfitColors.siderBgDark : mbfitColors.siderBgLight,
     bodyBg:
-      mode === "dark" ? merfitColors.darkBgLayout : merfitColors.lightBgLayout,
+      mode === "dark" ? mbfitColors.darkBgLayout : mbfitColors.lightBgLayout,
     headerHeight: 68,
     headerPadding: "0 24px",
   },
   Menu: {
-    itemBorderRadius: merfitRadius.sm,
+    itemBorderRadius: mbfitRadius.sm,
     itemHeight: 42,
     itemMarginInline: 8,
     itemMarginBlock: 4,
@@ -125,18 +125,18 @@ export const componentTokens = (mode) => ({
     collapsedIconSize: 18,
     itemSelectedBg:
       mode === "dark" ? "rgba(47,111,237,0.18)" : "rgba(47,111,237,0.10)",
-    itemSelectedColor: merfitColors.primary,
+    itemSelectedColor: mbfitColors.primary,
     itemHoverBg:
       mode === "dark" ? "rgba(255,255,255,0.04)" : "rgba(16,24,40,0.03)",
     itemColor:
       mode === "dark"
-        ? merfitColors.darkTextSecondary
-        : merfitColors.lightTextSecondary,
+        ? mbfitColors.darkTextSecondary
+        : mbfitColors.lightTextSecondary,
     groupTitleColor: mode === "dark" ? "#5B6579" : "#98A2B3",
     groupTitleFontSize: 11,
   },
   Card: {
-    borderRadiusLG: merfitRadius.lg,
+    borderRadiusLG: mbfitRadius.lg,
     paddingLG: 20,
     boxShadowTertiary:
       mode === "dark"
@@ -148,12 +148,12 @@ export const componentTokens = (mode) => ({
     contentFontSize: 26,
   },
   Table: {
-    headerBg: mode === "dark" ? merfitColors.darkBgElevated : "#FAFBFC",
-    borderRadiusLG: merfitRadius.md,
+    headerBg: mode === "dark" ? mbfitColors.darkBgElevated : "#FAFBFC",
+    borderRadiusLG: mbfitRadius.md,
     cellPaddingBlock: 14,
   },
   Button: {
-    borderRadius: merfitRadius.sm,
+    borderRadius: mbfitRadius.sm,
     controlHeight: 38,
     fontWeight: 500,
   },
@@ -161,6 +161,6 @@ export const componentTokens = (mode) => ({
     borderRadiusSM: 6,
   },
   Progress: {
-    defaultColor: merfitColors.primary,
+    defaultColor: mbfitColors.primary,
   },
 });

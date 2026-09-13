@@ -54,7 +54,7 @@ export default function FoodsTab() {
   const columns = buildFoodsColumns({ onView: handleView, onEdit: handleEdit, onDelete: handleDelete });
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, food: null })}>
           Besin Ekle
@@ -70,7 +70,7 @@ export default function FoodsTab() {
           loading={loading}
           scrollX={1000}
           emptyDescription="Bu filtrelere uyan besin bulunamadı."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

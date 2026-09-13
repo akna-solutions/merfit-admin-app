@@ -24,7 +24,7 @@ export default function FormDrawer({
       destroyOnHidden
       extra={extra}
       footer={
-        <div className="merfit-drawer-footer">
+        <div className="mbfit-drawer-footer">
           <Space>
             <Button onClick={onClose}>Vazgeç</Button>
             <Button type="primary" loading={submitting} onClick={onSubmit}>

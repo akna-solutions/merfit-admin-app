@@ -12,11 +12,11 @@ export default function SubscriptionChart({ data, loading }) {
   return (
     <Card
       title="Abonelik Dağılımı"
-      className="merfit-chart-card"
+      className="mbfit-chart-card"
       bordered={false}
       loading={loading}
     >
-      <div className="merfit-donut-wrap">
+      <div className="mbfit-donut-wrap">
         <ResponsiveContainer width="100%" height={220}>
           <PieChart>
             <Pie
@@ -42,15 +42,15 @@ export default function SubscriptionChart({ data, loading }) {
           </PieChart>
         </ResponsiveContainer>
 
-        <Space direction="vertical" size={6} className="merfit-donut-legend">
+        <Space direction="vertical" size={6} className="mbfit-donut-legend">
           {data.map((slice, index) => (
-            <div key={slice.name} className="merfit-donut-legend-row">
+            <div key={slice.name} className="mbfit-donut-legend-row">
               <span
-                className="merfit-donut-legend-dot"
+                className="mbfit-donut-legend-dot"
                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
               />
-              <Text className="merfit-donut-legend-label">{slice.name}</Text>
-              <Text type="secondary" className="merfit-donut-legend-pct">
+              <Text className="mbfit-donut-legend-label">{slice.name}</Text>
+              <Text type="secondary" className="mbfit-donut-legend-pct">
                 {total ? Math.round((slice.value / total) * 100) : 0}%
               </Text>
             </div>

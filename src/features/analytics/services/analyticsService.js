@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminAnalyticsController.cs
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminAnalyticsController.cs
 //
 // Fully read-only — seven snapshot endpoints, no query parameters at all.
 // Every endpoint is behind the "AdminOnly" policy, so apiClient automatically

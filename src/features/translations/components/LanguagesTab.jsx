@@ -6,7 +6,7 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { languageService } from "../services/translationService";
 import LanguageFormDrawer from "./LanguageFormDrawer";
 
-// MerfitApi.Api/Controllers/Admin/AdminLanguageController.cs — languageService
+// MBFitApi.Api/Controllers/Admin/AdminLanguageController.cs — languageService
 // already had full CRUD, but it was only ever called read-only to populate
 // the Translations grid's language pickers. This tab lets admins actually
 // add/edit/remove languages and set the default.
@@ -93,7 +93,7 @@ export default function LanguagesTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, language: null })}>
           Dil Ekle

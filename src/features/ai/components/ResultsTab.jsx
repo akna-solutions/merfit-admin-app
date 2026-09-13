@@ -34,7 +34,7 @@ export default function ResultsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <SectionCard>
         <DataTable
           columns={columns}
@@ -42,7 +42,7 @@ export default function ResultsTab() {
           loading={loading}
           scrollX={600}
           emptyDescription="Henüz yapay zeka sonucu yok."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

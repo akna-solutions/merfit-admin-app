@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Audit/AdminAuditLogDtos.cs). Fully read-only —
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Audit/AdminAuditLogDtos.cs). Fully read-only —
 // this is exactly the trail the mock actions elsewhere in this app (status
 // toggles, deletes, sends) would leave behind on the real audit log.
 
@@ -14,7 +14,7 @@ function minutesAgo(n) {
   return d.toISOString();
 }
 
-const ADMIN_EMAILS = ["admin@merfit.com", "ops@merfit.com", "support-lead@merfit.com"];
+const ADMIN_EMAILS = ["admin@mbfit.com", "ops@mbfit.com", "support-lead@mbfit.com"];
 const ACTIONS = ["Create", "Update", "Delete", "StatusChange", "Login", "Publish"];
 const ENTITIES = ["User", "Workout", "Food", "SubscriptionProduct", "Content", "Faq", "Achievement", "SupportTicket"];
 

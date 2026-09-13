@@ -63,7 +63,7 @@ export default function TranslationGridTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button icon={<ImportOutlined />} onClick={() => setImportOpen(true)} style={{ marginRight: 8 }}>
           İçe / Dışa Aktar

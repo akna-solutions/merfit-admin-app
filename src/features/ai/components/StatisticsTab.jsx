@@ -14,7 +14,7 @@ const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İ�
 function DistributionList({ title, items, loading, labelMap }) {
   const total = items?.reduce((sum, i) => sum + i.count, 0) || 1;
   return (
-    <Card title={title} bordered={false} className="merfit-table-card" loading={loading}>
+    <Card title={title} bordered={false} className="mbfit-table-card" loading={loading}>
       <List
         dataSource={items ?? []}
         renderItem={(item) => (
@@ -38,7 +38,7 @@ export default function StatisticsTab() {
   const d = data ?? {};
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <Row gutter={[20, 20]}>
         <Col xs={24} sm={12} lg={6}><MetricCard title="Toplam İstek" value={d.totalRequests} icon={<ThunderboltOutlined />} loading={loading} /></Col>
         <Col xs={24} sm={12} lg={6}><MetricCard title="Başarılı" value={d.successfulRequests} icon={<CheckCircleOutlined />} loading={loading} /></Col>

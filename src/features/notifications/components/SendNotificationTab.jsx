@@ -68,7 +68,7 @@ export default function SendNotificationTab() {
   return (
     <Row gutter={20}>
       <Col xs={24} lg={14}>
-        <Card bordered={false} className="merfit-table-card">
+        <Card bordered={false} className="mbfit-table-card">
           <Form form={form} layout="vertical" onValuesChange={handleValuesChange} initialValues={{ recipientType: "user" }}>
             <Form.Item label="Alıcılar">
               <Radio.Group
@@ -115,7 +115,7 @@ export default function SendNotificationTab() {
       </Col>
 
       <Col xs={24} lg={10}>
-        <Card bordered={false} className="merfit-table-card" title="Önizleme">
+        <Card bordered={false} className="mbfit-table-card" title="Önizleme">
           <div
             style={{
               border: "1px solid rgba(16,24,40,0.08)",
