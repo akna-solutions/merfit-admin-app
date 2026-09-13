@@ -91,7 +91,7 @@ export default function ProductFormDrawer({ open, product, submitting, onClose, 
     >
       <Form form={form} layout="vertical">
         <Form.Item name="name" label="İsim" rules={[{ required: true, min: 2, max: 200 }]}>
-          <Input placeholder="örn. Merfit Plus — Aylık" />
+          <Input placeholder="örn. MB Fit Plus — Aylık" />
         </Form.Item>
         <Form.Item name="code" label="Kod" rules={[{ required: true, min: 2, max: 100 }]}>
           <Input placeholder="örn. plus_monthly" />
@@ -113,7 +113,7 @@ export default function ProductFormDrawer({ open, product, submitting, onClose, 
           </Form.Item>
         </Space>
         <Form.Item name="storeProductIdIos" label="iOS Ürün Kimliği" rules={[{ max: 200 }]}>
-          <Input placeholder="com.merfit.plus.monthly" />
+          <Input placeholder="com.mbfit.plus.monthly" />
         </Form.Item>
         <Form.Item name="storeProductIdAndroid" label="Android Ürün Kimliği" rules={[{ max: 200 }]}>
           <Input placeholder="plus_monthly" />

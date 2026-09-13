@@ -5,13 +5,13 @@ export default function QuickStats({ data, loading }) {
   return (
     <Card
       title="Hızlı İstatistikler"
-      className="merfit-quickstats-card"
+      className="mbfit-quickstats-card"
       bordered={false}
       loading={loading}
     >
       <Space direction="vertical" size={18} style={{ width: "100%" }}>
         {data.map((stat) => (
-          <div key={stat.id} className="merfit-quickstat-row">
+          <div key={stat.id} className="mbfit-quickstat-row">
             <Statistic title={stat.label} value={stat.value} />
             {typeof stat.progress === "number" && (
               <Progress

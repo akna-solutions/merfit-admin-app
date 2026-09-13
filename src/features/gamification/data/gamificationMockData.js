@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Scores, .../Achievements, .../Leaderboards,
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Scores, .../Achievements, .../Leaderboards,
 // .../Rewards, and the matching Admin*Controller.cs files).
 
 function daysAgo(n) {
@@ -42,7 +42,7 @@ export const achievementsMockData = [
   { id: 3, code: "WORKOUTS_50", title: "50 Antrenman", description: "50 antrenman tamamla.", icon: "💪", points: 50, conditionType: "workout_count", conditionValue: "50", isActive: true },
   { id: 4, code: "NUTRITION_PRO", title: "Beslenme Uzmanı", description: "30 gün boyunca öğün kaydet.", icon: "🥗", points: 30, conditionType: "meal_log_days", conditionValue: "30", isActive: true },
   { id: 5, code: "EARLY_BIRD", title: "Erken Kalkan", description: "Saat 08:00'den önce 10 antrenman tamamla.", icon: "🌅", points: 15, conditionType: "early_workout_count", conditionValue: "10", isActive: false },
-  { id: 6, code: "SCORE_90", title: "90+ Skor", description: "Merfit Skorunu 90'a ulaştır.", icon: "🏆", points: 40, conditionType: "score_threshold", conditionValue: "90", isActive: true },
+  { id: 6, code: "SCORE_90", title: "90+ Skor", description: "MB Fit Skorunu 90'a ulaştır.", icon: "🏆", points: 40, conditionType: "score_threshold", conditionValue: "90", isActive: true },
 ].map((a, i) => ({
   ...a,
   createdAt: daysAgo(200 - i * 10),
@@ -90,8 +90,8 @@ export const leaderboardEntriesMockData = {
 
 // AdminRewardDto[]
 export const rewardsMockData = [
-  { id: 1, title: "1 Ay Ücretsiz Plus", description: "Bir ay ücretsiz Merfit Plus.", imageUrl: null, rewardType: "subscription", value: "plus_monthly:1", isActive: true },
-  { id: 2, title: "Merfit Tişört", description: "Resmi Merfit marka tişört.", imageUrl: null, rewardType: "physical", value: null, isActive: true },
+  { id: 1, title: "1 Ay Ücretsiz Plus", description: "Bir ay ücretsiz MB Fit Plus.", imageUrl: null, rewardType: "subscription", value: "plus_monthly:1", isActive: true },
+  { id: 2, title: "MB Fit Tişört", description: "Resmi MB Fit marka tişört.", imageUrl: null, rewardType: "physical", value: null, isActive: true },
   { id: 3, title: "500 Bonus Puan", description: "Skoruna eklenen bonus puanlar.", imageUrl: null, rewardType: "points", value: "500", isActive: true },
-  { id: 4, title: "Kişisel Koçluk Seansı", description: "Bir Merfit koçuyla 30 dakikalık seans.", imageUrl: null, rewardType: "service", value: null, isActive: false },
+  { id: 4, title: "Kişisel Koçluk Seansı", description: "Bir MB Fit koçuyla 30 dakikalık seans.", imageUrl: null, rewardType: "service", value: null, isActive: false },
 ].map((r, i) => ({ ...r, createdAt: daysAgo(150 - i * 10), updatedAt: daysAgo(20 + i) }));

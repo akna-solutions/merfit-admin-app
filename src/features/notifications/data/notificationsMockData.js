@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Notifications/AdminNotificationDtos.cs). Each row
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Notifications/AdminNotificationDtos.cs). Each row
 // here is one *recipient's* notification record — the API has no concept of
 // a "campaign" row with a recipient count; broadcast/segment sends just
 // fan out into many individual AdminNotificationListItemDto rows.
@@ -38,9 +38,9 @@ const BODIES = [
   "Bu haftanın en iyi performans gösterenlerine göz at.",
   "Tebrikler, yeni bir başarı kazandın!",
   "Uygulamada seni bekleyen yeni bir ödül var.",
-  "Merfit Plus aboneliğin 3 gün içinde yenileniyor.",
-  "Hata düzeltmeleri ve iyileştirmelerle birlikte Merfit'in yeni bir sürümü mevcut.",
-  "Merfit Plus'a yükselt ve bu hafta sadece %20 tasarruf et.",
+  "MB Fit Plus aboneliğin 3 gün içinde yenileniyor.",
+  "Hata düzeltmeleri ve iyileştirmelerle birlikte MB Fit'in yeni bir sürümü mevcut.",
+  "MB Fit Plus'a yükselt ve bu hafta sadece %20 tasarruf et.",
 ];
 
 // AdminNotificationListItemDto[] (+ AdminNotificationDetailDto.dataJson)

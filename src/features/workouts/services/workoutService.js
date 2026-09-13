@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutController.cs (+ the lookup
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutController.cs (+ the lookup
 // controllers for category/muscle-group/equipment/exercise selects). Method
 // names mirror the real endpoints one to one:
 //
@@ -105,7 +105,7 @@ export const workoutService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutCategoryController.cs
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutCategoryController.cs
 export const workoutCategoryService = {
   getCategories(params = {}) {
     const { page = 1, pageSize = 20, search, isActive } = params;
@@ -125,7 +125,7 @@ export const workoutCategoryService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminMuscleGroupController.cs
+// MBFitApi.Api/Controllers/Admin/AdminMuscleGroupController.cs
 export const muscleGroupService = {
   getMuscleGroups(params = {}) {
     const { page = 1, pageSize = 20, search } = params;
@@ -145,7 +145,7 @@ export const muscleGroupService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminEquipmentController.cs
+// MBFitApi.Api/Controllers/Admin/AdminEquipmentController.cs
 export const equipmentService = {
   getEquipmentList(params = {}) {
     const { page = 1, pageSize = 20, search } = params;
@@ -165,7 +165,7 @@ export const equipmentService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminExerciseController.cs
+// MBFitApi.Api/Controllers/Admin/AdminExerciseController.cs
 export const exerciseService = {
   getExercises(params = {}) {
     const { page = 1, pageSize = 20, search, difficulty, muscleGroupId, isActive } = params;
@@ -190,7 +190,7 @@ export const exerciseService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutPlanController.cs
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutPlanController.cs
 export const workoutPlanService = {
   getPlans(params = {}) {
     const { page = 1, pageSize = 20, userId, isActive, isAiGenerated, goal } = params;

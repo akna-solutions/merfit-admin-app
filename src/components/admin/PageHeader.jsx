@@ -13,23 +13,23 @@ export default function PageHeader({ crumbs, title, description, actions }) {
   }));
 
   return (
-    <div className="merfit-page-header">
+    <div className="mbfit-page-header">
       {items?.length > 0 && (
-        <Breadcrumb className="merfit-page-breadcrumb" items={items} />
+        <Breadcrumb className="mbfit-page-breadcrumb" items={items} />
       )}
-      <div className="merfit-page-header-row">
-        <div className="merfit-page-header-text">
-          <Title level={3} className="merfit-page-title">
+      <div className="mbfit-page-header-row">
+        <div className="mbfit-page-header-text">
+          <Title level={3} className="mbfit-page-title">
             {title}
           </Title>
           {description && (
-            <Text type="secondary" className="merfit-page-description">
+            <Text type="secondary" className="mbfit-page-description">
               {description}
             </Text>
           )}
         </div>
         {actions && (
-          <Space size={12} className="merfit-page-header-actions" wrap>
+          <Space size={12} className="mbfit-page-header-actions" wrap>
             {actions}
           </Space>
         )}

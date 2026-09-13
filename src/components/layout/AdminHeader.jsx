@@ -81,23 +81,23 @@ export default function AdminHeader({
   const defaultRange = [dayjs().startOf("month"), dayjs()];
 
   return (
-    <Header className="merfit-header">
-      <div className="merfit-header-left">
+    <Header className="mbfit-header">
+      <div className="mbfit-header-left">
         <Button
           type="text"
-          className="merfit-header-menu-btn"
+          className="mbfit-header-menu-btn"
           icon={<MenuOutlined />}
           aria-label="Gezinme menüsünü aç"
           onClick={onOpenMobileSidebar}
         />
-        <Title level={4} className="merfit-header-title">
+        <Title level={4} className="mbfit-header-title">
           {pageTitle}
         </Title>
       </div>
 
-      <div className="merfit-header-right">
+      <div className="mbfit-header-right">
         <RangePicker
-          className="merfit-header-range"
+          className="mbfit-header-range"
           defaultValue={defaultRange}
           format="DD MMM YYYY"
           onChange={onDateRangeChange}
@@ -109,14 +109,14 @@ export default function AdminHeader({
             mode === "dark" ? "Açık moda geç" : "Koyu moda geç"
           }
         >
-          <span className="merfit-theme-toggle">
-            <SunOutlined className="merfit-theme-toggle-icon" />
+          <span className="mbfit-theme-toggle">
+            <SunOutlined className="mbfit-theme-toggle-icon" />
             <Switch
               checked={mode === "dark"}
               onChange={toggleMode}
               aria-label="Koyu modu aç/kapat"
             />
-            <MoonOutlined className="merfit-theme-toggle-icon" />
+            <MoonOutlined className="mbfit-theme-toggle-icon" />
           </span>
         </Tooltip>
 
@@ -127,7 +127,7 @@ export default function AdminHeader({
               shape="circle"
               icon={<BellOutlined />}
               aria-label="Bildirimler"
-              className="merfit-header-icon-btn"
+              className="mbfit-header-icon-btn"
             />
           </Badge>
         </Tooltip>
@@ -137,11 +137,11 @@ export default function AdminHeader({
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Space className="merfit-header-profile" size={8}>
+          <Space className="mbfit-header-profile" size={8}>
             <Avatar size={36} style={{ backgroundColor: "#2F6FED" }}>
               {avatarInitial}
             </Avatar>
-            <span className="merfit-header-profile-name">{displayName}</span>
+            <span className="mbfit-header-profile-name">{displayName}</span>
           </Space>
         </Dropdown>
       </div>

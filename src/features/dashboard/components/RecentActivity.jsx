@@ -25,7 +25,7 @@ export default function RecentActivity({ data, loading }) {
   return (
     <Card
       title="Son Etkinlikler"
-      className="merfit-table-card"
+      className="mbfit-table-card"
       bordered={false}
     >
       <Table

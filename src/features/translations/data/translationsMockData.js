@@ -1,6 +1,6 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Languages/AdminLanguageDtos.cs and
-// MerfitApi.Business/Dtos/Translations/AdminTranslationDtos.cs). Note the
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Languages/AdminLanguageDtos.cs and
+// MBFitApi.Business/Dtos/Translations/AdminTranslationDtos.cs). Note the
 // real model is flat — one row per (languageId, resourceKey) pair — not a
 // single row with a column per language. The UI pivots two chosen
 // languages' rows into a side-by-side grid client-side.

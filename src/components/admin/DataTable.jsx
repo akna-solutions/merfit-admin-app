@@ -21,7 +21,7 @@ export default function DataTable({
 }) {
   return (
     <Table
-      className="merfit-data-table"
+      className="mbfit-data-table"
       columns={columns}
       dataSource={dataSource}
       rowKey={rowKey}

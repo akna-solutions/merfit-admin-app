@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminFoodController.cs and
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminFoodController.cs and
 // AdminNutritionController.cs. Method names mirror the real endpoints:
 //
 //   GET    /api/admin/foods            -> foodService.getFoods(params)

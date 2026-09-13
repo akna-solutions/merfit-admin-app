@@ -19,7 +19,7 @@ export default function WorkoutActivityChart({ data, loading }) {
   return (
     <Card
       title="Antrenman Etkinliği"
-      className="merfit-chart-card"
+      className="mbfit-chart-card"
       bordered={false}
       loading={loading}
     >

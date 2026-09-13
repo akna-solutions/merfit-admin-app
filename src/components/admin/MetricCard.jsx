@@ -21,25 +21,25 @@ export default function MetricCard({
   const isPositive = trend >= 0;
 
   return (
-    <Card className="merfit-kpi-card" bordered={false} loading={loading}>
-      <div className="merfit-kpi-card-top">
-        <Text className="merfit-kpi-card-title">{title}</Text>
-        {icon && <span className="merfit-kpi-card-icon">{icon}</span>}
+    <Card className="mbfit-kpi-card" bordered={false} loading={loading}>
+      <div className="mbfit-kpi-card-top">
+        <Text className="mbfit-kpi-card-title">{title}</Text>
+        {icon && <span className="mbfit-kpi-card-icon">{icon}</span>}
       </div>
       <Statistic
         value={value}
         suffix={suffix}
         precision={precision}
-        className="merfit-kpi-card-value"
+        className="mbfit-kpi-card-value"
       />
       {hasTrend && (
         <div
-          className={`merfit-kpi-card-trend ${isPositive ? "is-positive" : "is-negative"}`}
+          className={`mbfit-kpi-card-trend ${isPositive ? "is-positive" : "is-negative"}`}
         >
           {isPositive ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
           <span>{Math.abs(trend)}%</span>
           {trendLabel && (
-            <Text type="secondary" className="merfit-kpi-card-trend-label">
+            <Text type="secondary" className="mbfit-kpi-card-trend-label">
               {trendLabel}
             </Text>
           )}

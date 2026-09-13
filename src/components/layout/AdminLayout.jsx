@@ -43,15 +43,15 @@ export default function AdminLayout() {
   };
 
   return (
-    <Layout className="merfit-admin-shell">
+    <Layout className="mbfit-admin-shell">
       <AdminSidebar
         collapsed={collapsed}
         mobileOpen={mobileOpen}
         onCloseMobile={() => setMobileOpen(false)}
       />
-      <Layout className="merfit-admin-body">
+      <Layout className="mbfit-admin-body">
         <AdminHeader onOpenMobileSidebar={handleOpenMobileSidebar} />
-        <Content className="merfit-admin-content">
+        <Content className="mbfit-admin-content">
           <Outlet />
         </Content>
       </Layout>

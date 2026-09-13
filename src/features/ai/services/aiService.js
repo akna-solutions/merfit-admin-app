@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminAiController.cs. Fully read-only — no
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminAiController.cs. Fully read-only — no
 // create/update/delete anywhere in this controller.
 //
 //   GET /api/admin/ai/requests            -> getRequests(params)   AdminAiRequestListRequest

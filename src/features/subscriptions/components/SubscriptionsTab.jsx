@@ -59,7 +59,7 @@ export default function SubscriptionsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <SubscriptionsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
 
       <SectionCard>
@@ -69,7 +69,7 @@ export default function SubscriptionsTab() {
           loading={loading}
           scrollX={1000}
           emptyDescription="Bu filtrelere uyan abonelik yok."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Faq/AdminFaqDtos.cs). Note AdminFaqCategoryDto has
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Faq/AdminFaqDtos.cs). Note AdminFaqCategoryDto has
 // no IsActive field — categories aren't independently enable/disable-able
 // in this API, only individual FAQs are.
 
@@ -21,14 +21,14 @@ export const faqCategoriesMockData = [
 // AdminFaqDto[]
 const RAW_FAQS = [
   { categoryId: 1, question: "Nasıl hesap oluştururum?", answer: "Uygulamayı indirin ve e-posta ya da Apple/Google ile giriş kullanarak hesap oluşturmak için Kaydol'a dokunun." },
-  { categoryId: 1, question: "Merfit kullanmak ücretsiz mi?", answer: "Evet, Merfit'in ücretsiz bir seviyesi vardır. Merfit Plus, yapay zekâ ile oluşturulan antrenmanlar gibi ek özelliklerin kilidini açar." },
+  { categoryId: 1, question: "MB Fit kullanmak ücretsiz mi?", answer: "Evet, MB Fit'in ücretsiz bir seviyesi vardır. MB Fit Plus, yapay zekâ ile oluşturulan antrenmanlar gibi ek özelliklerin kilidini açar." },
   { categoryId: 2, question: "Aboneliğimi nasıl iptal ederim?", answer: "Yönetmek veya iptal etmek için cihazınızın abonelik ayarlarına (App Store veya Play Store) gidin." },
   { categoryId: 2, question: "Ücretsiz deneme süresinden sonra ücretlendirilecek miyim?", answer: "Evet, deneme süresi bitmeden iptal etmezseniz ücretlendirilirsiniz." },
   { categoryId: 2, question: "Para iadesi alabilir miyim?", answer: "Para iadeleri, satın alma platformunuza bağlı olarak Apple veya Google tarafından yönetilir." },
   { categoryId: 3, question: "Kendi antrenmanımı oluşturabilir miyim?", answer: "Evet, yapay zekâ antrenman oluşturucusunu kullanabilir veya egzersiz kitaplığından manuel olarak bir tane oluşturabilirsiniz." },
-  { categoryId: 3, question: "Merfit Skorum nasıl hesaplanır?", answer: "Skorunuz; antrenman düzenliliğinizi, beslenme kaydınızı ve genel aktivitenizi birleştirir." },
+  { categoryId: 3, question: "MB Fit Skorum nasıl hesaplanır?", answer: "Skorunuz; antrenman düzenliliğinizi, beslenme kaydınızı ve genel aktivitenizi birleştirir." },
   { categoryId: 4, question: "Barkod okutarak besin kaydedebilir miyim?", answer: "Evet, paketli besinleri hızlıca kaydetmek için beslenme sekmesindeki barkod tarayıcıyı kullanabilirsiniz." },
-  { categoryId: 4, question: "Merfit özel makro hedeflerini destekliyor mu?", answer: "Evet, beslenme hedeflerinizde özel kalori ve makro hedefleri belirleyebilirsiniz." },
+  { categoryId: 4, question: "MB Fit özel makro hedeflerini destekliyor mu?", answer: "Evet, beslenme hedeflerinizde özel kalori ve makro hedefleri belirleyebilirsiniz." },
   { categoryId: 5, question: "Hesabımı nasıl silerim?", answer: "Ayarlar > Hesap > Hesabı Sil yolunu izleyin. Bu işlem kalıcıdır." },
   { categoryId: 5, question: "Verilerim nasıl korunuyor?", answer: "Endüstri standardı şifreleme kullanıyoruz ve kişisel verilerinizi asla satmıyoruz." },
 ];

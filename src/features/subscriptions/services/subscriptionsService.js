@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminSubscriptionProductController.cs,
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminSubscriptionProductController.cs,
 // AdminSubscriptionController.cs, and AdminSubscriptionTransactionController.cs.
 //
 //   GET/POST /api/admin/subscription-products[...]  -> subscriptionProductService.*
@@ -66,7 +66,7 @@ export const subscriptionService = {
   },
 };
 
-// MerfitApi.Api/Controllers/Admin/AdminFeatureController.cs — the master
+// MBFitApi.Api/Controllers/Admin/AdminFeatureController.cs — the master
 // list of Features that can be attached to a subscription product via
 // subscriptionProductService.getFeatures/setFeatures.
 export const featureService = {

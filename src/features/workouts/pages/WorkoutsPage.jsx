@@ -20,7 +20,7 @@ export default function WorkoutsPage() {
       <PageHeader
         crumbs={[{ label: "Panel", path: "/admin" }, { label: "Antrenmanlar" }]}
         title="Antrenmanlar"
-        description="Merfit antrenman kütüphanesini, kategorileri, kas gruplarını, ekipmanları, egzersizleri ve kullanıcı planlarını yönetin."
+        description="MB Fit antrenman kütüphanesini, kategorileri, kas gruplarını, ekipmanları, egzersizleri ve kullanıcı planlarını yönetin."
       />
       <Tabs
         defaultActiveKey="workouts"

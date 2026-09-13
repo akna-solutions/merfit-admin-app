@@ -90,7 +90,7 @@ export default function AuditLogsPage() {
           loading={loading}
           scrollX={1000}
           emptyDescription="Bu filtrelerle eşleşen denetim kaydı bulunamadı."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

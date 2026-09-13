@@ -27,7 +27,7 @@ export default function GeneralSettingsTab() {
         form={form}
         layout="vertical"
         style={{ maxWidth: 480 }}
-        initialValues={{ appName: "Merfit Admin", defaultLanguage: "tr", timezone: "Europe/Istanbul" }}
+        initialValues={{ appName: "MB Fit Admin", defaultLanguage: "tr", timezone: "Europe/Istanbul" }}
       >
         <Form.Item name="appName" label="Uygulama Adı" rules={[{ required: true }]}>
           <Input />

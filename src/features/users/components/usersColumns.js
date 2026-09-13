@@ -15,7 +15,7 @@ const { Text } = Typography;
 // AdminUserController only exposes status toggle (PATCH .../status),
 // soft-delete (DELETE), and restore (PATCH .../restore) — there is no
 // create/update-profile endpoint, so row actions are limited to what the
-// real API can actually do (see MerfitApi AdminUserController.cs).
+// real API can actually do (see MBFitApi AdminUserController.cs).
 function deriveStatus(record) {
   if (record.isDeleted) return { label: "Silindi", color: "red", code: "deleted" };
   if (record.isActive) return { label: "Aktif", color: "green", code: "active" };

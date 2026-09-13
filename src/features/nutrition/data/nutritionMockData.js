@@ -1,6 +1,6 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Foods/AdminFoodDtos.cs and
-// MerfitApi.Business/Dtos/Nutrition/AdminMealDtos.cs). AdminNutritionController
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Foods/AdminFoodDtos.cs and
+// MBFitApi.Business/Dtos/Nutrition/AdminMealDtos.cs). AdminNutritionController
 // only exposes a read-only, cross-user meal list/detail — there is no
 // dedicated "nutrition overview stats" endpoint, so the Overview tab's
 // metrics are computed client-side from the foods catalog + meal list,

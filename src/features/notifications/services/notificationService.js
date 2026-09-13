@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminNotificationController.cs
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminNotificationController.cs
 //
 //   GET    /api/admin/notifications           -> getNotifications(params)
 //   GET    /api/admin/notifications/{id}       -> getNotificationById(id)
@@ -45,8 +45,8 @@ export const notificationService = {
   },
 };
 
-// AdminNotificationSegment enum (see MerfitApi repo:
-// MerfitApi.Business.Dtos.Admin.Notifications.AdminNotificationSegment).
+// AdminNotificationSegment enum (see MBFitApi repo:
+// MBFitApi.Business.Dtos.Admin.Notifications.AdminNotificationSegment).
 export const NOTIFICATION_SEGMENTS = [
   { value: "AllUsers", label: "Tüm Kullanıcılar" },
   { value: "PlusUsers", label: "Plus Kullanıcılar" },

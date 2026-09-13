@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/Ai/AdminAiDtos.cs).
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/Ai/AdminAiDtos.cs).
 
 function daysAgo(n) {
   const d = new Date();

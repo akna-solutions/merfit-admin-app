@@ -1,5 +1,5 @@
-// Thin fetch wrapper for talking to the real MerfitApi backend (see
-// MerfitApi repo, running at http://localhost:5000).
+// Thin fetch wrapper for talking to the real MBFitApi backend (see
+// MBFitApi repo, running at http://localhost:5000).
 //
 // In development this app is served by CRA's dev server on its own port,
 // so calls use *relative* paths ("/api/..."). package.json's "proxy" field
@@ -8,7 +8,7 @@
 // at a different host (e.g. a deployed API) instead of relying on the proxy.
 const BASE_URL = process.env.REACT_APP_API_BASE_URL || "";
 
-export const AUTH_TOKEN_STORAGE_KEY = "merfit_admin_access_token";
+export const AUTH_TOKEN_STORAGE_KEY = "mbfit_admin_access_token";
 
 function statusToCode(status) {
   switch (status) {

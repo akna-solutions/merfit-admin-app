@@ -11,7 +11,7 @@ import WorkoutPlanDetailDrawer from "./WorkoutPlanDetailDrawer";
 
 const { Text } = Typography;
 
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutPlanController.cs — read-only
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutPlanController.cs — read-only
 // list + status + days management already existed in workoutPlanService but
 // had no screen at all (user-generated / AI-generated plans were invisible
 // to admins).
@@ -104,7 +104,7 @@ export default function WorkoutPlansTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <FilterBar onReset={resetFilters}>
         <Col xs={12} sm={8} lg={5}>
           <Input
@@ -153,7 +153,7 @@ export default function WorkoutPlansTab() {
           loading={loading}
           scrollX={1000}
           emptyDescription="Bu filtrelerle eşleşen antrenman planı yok."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

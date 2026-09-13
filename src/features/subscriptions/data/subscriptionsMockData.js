@@ -1,5 +1,5 @@
-// Mock data shaped to match MerfitApi's real DTOs (see MerfitApi repo:
-// MerfitApi.Business/Dtos/SubscriptionProducts, .../Subscriptions,
+// Mock data shaped to match MBFitApi's real DTOs (see MBFitApi repo:
+// MBFitApi.Business/Dtos/SubscriptionProducts, .../Subscriptions,
 // .../SubscriptionTransactions, and the matching Admin*Controller.cs files).
 
 function daysAgo(n) {
@@ -17,8 +17,8 @@ export const subscriptionProductsMockData = [
   {
     id: 1,
     code: "plus_monthly",
-    name: "Merfit Plus — Aylık",
-    storeProductIdIos: "com.merfit.plus.monthly",
+    name: "MB Fit Plus — Aylık",
+    storeProductIdIos: "com.mbfit.plus.monthly",
     storeProductIdAndroid: "plus_monthly",
     billingPeriod: "Monthly",
     price: 149.99,
@@ -30,8 +30,8 @@ export const subscriptionProductsMockData = [
   {
     id: 2,
     code: "plus_yearly",
-    name: "Merfit Plus — Yıllık",
-    storeProductIdIos: "com.merfit.plus.yearly",
+    name: "MB Fit Plus — Yıllık",
+    storeProductIdIos: "com.mbfit.plus.yearly",
     storeProductIdAndroid: "plus_yearly",
     billingPeriod: "Yearly",
     price: 1199.99,
@@ -43,8 +43,8 @@ export const subscriptionProductsMockData = [
   {
     id: 3,
     code: "plus_monthly_promo",
-    name: "Merfit Plus — Promosyonlu Aylık",
-    storeProductIdIos: "com.merfit.plus.promo",
+    name: "MB Fit Plus — Promosyonlu Aylık",
+    storeProductIdIos: "com.mbfit.plus.promo",
     storeProductIdAndroid: "plus_monthly_promo",
     billingPeriod: "Monthly",
     price: 99.99,

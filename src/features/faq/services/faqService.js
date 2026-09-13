@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminFaqController.cs
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminFaqController.cs
 //
 //   GET/POST/PUT/DELETE /api/admin/faq/categories[...]  -> faqCategoryService.*
 //   GET/POST/PUT/DELETE /api/admin/faqs[...]            -> faqService.*

@@ -8,7 +8,7 @@ import FeatureFormDrawer from "./FeatureFormDrawer";
 
 const { Text } = Typography;
 
-// MerfitApi.Api/Controllers/Admin/AdminFeatureController.cs had no service
+// MBFitApi.Api/Controllers/Admin/AdminFeatureController.cs had no service
 // or screen at all before — this is the master list of Features that can be
 // attached to a subscription product (see the "Features" section of the
 // Products tab's edit form).
@@ -82,7 +82,7 @@ export default function FeaturesTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, feature: null })}>
           Özellik Oluştur

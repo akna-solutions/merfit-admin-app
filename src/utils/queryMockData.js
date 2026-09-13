@@ -8,8 +8,8 @@ export function simulateLatency(data, ms = 300) {
   return new Promise((resolve) => setTimeout(() => resolve(data), ms));
 }
 
-// Wraps mock data in MerfitApi's exact response envelope
-// (MerfitApi.Business.Common.Responses.ApiResponse<T>) so every mock service
+// Wraps mock data in MBFitApi's exact response envelope
+// (MBFitApi.Business.Common.Responses.ApiResponse<T>) so every mock service
 // call already returns what the real endpoint will: { isSuccess, data,
 // errorMessage, errors, traceId }. Hooks/components read `.data`, which
 // means swapping a mock service method for a real axios/fetch call later
@@ -24,8 +24,8 @@ export function apiSuccess(data) {
   };
 }
 
-// Wraps a paged array in MerfitApi's PagedResult<T> shape
-// (MerfitApi.Business.Common.Pagination.PagedResult<T>), nested inside the
+// Wraps a paged array in MBFitApi's PagedResult<T> shape
+// (MBFitApi.Business.Common.Pagination.PagedResult<T>), nested inside the
 // ApiResponse envelope exactly as AdminXxxController list endpoints return it.
 export function apiPagedSuccess(items, page, pageSize, totalCount) {
   const totalPages = pageSize <= 0 ? 0 : Math.ceil(totalCount / pageSize);

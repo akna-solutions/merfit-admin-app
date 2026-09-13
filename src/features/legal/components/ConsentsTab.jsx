@@ -53,7 +53,7 @@ export default function ConsentsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <FilterBar onReset={resetFilters}>
         <Col xs={12} sm={8} lg={6}>
           <Input

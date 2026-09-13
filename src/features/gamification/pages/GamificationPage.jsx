@@ -12,12 +12,12 @@ export default function GamificationPage() {
       <PageHeader
         crumbs={[{ label: "Kontrol Paneli", path: "/admin" }, { label: "Oyunlaştırma" }]}
         title="Oyunlaştırma"
-        description="Merfit Skoru, başarıları, liderlik tablolarını ve ödülleri yönetin."
+        description="MB Fit Skoru, başarıları, liderlik tablolarını ve ödülleri yönetin."
       />
       <Tabs
         defaultActiveKey="score"
         items={[
-          { key: "score", label: "Merfit Skoru", children: <ScoreTab /> },
+          { key: "score", label: "MB Fit Skoru", children: <ScoreTab /> },
           { key: "achievements", label: "Başarılar", children: <AchievementsTab /> },
           { key: "leaderboard", label: "Liderlik Tablosu", children: <LeaderboardTab /> },
           { key: "rewards", label: "Ödüller", children: <RewardsTab /> },

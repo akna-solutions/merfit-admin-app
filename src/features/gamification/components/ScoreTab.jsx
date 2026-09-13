@@ -62,7 +62,7 @@ export default function ScoreTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <Row gutter={[20, 20]}>
         <Col xs={24} sm={8}><MetricCard title="Ortalama Skor" value={stats.average} loading={loading} /></Col>
         <Col xs={24} sm={8}><MetricCard title="En Yüksek Skor" value={stats.highest} loading={loading} /></Col>

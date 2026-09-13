@@ -120,7 +120,7 @@ export default function UsersPage() {
       <PageHeader
         crumbs={[{ label: "Panel", path: "/admin" }, { label: "Kullanıcılar" }]}
         title="Kullanıcılar"
-        description="Tüm Merfit kullanıcılarını yönetin."
+        description="Tüm MB Fit kullanıcılarını yönetin."
       />
 
       <UsersFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
@@ -133,7 +133,7 @@ export default function UsersPage() {
           scrollX={1100}
           emptyDescription="Bu filtrelere uyan kullanıcı bulunamadı."
           onRow={(record) => ({
-            className: "merfit-row-clickable",
+            className: "mbfit-row-clickable",
             onClick: () => handleView(record),
           })}
           pagination={{

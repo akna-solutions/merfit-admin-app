@@ -1,5 +1,5 @@
-// Real MerfitApi calls (see MerfitApi repo, running at http://localhost:5000):
-// MerfitApi.Api/Controllers/Admin/AdminScoreController.cs,
+// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
+// MBFitApi.Api/Controllers/Admin/AdminScoreController.cs,
 // AdminAchievementController.cs, AdminLeaderboardController.cs, and
 // AdminRewardController.cs.
 import { apiClient, buildQuery } from "../../../utils/apiClient";

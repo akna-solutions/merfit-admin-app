@@ -91,7 +91,7 @@ export default function WorkoutsTab() {
   });
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           type="primary"
@@ -117,7 +117,7 @@ export default function WorkoutsTab() {
           scrollX={1300}
           emptyDescription="Bu filtrelerle eşleşen antrenman yok."
           onRow={(record) => ({
-            className: "merfit-row-clickable",
+            className: "mbfit-row-clickable",
             onClick: () => handleView(record),
           })}
           pagination={{

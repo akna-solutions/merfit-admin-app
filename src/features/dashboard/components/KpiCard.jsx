@@ -27,20 +27,20 @@ export default function KpiCard({ title, value, trend, trendLabel, icon }) {
   const isPositive = trend >= 0;
 
   return (
-    <Card className="merfit-kpi-card" bordered={false}>
-      <div className="merfit-kpi-card-top">
-        <Text className="merfit-kpi-card-title">{title}</Text>
-        <span className="merfit-kpi-card-icon">
+    <Card className="mbfit-kpi-card" bordered={false}>
+      <div className="mbfit-kpi-card-top">
+        <Text className="mbfit-kpi-card-title">{title}</Text>
+        <span className="mbfit-kpi-card-icon">
           <Icon />
         </span>
       </div>
-      <Statistic value={value} className="merfit-kpi-card-value" />
+      <Statistic value={value} className="mbfit-kpi-card-value" />
       <div
-        className={`merfit-kpi-card-trend ${isPositive ? "is-positive" : "is-negative"}`}
+        className={`mbfit-kpi-card-trend ${isPositive ? "is-positive" : "is-negative"}`}
       >
         {isPositive ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
         <span>{Math.abs(trend)}%</span>
-        <Text type="secondary" className="merfit-kpi-card-trend-label">
+        <Text type="secondary" className="mbfit-kpi-card-trend-label">
           {trendLabel}
         </Text>
       </div>

@@ -72,7 +72,7 @@ export default function RequestsTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <RequestsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
       <SectionCard>
         <DataTable
@@ -81,7 +81,7 @@ export default function RequestsTab() {
           loading={loading}
           scrollX={1050}
           emptyDescription="Bu filtrelerle eşleşen yapay zeka isteği bulunamadı."
-          onRow={(record) => ({ className: "merfit-row-clickable", onClick: () => handleView(record) })}
+          onRow={(record) => ({ className: "mbfit-row-clickable", onClick: () => handleView(record) })}
           pagination={{
             current: page,
             pageSize,

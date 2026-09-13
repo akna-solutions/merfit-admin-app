@@ -179,11 +179,11 @@ function MeasurementsTab({ measurements }) {
   );
 }
 
-function MerfitScoreTab({ user, breakdown }) {
+function MBFitScoreTab({ user, breakdown }) {
   return (
     <Card size="small">
       <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <Progress type="dashboard" percent={user.latestMerfitScore ?? 0} format={(p) => `${p}`} />
+        <Progress type="dashboard" percent={user.latestMBFitScore ?? 0} format={(p) => `${p}`} />
       </div>
       <Descriptions column={1} size="small" bordered>
         {breakdown?.map((b) => (
@@ -251,15 +251,15 @@ export default function UserDetailDrawer({ open, user, related, loading, onClose
         <Skeleton active paragraph={{ rows: 8 }} />
       ) : (
         <>
-          <div className="merfit-detail-header">
+          <div className="mbfit-detail-header">
             <Avatar size={56} style={{ backgroundColor: user.avatarColor }}>
               {user.profile.firstName.charAt(0).toUpperCase()}
             </Avatar>
-            <div className="merfit-detail-header-text">
-              <div className="merfit-detail-header-title">
+            <div className="mbfit-detail-header-text">
+              <div className="mbfit-detail-header-title">
                 {user.profile.firstName} {user.profile.lastName}
               </div>
-              <div className="merfit-detail-header-sub">
+              <div className="mbfit-detail-header-sub">
                 @{user.profile.username} · {user.email}
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function UserDetailDrawer({ open, user, related, loading, onClose
               { key: "workout", label: "Antrenman Aktivitesi", children: <WorkoutActivityTab data={related.workoutSessions} /> },
               { key: "nutrition", label: "Beslenme", children: <NutritionTab meals={related.meals} goal={related.nutritionGoal} /> },
               { key: "measurements", label: "Ölçümler", children: <MeasurementsTab measurements={related.measurements} /> },
-              { key: "score", label: "Merfit Skoru", children: <MerfitScoreTab user={user} breakdown={related.scoreBreakdown} /> },
+              { key: "score", label: "MB Fit Skoru", children: <MBFitScoreTab user={user} breakdown={related.scoreBreakdown} /> },
               { key: "achievements", label: "Başarılar", children: <AchievementsTab achievements={related.achievements} /> },
               { key: "devices", label: "Cihazlar", children: <DevicesTab devices={related.devices} /> },
               { key: "support", label: "Destek Talepleri", children: <SupportTicketsTab tickets={related.supportTickets} /> },

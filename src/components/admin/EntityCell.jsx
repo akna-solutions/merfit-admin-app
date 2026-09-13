@@ -7,7 +7,7 @@ import { Avatar } from "antd";
 // Title+Key, etc.) — centralized so it renders identically everywhere.
 export default function EntityCell({ avatar, avatarColor, title, subtitle, icon }) {
   return (
-    <div className="merfit-entity-cell">
+    <div className="mbfit-entity-cell">
       <Avatar
         size={36}
         src={avatar}
@@ -16,9 +16,9 @@ export default function EntityCell({ avatar, avatarColor, title, subtitle, icon 
       >
         {!avatar && title ? title.charAt(0).toUpperCase() : null}
       </Avatar>
-      <div className="merfit-entity-cell-text">
-        <span className="merfit-entity-cell-title">{title}</span>
-        {subtitle && <span className="merfit-entity-cell-sub">{subtitle}</span>}
+      <div className="mbfit-entity-cell-text">
+        <span className="mbfit-entity-cell-title">{title}</span>
+        {subtitle && <span className="mbfit-entity-cell-sub">{subtitle}</span>}
       </div>
     </div>
   );

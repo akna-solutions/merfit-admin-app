@@ -39,8 +39,8 @@ function buildMenuItems(navigate) {
 
 function SidebarBrand({ collapsed }) {
   return (
-    <div className="merfit-sidebar-brand">
-        <img src={"https://kcxewftcfitahxefmuwz.supabase.co/storage/v1/object/public/mbfit/mbfit-logo-withoutback.png"} alt="Merfit" className="merfit-sidebar-logo" />
+    <div className="mbfit-sidebar-brand">
+        <img src={"https://kcxewftcfitahxefmuwz.supabase.co/storage/v1/object/public/mbfit/mbfit-logo-withoutback.png"} alt="MB Fit" className="mbfit-sidebar-logo" />
     </div>
   );
 }
@@ -81,21 +81,21 @@ function SidebarContent({ collapsed, onNavigate }) {
   );
 
   return (
-    <div className="merfit-sidebar-inner">
+    <div className="mbfit-sidebar-inner">
       <SidebarBrand collapsed={collapsed} />
-      <div className="merfit-sidebar-menu-scroll">
+      <div className="mbfit-sidebar-menu-scroll">
         <Menu
           mode="inline"
           selectedKeys={selectedKey}
           items={menuItems}
-          className="merfit-sidebar-menu"
+          className="mbfit-sidebar-menu"
         />
       </div>
-      <div className="merfit-sidebar-footer">
+      <div className="mbfit-sidebar-footer">
         <Menu
           mode="inline"
           selectable={false}
-          className="merfit-sidebar-menu merfit-sidebar-signout"
+          className="mbfit-sidebar-menu mbfit-sidebar-signout"
           items={[
             {
               key: "sign-out",
@@ -127,7 +127,7 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile }) {
       }}
     >
       <Sider
-        className="merfit-sidebar merfit-sidebar-desktop"
+        className="mbfit-sidebar mbfit-sidebar-desktop"
         width={248}
         collapsedWidth={80}
         collapsed={collapsed}
@@ -144,7 +144,7 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile }) {
         open={mobileOpen}
         onClose={onCloseMobile}
         width={264}
-        className="merfit-sidebar-drawer"
+        className="mbfit-sidebar-drawer"
         styles={{ body: { padding: 0 } }}
       >
         <SidebarContent collapsed={false} onNavigate={onCloseMobile} />

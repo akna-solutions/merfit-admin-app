@@ -8,7 +8,7 @@ import WorkoutCategoryFormDrawer from "./WorkoutCategoryFormDrawer";
 
 const { Text } = Typography;
 
-// MerfitApi.Api/Controllers/Admin/AdminWorkoutCategoryController.cs — full
+// MBFitApi.Api/Controllers/Admin/AdminWorkoutCategoryController.cs — full
 // CRUD was already implemented in workoutCategoryService but had no screen.
 export default function WorkoutCategoriesTab() {
   const { message } = App.useApp();
@@ -100,7 +100,7 @@ export default function WorkoutCategoriesTab() {
   ];
 
   return (
-    <div className="merfit-page" style={{ gap: 20 }}>
+    <div className="mbfit-page" style={{ gap: 20 }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setFormState({ open: true, category: null })}>
           Kategori Oluştur
