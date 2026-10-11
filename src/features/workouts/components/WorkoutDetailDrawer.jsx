@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
 import { workoutService } from "../services/workoutService";
 import { difficultyLabel } from "../data/enumLabels";
+import { AttributeScoresView } from "./AttributeScoresEditor";
 
 const { Paragraph } = Typography;
 
@@ -68,6 +69,8 @@ export default function WorkoutDetailDrawer({ open, workout, loading, onClose })
   const [exercises, setExercises] = useState([]);
   const [equipment, setEquipment] = useState([]);
   const [subLoading, setSubLoading] = useState(false);
+  const [scores, setScores] = useState(null);
+  const [scoresLoading, setScoresLoading] = useState(false);
 
   useEffect(() => {
     if (open && workout?.id) {
@@ -80,6 +83,13 @@ export default function WorkoutDetailDrawer({ open, workout, loading, onClose })
         setEquipment(eq.data);
         setSubLoading(false);
       });
+      // Loaded on its own so a failure here doesn't hide exercises/equipment.
+      setScoresLoading(true);
+      workoutService
+        .getAttributeScores(workout.id)
+        .then((res) => setScores(res.data))
+        .catch(() => setScores(null))
+        .finally(() => setScoresLoading(false));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, workout?.id]);
@@ -95,6 +105,7 @@ export default function WorkoutDetailDrawer({ open, workout, loading, onClose })
             { key: "overview", label: "Genel Bakış", children: <OverviewTab workout={workout} /> },
             { key: "exercises", label: "Egzersizler", children: <ExercisesTab exercises={exercises} loading={subLoading} /> },
             { key: "equipment", label: "Ekipman", children: <EquipmentTab equipment={equipment} loading={subLoading} /> },
+            { key: "scores", label: "Puanlar", children: <AttributeScoresView scores={scores} loading={scoresLoading} /> },
           ]}
         />
       )}

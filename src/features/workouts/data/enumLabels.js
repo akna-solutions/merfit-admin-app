@@ -25,3 +25,16 @@ export const FITNESS_GOAL_LABELS_TR = {
 export function fitnessGoalLabel(value) {
   return FITNESS_GOAL_LABELS_TR[value] ?? value;
 }
+
+export const WORKOUT_ATTRIBUTE_LABELS_TR = {
+  Hypertrophy: "Kas Gelişimi (Hipertrofi)",
+  Strength: "Kuvvet",
+  Cardio: "Kardiyo",
+  Endurance: "Dayanıklılık",
+  Mobility: "Mobilite",
+  CoreStability: "Core Stabilitesi",
+};
+
+export function workoutAttributeLabel(value) {
+  return WORKOUT_ATTRIBUTE_LABELS_TR[value] ?? value;
+}

@@ -8,6 +8,7 @@ import { FormDrawer } from "../../../components/admin";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
 import { workoutService } from "../services/workoutService";
 import { difficultyLabel } from "../data/enumLabels";
+import { AttributeScoresEditor } from "./AttributeScoresEditor";
 
 const { Text } = Typography;
 
@@ -226,6 +227,9 @@ export default function WorkoutFormDrawer({
 
       <Divider>Egzersizler</Divider>
       <ExercisesEditor workoutId={workout?.id} exerciseOptions={exerciseOptions} />
+
+      <Divider>Özellik Puanları</Divider>
+      <AttributeScoresEditor workoutId={workout?.id} />
     </FormDrawer>
   );
 }

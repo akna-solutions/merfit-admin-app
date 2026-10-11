@@ -15,6 +15,8 @@
 //   PUT    /api/admin/workouts/{id}/exercises    -> setExercises(id, { exercises })  (replace-all)
 //   GET    /api/admin/workouts/{id}/equipment    -> getEquipment(id)
 //   PUT    /api/admin/workouts/{id}/equipment    -> setEquipment(id, { equipmentIds }) (replace-all)
+//   GET    /api/admin/workouts/{id}/attribute-scores -> getAttributeScores(id)
+//   PUT    /api/admin/workouts/{id}/attribute-scores -> setAttributeScores(id, { scores }) (replace-all)
 import { apiClient, buildQuery } from "../../../utils/apiClient";
 
 export const workoutService = {
@@ -85,6 +87,20 @@ export const workoutService = {
   /** PUT /api/admin/workouts/{id}/equipment — AdminSetWorkoutEquipmentRequest (replace-all) */
   setEquipment(id, { equipmentIds }) {
     return apiClient.put(`/api/admin/workouts/${id}/equipment`, { equipmentIds });
+  },
+
+  /** GET /api/admin/workouts/{id}/attribute-scores — AdminWorkoutAttributeScoresDto */
+  getAttributeScores(id) {
+    return apiClient.get(`/api/admin/workouts/${id}/attribute-scores`);
+  },
+
+  /**
+   * PUT /api/admin/workouts/{id}/attribute-scores — AdminSetWorkoutAttributeScoresRequest
+   * (replace-all: attributes left out of `scores` are deleted). `attributeType`
+   * is sent as the enum's integer value, see WORKOUT_ATTRIBUTE_TYPE.
+   */
+  setAttributeScores(id, { scores }) {
+    return apiClient.put(`/api/admin/workouts/${id}/attribute-scores`, { scores });
   },
 
   // Lookup lists for the form's selects — not AdminWorkoutController itself,
