@@ -51,3 +51,15 @@ export function enumLabel(map, value) {
 export function enumIndex(map, label) {
   return map.indexOf(label);
 }
+
+// MBFitApi.Domain.Enums.WorkoutAttributeType — declaration order matters:
+// AdminSetWorkoutAttributeScoresRequest takes the raw enum (int), while
+// AdminWorkoutAttributeScoresDto returns the name as a string.
+export const WORKOUT_ATTRIBUTE_TYPE = [
+  "Hypertrophy",
+  "Strength",
+  "Cardio",
+  "Endurance",
+  "Mobility",
+  "CoreStability",
+];
