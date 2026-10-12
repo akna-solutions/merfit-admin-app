@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
 import { workoutPlanService, workoutService } from "../services/workoutService";
 import { fitnessGoalLabel } from "../data/enumLabels";
+import { TRAINING_DAYS } from "../../../constants/apiEnums";
 
 const { Text } = Typography;
 
@@ -20,6 +21,10 @@ function DaysEditor({ planId }) {
   const [saving, setSaving] = useState(false);
   const [workoutOptions, setWorkoutOptions] = useState([]);
 
+  // Exercise counts come from the server per saved day; a changed row shows
+  // its new count only after save, when the API returns the rebuilt days.
+  const setDays = (days) => form.setFieldsValue({ days: days ?? [] });
+
   useEffect(() => {
     if (!planId) return;
     setLoading(true);
@@ -27,7 +32,7 @@ function DaysEditor({ planId }) {
       workoutPlanService.getDays(planId),
       workoutService.getWorkouts({ pageSize: 200 }),
     ]).then(([daysRes, workoutsRes]) => {
-      form.setFieldsValue({ days: daysRes.data });
+      setDays(daysRes.data);
       setWorkoutOptions(workoutsRes.data.items);
       setLoading(false);
     });
@@ -38,9 +43,16 @@ function DaysEditor({ planId }) {
     const values = await form.validateFields();
     setSaving(true);
     try {
-      const days = values.days.map((d, i) => ({ ...d, order: d.order ?? i + 1 }));
-      await workoutPlanService.setDays(planId, { days });
+      const days = (values.days ?? []).map((d, i) => ({
+        workoutId: d.workoutId,
+        dayOfWeek: d.dayOfWeek,
+        order: d.order ?? i + 1,
+      }));
+      const res = await workoutPlanService.setDays(planId, { days });
+      if (Array.isArray(res?.data)) setDays(res.data);
       message.success("Plan günleri kaydedildi.");
+    } catch (err) {
+      message.error(err.message || "Plan günleri kaydedilemedi.");
     } finally {
       setSaving(false);
     }
@@ -68,10 +80,38 @@ function DaysEditor({ planId }) {
                       showSearch
                       optionFilterProp="label"
                       options={workoutOptions.map((w) => ({ value: w.id, label: w.title }))}
+                      onChange={() => form.setFieldValue(["days", field.name, "exerciseCount"], undefined)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name={[field.name, "dayOfWeek"]}
+                    dependencies={fields.filter((f) => f.key !== field.key).map((f) => ["days", f.name, "dayOfWeek"])}
+                    rules={[
+                      { required: true, message: "Gün seçin" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          const all = (getFieldValue("days") ?? []).map((d) => d?.dayOfWeek);
+                          return value && all.filter((v) => v === value).length > 1
+                            ? Promise.reject(new Error("Bu gün zaten kullanılıyor"))
+                            : Promise.resolve();
+                        },
+                      }),
+                    ]}
+                    style={{ marginBottom: 0, minWidth: 140 }}
+                  >
+                    <Select
+                      placeholder="Gün"
+                      options={TRAINING_DAYS.map((d) => ({ value: d.value, label: d.label }))}
                     />
                   </Form.Item>
                   <Form.Item name={[field.name, "order"]} style={{ marginBottom: 0 }} initialValue={index}>
                     <InputNumber min={0} max={400} addonBefore="Sıra" style={{ width: 140 }} />
+                  </Form.Item>
+                  <Form.Item noStyle shouldUpdate>
+                    {({ getFieldValue }) => {
+                      const count = getFieldValue(["days", field.name, "exerciseCount"]);
+                      return count == null ? null : <Tag>{count} egzersiz</Tag>;
+                    }}
                   </Form.Item>
                   <Button type="text" danger icon={<DeleteOutlined />} onClick={() => remove(field.name)} />
                 </Space>
@@ -80,7 +120,11 @@ function DaysEditor({ planId }) {
             <Button
               type="dashed"
               icon={<PlusOutlined />}
-              onClick={() => add({ order: fields.length })}
+              onClick={() => {
+                const used = new Set((form.getFieldValue("days") ?? []).map((d) => d?.dayOfWeek));
+                add({ order: fields.length, dayOfWeek: TRAINING_DAYS.find((d) => !used.has(d.value))?.value });
+              }}
+              disabled={fields.length >= TRAINING_DAYS.length}
               style={{ marginTop: 12 }}
               block
             >

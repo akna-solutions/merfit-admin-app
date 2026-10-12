@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import { DetailDrawer, StatusTag } from "../../../components/admin";
 import {
   GENDER, FITNESS_GOAL, EXPERIENCE_LEVEL, ACTIVITY_LEVEL, TRAINING_LOCATION, PLATFORM, enumLabel,
+  trainingDaysLabel,
 } from "../../../constants/apiEnums";
 
 // Renders AdminUserDetailDto + the per-tab sub-resources fetched alongside it
@@ -45,6 +46,9 @@ function ProfileTab({ user }) {
       </Descriptions.Item>
       <Descriptions.Item label="Antrenman Ortamı">
         {enumLabel(TRAINING_LOCATION, profile.trainingLocation) ?? "—"}
+      </Descriptions.Item>
+      <Descriptions.Item label="Antrenman Günleri">
+        {trainingDaysLabel(profile.preferredTrainingDays) ?? "—"}
       </Descriptions.Item>
       <Descriptions.Item label="Boy">{profile.heightCm ? `${profile.heightCm} cm` : "—"}</Descriptions.Item>
       <Descriptions.Item label="Kilo">{profile.weightKg ? `${profile.weightKg} kg` : "—"}</Descriptions.Item>
