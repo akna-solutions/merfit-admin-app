@@ -19,6 +19,17 @@ export const REWARD_TYPE_LABELS = {
   service: "Hizmet",
 };
 
+// MBFitApi/MerfitCustomerApi MerfitScoreService'in desteklediği başarı koşul türleri.
+// Koşul değeri bu metriğin ulaşması gereken sayıdır (örn. streak_days + 7).
+export const ACHIEVEMENT_CONDITION_TYPE_LABELS = {
+  workouts_completed: "Tamamlanan antrenman sayısı",
+  streak_days: "Gün serisi",
+  personal_records: "Kişisel rekor sayısı",
+  meal_log_days: "Öğün kaydı girilen gün",
+  water_log_days: "Su kaydı girilen gün",
+  total_points: "Toplam MB Fit puanı",
+};
+
 export const scoreService = {
   /** GET /api/admin/scores — AdminScoreListRequest */
   getScores(params = {}) {
@@ -98,6 +109,10 @@ export const leaderboardService = {
   /** POST /api/admin/leaderboards/{periodId}/recalculate */
   recalculate(periodId) {
     return apiClient.post(`/api/admin/leaderboards/${periodId}/recalculate`);
+  },
+  /** POST /api/admin/leaderboards/{periodId}/distribute-rewards */
+  distributeRewards(periodId) {
+    return apiClient.post(`/api/admin/leaderboards/${periodId}/distribute-rewards`);
   },
 };
 
