@@ -63,3 +63,25 @@ export const WORKOUT_ATTRIBUTE_TYPE = [
   "Mobility",
   "CoreStability",
 ];
+
+// Training day codes — sent and returned as strings ("Mon".."Sun") by the
+// workout-plan days endpoints and UserProfile.PreferredTrainingDays
+// (comma-separated, Monday first).
+export const TRAINING_DAYS = [
+  { value: "Mon", label: "Pazartesi", short: "Pzt" },
+  { value: "Tue", label: "Salı", short: "Sal" },
+  { value: "Wed", label: "Çarşamba", short: "Çar" },
+  { value: "Thu", label: "Perşembe", short: "Per" },
+  { value: "Fri", label: "Cuma", short: "Cum" },
+  { value: "Sat", label: "Cumartesi", short: "Cmt" },
+  { value: "Sun", label: "Pazar", short: "Paz" },
+];
+
+export function trainingDaysLabel(codes) {
+  if (!codes) return undefined;
+  const labels = codes
+    .split(",")
+    .map((code) => TRAINING_DAYS.find((d) => d.value === code.trim())?.label)
+    .filter(Boolean);
+  return labels.length ? labels.join(", ") : undefined;
+}
