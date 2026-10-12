@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, App } from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, DeleteOutlined, UnorderedListOutlined, GiftOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { SectionCard, DataTable, StatusTag, RowActions } from "../../../components/admin";
 import { useListQuery } from "../../../utils/useListQuery";
 import { leaderboardService, LEADERBOARD_PERIOD_TYPE_LABELS } from "../services/gamificationService";
 import LeaderboardPeriodFormDrawer from "./LeaderboardPeriodFormDrawer";
 import LeaderboardEntriesDrawer from "./LeaderboardEntriesDrawer";
+import LeaderboardRewardsDrawer from "./LeaderboardRewardsDrawer";
 
 export default function LeaderboardTab() {
   const { message } = App.useApp();
@@ -17,6 +18,7 @@ export default function LeaderboardTab() {
   const [formState, setFormState] = useState({ open: false, period: null });
   const [submitting, setSubmitting] = useState(false);
   const [entriesState, setEntriesState] = useState({ open: false, period: null, entries: [], loading: false });
+  const [rewardsPeriod, setRewardsPeriod] = useState(null);
 
   const handleDelete = async (record) => {
     await leaderboardService.deletePeriod(record.id);
@@ -67,6 +69,7 @@ export default function LeaderboardTab() {
         <RowActions
           items={[
             { key: "entries", label: "Kayıtları Görüntüle", icon: <UnorderedListOutlined />, onClick: () => loadEntries(record) },
+            { key: "rewards", label: "Ödülleri Yönet", icon: <GiftOutlined />, onClick: () => setRewardsPeriod(record) },
             { key: "edit", label: "Düzenle", icon: <EditOutlined />, onClick: () => setFormState({ open: true, period: record }) },
             {
               key: "delete",
@@ -125,6 +128,12 @@ export default function LeaderboardTab() {
         loading={entriesState.loading}
         onClose={() => setEntriesState({ open: false, period: null, entries: [], loading: false })}
         onRecalculate={handleRecalculate}
+      />
+
+      <LeaderboardRewardsDrawer
+        open={Boolean(rewardsPeriod)}
+        period={rewardsPeriod}
+        onClose={() => setRewardsPeriod(null)}
       />
     </div>
   );

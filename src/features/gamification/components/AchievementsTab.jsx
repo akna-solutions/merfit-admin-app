@@ -3,7 +3,7 @@ import { Button, Tag, Typography, App } from "antd";
 import { PlusOutlined, EditOutlined, StopOutlined, CheckCircleOutlined, DeleteOutlined, TeamOutlined } from "@ant-design/icons";
 import { SectionCard, DataTable, StatusTag, RowActions } from "../../../components/admin";
 import { useListQuery } from "../../../utils/useListQuery";
-import { achievementService } from "../services/gamificationService";
+import { achievementService, ACHIEVEMENT_CONDITION_TYPE_LABELS } from "../services/gamificationService";
 import AchievementFormDrawer from "./AchievementFormDrawer";
 import AchievementUsersDrawer from "./AchievementUsersDrawer";
 
@@ -63,7 +63,7 @@ export default function AchievementsTab() {
       title: "Koşul",
       key: "condition",
       width: 180,
-      render: (_, r) => <Tag>{r.conditionType} ≥ {r.conditionValue}</Tag>,
+      render: (_, r) => <Tag>{ACHIEVEMENT_CONDITION_TYPE_LABELS[r.conditionType] ?? r.conditionType} ≥ {r.conditionValue}</Tag>,
     },
     { title: "Durum", dataIndex: "isActive", key: "isActive", width: 100, render: (v) => <StatusTag status={v ? "Active" : "Inactive"}>{v ? "Aktif" : "Pasif"}</StatusTag> },
     {
