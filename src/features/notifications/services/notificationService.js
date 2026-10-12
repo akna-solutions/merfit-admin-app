@@ -1,57 +1,156 @@
-// Real MBFitApi calls (see MBFitApi repo, running at http://localhost:5000):
-// MBFitApi.Api/Controllers/Admin/AdminNotificationController.cs
-//
-//   GET    /api/admin/notifications           -> getNotifications(params)
-//   GET    /api/admin/notifications/{id}       -> getNotificationById(id)
-//   POST   /api/admin/notifications/user       -> sendToUser(payload)
-//   POST   /api/admin/notifications/broadcast  -> broadcast(payload)
-//   POST   /api/admin/notifications/segment    -> sendToSegment(payload)
-//   DELETE /api/admin/notifications/{id}       -> deleteNotification(id)
+// MerfitApi admin bildirim uc noktalari (http://localhost:5000, bkz. MerfitApi repo):
+//   AdminNotificationController           /api/admin/notifications              (uygulama ici kutu gecmisi)
+//   AdminNotificationTemplateController   /api/admin/notification-templates
+//   AdminNotificationRuleController       /api/admin/notification-rules
+//   AdminNotificationCampaignController   /api/admin/notification-campaigns
+//   AdminNotificationDispatchController   /api/admin/notification-dispatches
+//   AdminMonthlyRewardNotificationController /api/admin/notification-monthly-runs
+// Push gonderimi istek icinde yapilmaz: kampanya zamanlanir, arka plan islemleri kuyruga yazar ve
+// MerfitCustomerApi gonderir. Cihaz tokenlari hicbir yanitta yer almaz.
 import { apiClient, buildQuery } from "../../../utils/apiClient";
 
+function dateRangeParams(dateRange) {
+  const [from, to] = dateRange ?? [];
+  return {
+    from: from ? from.toISOString?.() ?? from : undefined,
+    to: to ? to.toISOString?.() ?? to : undefined,
+  };
+}
+
+/** Uygulama ici bildirim kutusu gecmisi. */
 export const notificationService = {
-  /** GET /api/admin/notifications — AdminNotificationListRequest */
   getNotifications(params = {}) {
-    const { page = 1, pageSize = 20, search, userId, isRead, dateRange } = params;
-    const [from, to] = dateRange ?? [];
+    const { page = 1, pageSize = 20, search, userId, isRead, type, dateRange } = params;
     return apiClient.get(
-      `/api/admin/notifications${buildQuery({ page, pageSize, search, userId, isRead, from, to })}`,
+      `/api/admin/notifications${buildQuery({ page, pageSize, search, userId, isRead, type, ...dateRangeParams(dateRange) })}`,
     );
   },
-
-  /** GET /api/admin/notifications/{id} */
   getNotificationById(id) {
     return apiClient.get(`/api/admin/notifications/${id}`);
   },
-
-  /** POST /api/admin/notifications/user — AdminSendUserNotificationRequest */
-  sendToUser(payload) {
-    return apiClient.post(`/api/admin/notifications/user`, payload);
-  },
-
-  /** POST /api/admin/notifications/broadcast — AdminBroadcastNotificationRequest */
-  broadcast(payload) {
-    return apiClient.post(`/api/admin/notifications/broadcast`, payload);
-  },
-
-  /** POST /api/admin/notifications/segment — AdminSegmentNotificationRequest { segment, title, body, imageUrl?, dataJson?, expiresAt? } */
-  sendToSegment(payload) {
-    return apiClient.post(`/api/admin/notifications/segment`, payload);
-  },
-
-  /** DELETE /api/admin/notifications/{id} */
   deleteNotification(id) {
     return apiClient.delete(`/api/admin/notifications/${id}`);
   },
 };
 
-// AdminNotificationSegment enum (see MBFitApi repo:
-// MBFitApi.Business.Dtos.Admin.Notifications.AdminNotificationSegment).
-export const NOTIFICATION_SEGMENTS = [
-  { value: "AllUsers", label: "Tüm Kullanıcılar" },
-  { value: "PlusUsers", label: "Plus Kullanıcılar" },
-  { value: "FreeUsers", label: "Ücretsiz Kullanıcılar" },
-  { value: "InactiveUsers", label: "Pasif Kullanıcılar" },
-  { value: "NewUsers", label: "Yeni Kullanıcılar" },
-  { value: "WorkoutInactiveUsers", label: "Antrenman Yapmayan Kullanıcılar" },
-];
+let metadataPromise = null;
+
+export const notificationTemplateService = {
+  /** Turler, segmentler, ekranlar, ture gore alanlar, buyuk kitle esigi. Oturum boyunca onbellekte tutulur. */
+  getMetadata() {
+    if (!metadataPromise) {
+      metadataPromise = apiClient.get(`/api/admin/notification-templates/metadata`).catch((error) => {
+        metadataPromise = null;
+        throw error;
+      });
+    }
+    return metadataPromise;
+  },
+  getTemplates(params = {}) {
+    const { page = 1, pageSize = 20, search, type, isActive } = params;
+    return apiClient.get(`/api/admin/notification-templates${buildQuery({ page, pageSize, search, type, isActive })}`);
+  },
+  createTemplate(payload) {
+    return apiClient.post(`/api/admin/notification-templates`, payload);
+  },
+  updateTemplate(id, payload) {
+    return apiClient.put(`/api/admin/notification-templates/${id}`, payload);
+  },
+  deleteTemplate(id) {
+    return apiClient.delete(`/api/admin/notification-templates/${id}`);
+  },
+  /** Hicbir sey gondermez; metni ornek degerlerle doldurur. */
+  preview(payload) {
+    return apiClient.post(`/api/admin/notification-templates/preview`, payload);
+  },
+};
+
+export const notificationRuleService = {
+  getRules(params = {}) {
+    const { page = 1, pageSize = 20, search, kind, status } = params;
+    return apiClient.get(`/api/admin/notification-rules${buildQuery({ page, pageSize, search, kind, status })}`);
+  },
+  createRule(payload) {
+    return apiClient.post(`/api/admin/notification-rules`, payload);
+  },
+  updateRule(id, payload) {
+    return apiClient.put(`/api/admin/notification-rules/${id}`, payload);
+  },
+  changeStatus(id, status) {
+    return apiClient.patch(`/api/admin/notification-rules/${id}/status`, { status });
+  },
+  deleteRule(id) {
+    return apiClient.delete(`/api/admin/notification-rules/${id}`);
+  },
+};
+
+export const notificationCampaignService = {
+  getCampaigns(params = {}) {
+    const { page = 1, pageSize = 20, search, status } = params;
+    return apiClient.get(`/api/admin/notification-campaigns${buildQuery({ page, pageSize, search, status })}`);
+  },
+  getCampaign(id) {
+    return apiClient.get(`/api/admin/notification-campaigns/${id}`);
+  },
+  /** Kaydetmeden kitle sayisi ve ornek alicilar: { segment, userIds? } */
+  previewAudience(payload) {
+    return apiClient.post(`/api/admin/notification-campaigns/audience-preview`, payload);
+  },
+  getAudience(id) {
+    return apiClient.get(`/api/admin/notification-campaigns/${id}/audience`);
+  },
+  createCampaign(payload) {
+    return apiClient.post(`/api/admin/notification-campaigns`, payload);
+  },
+  updateCampaign(id, payload) {
+    return apiClient.put(`/api/admin/notification-campaigns/${id}`, payload);
+  },
+  deleteCampaign(id) {
+    return apiClient.delete(`/api/admin/notification-campaigns/${id}`);
+  },
+  /** { scheduledAtUtc, confirmLargeAudience } */
+  schedule(id, payload) {
+    return apiClient.post(`/api/admin/notification-campaigns/${id}/schedule`, payload);
+  },
+  /** { confirmLargeAudience } */
+  sendNow(id, payload) {
+    return apiClient.post(`/api/admin/notification-campaigns/${id}/send-now`, payload);
+  },
+  unschedule(id) {
+    return apiClient.post(`/api/admin/notification-campaigns/${id}/unschedule`);
+  },
+  cancel(id) {
+    return apiClient.post(`/api/admin/notification-campaigns/${id}/cancel`);
+  },
+  getStats(id) {
+    return apiClient.get(`/api/admin/notification-campaigns/${id}/stats`);
+  },
+  retryFailed(id) {
+    return apiClient.post(`/api/admin/notification-campaigns/${id}/retry-failed`);
+  },
+};
+
+export const notificationDispatchService = {
+  /** Filtreler: status, source, campaignId, ruleId, leaderboardPeriodId, userId, search (e-posta), dateRange */
+  getDispatches(params = {}) {
+    const { page = 1, pageSize = 20, dateRange, ...rest } = params;
+    return apiClient.get(`/api/admin/notification-dispatches${buildQuery({ page, pageSize, ...rest, ...dateRangeParams(dateRange) })}`);
+  },
+  getDispatch(id) {
+    return apiClient.get(`/api/admin/notification-dispatches/${id}`);
+  },
+  retry(id) {
+    return apiClient.post(`/api/admin/notification-dispatches/${id}/retry`);
+  },
+};
+
+export const monthlyRewardNotificationService = {
+  getRuns(params = {}) {
+    const { page = 1, pageSize = 20, status } = params;
+    return apiClient.get(`/api/admin/notification-monthly-runs${buildQuery({ page, pageSize, status })}`);
+  },
+  /** Kuyruga al veya yeniden dene (donem bitmeden calismaz, ayni kullaniciya iki kez gonderilmez). */
+  trigger(periodId) {
+    return apiClient.post(`/api/admin/notification-monthly-runs/periods/${periodId}/trigger`);
+  },
+};
