@@ -2,6 +2,7 @@ import React from "react";
 import { Descriptions, Skeleton } from "antd";
 import dayjs from "dayjs";
 import { DetailDrawer } from "../../../components/admin";
+import { allergenLabels, categoryLabel, dietLabel, mealTypeLabels } from "./foodClassification";
 
 export default function FoodDetailDrawer({ open, food, loading, onClose }) {
   return (
@@ -21,6 +22,15 @@ export default function FoodDetailDrawer({ open, food, loading, onClose }) {
           <Descriptions.Item label="Lif">{food.fiber ?? "—"} g</Descriptions.Item>
           <Descriptions.Item label="Şeker">{food.sugar ?? "—"} g</Descriptions.Item>
           <Descriptions.Item label="Sodyum">{food.sodium ?? "—"} mg</Descriptions.Item>
+          <Descriptions.Item label="Kategori">{categoryLabel(food.category) ?? "Sınıflandırılmadı"}</Descriptions.Item>
+          <Descriptions.Item label="Uygun Öğünler">
+            {food.mealTypes?.length ? mealTypeLabels(food.mealTypes).join(", ") : "Seçilmedi"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Alerjenler">
+            {food.allergens == null ? "Doğrulanmadı" : food.allergens.length ? allergenLabels(food.allergens).join(", ") : "İçermez"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Diyet">{dietLabel(food.dietTags)}</Descriptions.Item>
+          <Descriptions.Item label="Programlarda Kullanılır">{food.isClassified ? "Evet" : "Hayır (sınıflandırma eksik)"}</Descriptions.Item>
           <Descriptions.Item label="Oluşturulma Tarihi">{dayjs(food.createdAt).format("DD MMM YYYY")}</Descriptions.Item>
           <Descriptions.Item label="Güncellenme Tarihi">
             {food.updatedAt ? dayjs(food.updatedAt).format("DD MMM YYYY") : "—"}

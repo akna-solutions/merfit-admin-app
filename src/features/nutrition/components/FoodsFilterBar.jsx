@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Input } from "antd";
+import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar } from "../../../components/admin";
 
@@ -29,6 +29,19 @@ export default function FoodsFilterBar({ filters, onChange, onReset }) {
           placeholder="Barkod"
           value={filters.barcode}
           onChange={(e) => onChange({ barcode: e.target.value || undefined })}
+        />
+      </Col>
+      <Col xs={24} sm={12} lg={6}>
+        <Select
+          allowClear
+          style={{ width: "100%" }}
+          placeholder="Program sınıflandırması"
+          value={filters.isClassified}
+          onChange={(value) => onChange({ isClassified: value })}
+          options={[
+            { value: false, label: "Sınıflandırılmamış" },
+            { value: true, label: "Sınıflandırılmış" },
+          ]}
         />
       </Col>
     </FilterBar>

@@ -15,8 +15,8 @@ import { apiClient, buildQuery } from "../../../utils/apiClient";
 export const foodService = {
   /** GET /api/admin/foods — AdminFoodListRequest */
   getFoods(params = {}) {
-    const { page = 1, pageSize = 20, search, brand, barcode } = params;
-    return apiClient.get(`/api/admin/foods${buildQuery({ page, pageSize, search, brand, barcode })}`);
+    const { page = 1, pageSize = 20, search, brand, barcode, isClassified } = params;
+    return apiClient.get(`/api/admin/foods${buildQuery({ page, pageSize, search, brand, barcode, isClassified })}`);
   },
 
   /** GET /api/admin/foods/{id} */

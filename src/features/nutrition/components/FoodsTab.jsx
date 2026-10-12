@@ -26,7 +26,12 @@ export default function FoodsTab() {
     setDetailState({ open: true, food: detail.data, loading: false });
   };
 
-  const handleEdit = (record) => setFormState({ open: true, food: record });
+  // Liste satiri lif/seker/sodyum alanlarini tasimaz; formu detaydan doldurmak bu alanlarin
+  // kaydederken bosaltilmasini onler.
+  const handleEdit = async (record) => {
+    const detail = await foodService.getFoodById(record.id);
+    setFormState({ open: true, food: detail.data });
+  };
 
   const handleDelete = async (record) => {
     await foodService.deleteFood(record.id);
