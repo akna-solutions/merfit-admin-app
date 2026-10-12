@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { foodService } from "../services/nutritionService";
 
-const DEFAULT_FILTERS = { search: "", brand: undefined, barcode: undefined };
+const DEFAULT_FILTERS = { search: "", brand: undefined, barcode: undefined, isClassified: undefined };
 
 export function useFoods() {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);

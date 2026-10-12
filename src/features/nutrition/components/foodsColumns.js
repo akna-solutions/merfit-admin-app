@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "antd";
+import { Tag, Typography } from "antd";
 import { EntityCell, RowActions } from "../../../components/admin";
 import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
@@ -27,6 +27,13 @@ export function buildFoodsColumns({ onView, onEdit, onDelete }) {
     { title: "Karbonhidrat", dataIndex: "carbs", key: "carbs", width: 90, render: (v) => `${v} g` },
     { title: "Yağ", dataIndex: "fat", key: "fat", width: 80, render: (v) => `${v} g` },
     { title: "Lif", dataIndex: "fiber", key: "fiber", width: 80, render: (v) => (v ? `${v} g` : "—") },
+    {
+      title: "Program",
+      dataIndex: "isClassified",
+      key: "isClassified",
+      width: 130,
+      render: (v) => (v ? <Tag color="green">Sınıflandırıldı</Tag> : <Tag color="orange">Sınıflandırılmadı</Tag>),
+    },
     {
       title: "Barkod",
       dataIndex: "barcode",

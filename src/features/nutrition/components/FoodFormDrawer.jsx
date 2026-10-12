@@ -1,6 +1,16 @@
 import React, { useEffect } from "react";
-import { Form, Input, InputNumber, Space } from "antd";
+import { Divider, Form, Input, InputNumber, Select, Space, Switch, Typography } from "antd";
 import { FormDrawer } from "../../../components/admin";
+import {
+  ALLERGEN_OPTIONS,
+  DIET_OPTIONS,
+  FOOD_CATEGORY_OPTIONS,
+  MEAL_TYPE_OPTIONS,
+  toClassificationFormValues,
+  toClassificationPayload,
+} from "./foodClassification";
+
+const { Text } = Typography;
 
 export default function FoodFormDrawer({ open, food, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
@@ -8,12 +18,13 @@ export default function FoodFormDrawer({ open, food, submitting, onClose, onSubm
 
   useEffect(() => {
     if (open) {
-      form.setFieldsValue(food ?? { servingUnit: "g", servingSize: 100 });
+      form.resetFields();
+      form.setFieldsValue({ ...(food ?? { servingUnit: "g", servingSize: 100 }), ...toClassificationFormValues(food) });
     }
   }, [open, food, form]);
 
   const handleSubmit = () => {
-    form.validateFields().then((values) => onSubmit(values));
+    form.validateFields().then((values) => onSubmit(toClassificationPayload(values)));
   };
 
   return (
@@ -82,6 +93,41 @@ export default function FoodFormDrawer({ open, food, submitting, onClose, onSubm
         </Space>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
           <Input placeholder="https://..." />
+        </Form.Item>
+
+        <Divider>Kişisel beslenme programı</Divider>
+        <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
+          Programlar yalnızca kategori ve uygun öğün girilmiş besinleri kullanır. Alerjen veya diyet bilgisi
+          doğrulanmayan besin, alerjisi olan ya da vejetaryen/vegan kullanıcılara önerilmez.
+        </Text>
+        <Form.Item name="category" label="Kategori">
+          <Select allowClear placeholder="Sınıflandırılmadı" options={FOOD_CATEGORY_OPTIONS} />
+        </Form.Item>
+        <Form.Item name="mealTypes" label="Uygun öğünler">
+          <Select mode="multiple" allowClear placeholder="Seçilmedi" options={MEAL_TYPE_OPTIONS} />
+        </Form.Item>
+        <Form.Item name="allergensVerified" label="Alerjen bilgisi doğrulandı" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+        <Form.Item noStyle shouldUpdate={(prev, next) => prev.allergensVerified !== next.allergensVerified}>
+          {({ getFieldValue }) => (
+            <Form.Item
+              name="allergens"
+              label="İçerdiği alerjenler"
+              extra={getFieldValue("allergensVerified") ? "Boş bırakmak: alerjen içermez." : "Önce alerjen bilgisini doğrulayın."}
+            >
+              <Select
+                mode="multiple"
+                allowClear
+                disabled={!getFieldValue("allergensVerified")}
+                placeholder="Alerjen içermez"
+                options={ALLERGEN_OPTIONS}
+              />
+            </Form.Item>
+          )}
+        </Form.Item>
+        <Form.Item name="diet" label="Diyet uygunluğu">
+          <Select options={DIET_OPTIONS} />
         </Form.Item>
       </Form>
     </FormDrawer>
