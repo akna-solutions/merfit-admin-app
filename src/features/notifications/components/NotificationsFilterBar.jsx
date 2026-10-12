@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar, DateRangeFilter } from "../../../components/admin";
+import { NOTIFICATION_TYPE_LABELS, toOptions } from "../utils/notificationLabels";
 
 export default function NotificationsFilterBar({ filters, onChange, onReset }) {
   return (
@@ -9,7 +10,7 @@ export default function NotificationsFilterBar({ filters, onChange, onReset }) {
       <Col xs={24} sm={12} lg={8}>
         <Input
           allowClear
-          placeholder="Başlık, içerik veya kullanıcıya göre ara"
+          placeholder="Ara"
           prefix={<SearchOutlined />}
           value={filters.search}
           onChange={(e) => onChange({ search: e.target.value })}
@@ -27,7 +28,17 @@ export default function NotificationsFilterBar({ filters, onChange, onReset }) {
           ]}
         />
       </Col>
-      <Col xs={24} sm={12} lg={8}>
+      <Col xs={12} sm={6} lg={5}>
+        <Select
+          allowClear
+          style={{ width: "100%" }}
+          placeholder="Tür"
+          value={filters.type}
+          onChange={(type) => onChange({ type })}
+          options={toOptions(NOTIFICATION_TYPE_LABELS)}
+        />
+      </Col>
+      <Col xs={24} sm={12} lg={6}>
         <DateRangeFilter value={filters.dateRange} onChange={(dateRange) => onChange({ dateRange })} />
       </Col>
     </FilterBar>

@@ -1,28 +1,28 @@
 import React from "react";
-import { Typography, App } from "antd";
+import { Typography } from "antd";
 import dayjs from "dayjs";
 import { SectionCard, DataTable, EntityCell, StatusTag, RowActions } from "../../../components/admin";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useListQuery } from "../../../utils/useListQuery";
 import { notificationService } from "../services/notificationService";
+import { useApiAction } from "../hooks/useApiAction";
+import { NOTIFICATION_TYPE_LABELS, label } from "../utils/notificationLabels";
 import NotificationsFilterBar from "./NotificationsFilterBar";
 
 const { Text } = Typography;
 
 export default function NotificationHistoryTab() {
-  const { message } = App.useApp();
+  const run = useApiAction();
   const {
     rows, total, loading, filters, page, pageSize,
     setPage, setPageSize, updateFilters, resetFilters, refetch,
   } = useListQuery(
     notificationService.getNotifications,
-    { search: "", isRead: undefined, dateRange: null },
+    { search: "", isRead: undefined, type: undefined, dateRange: null },
   );
   
   const handleDelete = async (record) => {
-    await notificationService.deleteNotification(record.id);
-    message.success("Bildirim silindi.");
-    refetch();
+    if (await run(() => notificationService.deleteNotification(record.id), "Bildirim silindi.")) refetch();
   };
 
   const columns = [
@@ -33,6 +33,7 @@ export default function NotificationHistoryTab() {
       render: (_, r) => <EntityCell title={r.title} subtitle={r.body} avatarColor="#2F6FED" />,
     },
     { title: "Kullanıcı", dataIndex: "userEmail", key: "userEmail", width: 200 },
+    { title: "Tür", dataIndex: "type", key: "type", width: 170, render: (v) => label(NOTIFICATION_TYPE_LABELS, v) },
     {
       title: "Durum",
       dataIndex: "isRead",
@@ -85,8 +86,8 @@ export default function NotificationHistoryTab() {
           columns={columns}
           dataSource={rows}
           loading={loading}
-          scrollX={1000}
-          emptyDescription="Henüz bildirim gönderilmedi."
+          scrollX={1150}
+          emptyDescription="Uygulama içi bildirim kaydı yok."
           pagination={{
             current: page,
             pageSize,
