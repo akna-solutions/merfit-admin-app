@@ -10,7 +10,7 @@ import RequestDetailDrawer from "./RequestDetailDrawer";
 // Display-only labels for the underlying request type/status values (values
 // used for filtering and matching stay in English — only the rendered text
 // is translated here).
-const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İçgörü" };
+const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İçgörü", NutritionAssistant: "Beslenme Asistanı" };
 const STATUS_LABELS = { Pending: "Beklemede", Processing: "İşleniyor", Completed: "Tamamlandı", Failed: "Başarısız" };
 
 export default function RequestsTab() {

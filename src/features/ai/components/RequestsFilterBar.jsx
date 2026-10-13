@@ -25,6 +25,7 @@ export default function RequestsFilterBar({ filters, onChange, onReset }) {
             { value: "Workout", label: "Antrenman" },
             { value: "Nutrition", label: "Beslenme" },
             { value: "Insight", label: "İçgörü" },
+            { value: "NutritionAssistant", label: "Beslenme Asistanı" },
           ]}
         />
       </Col>
