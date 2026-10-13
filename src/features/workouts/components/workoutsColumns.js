@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { EntityCell, StatusTag, RowActions } from "../../../components/admin";
 import { EyeOutlined, EditOutlined, StopOutlined, CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import { difficultyLabel } from "../data/enumLabels";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -16,6 +17,8 @@ export function buildWorkoutsColumns({ onView, onEdit, onToggleStatus, onDelete 
       width: 260,
       render: (_, record) => (
         <EntityCell
+          avatar={previewableImageUrl(record.imageUrl)}
+          avatarShape="square"
           title={record.title}
           subtitle={record.categoryName}
           avatarColor="#2F6FED"

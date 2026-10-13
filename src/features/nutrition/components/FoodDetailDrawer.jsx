@@ -1,7 +1,7 @@
 import React from "react";
 import { Descriptions, Skeleton } from "antd";
 import dayjs from "dayjs";
-import { DetailDrawer } from "../../../components/admin";
+import { DetailDrawer, ImageUrlPreview } from "../../../components/admin";
 import { allergenLabels, categoryLabel, dietLabel, mealTypeLabels } from "./foodClassification";
 
 export default function FoodDetailDrawer({ open, food, loading, onClose }) {
@@ -10,32 +10,35 @@ export default function FoodDetailDrawer({ open, food, loading, onClose }) {
       {loading || !food ? (
         <Skeleton active paragraph={{ rows: 8 }} />
       ) : (
-        <Descriptions column={1} bordered size="small">
-          <Descriptions.Item label="Ad">{food.name}</Descriptions.Item>
-          <Descriptions.Item label="Marka">{food.brand ?? "Jenerik"}</Descriptions.Item>
-          <Descriptions.Item label="Barkod">{food.barcode ?? "—"}</Descriptions.Item>
-          <Descriptions.Item label="Porsiyon">{food.servingSize} {food.servingUnit}</Descriptions.Item>
-          <Descriptions.Item label="Kalori">{food.calories}</Descriptions.Item>
-          <Descriptions.Item label="Protein">{food.protein} g</Descriptions.Item>
-          <Descriptions.Item label="Karbonhidrat">{food.carbs} g</Descriptions.Item>
-          <Descriptions.Item label="Yağ">{food.fat} g</Descriptions.Item>
-          <Descriptions.Item label="Lif">{food.fiber ?? "—"} g</Descriptions.Item>
-          <Descriptions.Item label="Şeker">{food.sugar ?? "—"} g</Descriptions.Item>
-          <Descriptions.Item label="Sodyum">{food.sodium ?? "—"} mg</Descriptions.Item>
-          <Descriptions.Item label="Kategori">{categoryLabel(food.category) ?? "Sınıflandırılmadı"}</Descriptions.Item>
-          <Descriptions.Item label="Uygun Öğünler">
-            {food.mealTypes?.length ? mealTypeLabels(food.mealTypes).join(", ") : "Seçilmedi"}
-          </Descriptions.Item>
-          <Descriptions.Item label="Alerjenler">
-            {food.allergens == null ? "Doğrulanmadı" : food.allergens.length ? allergenLabels(food.allergens).join(", ") : "İçermez"}
-          </Descriptions.Item>
-          <Descriptions.Item label="Diyet">{dietLabel(food.dietTags)}</Descriptions.Item>
-          <Descriptions.Item label="Programlarda Kullanılır">{food.isClassified ? "Evet" : "Hayır (sınıflandırma eksik)"}</Descriptions.Item>
-          <Descriptions.Item label="Oluşturulma Tarihi">{dayjs(food.createdAt).format("DD MMM YYYY")}</Descriptions.Item>
-          <Descriptions.Item label="Güncellenme Tarihi">
-            {food.updatedAt ? dayjs(food.updatedAt).format("DD MMM YYYY") : "—"}
+        <>
+          <ImageUrlPreview url={food.imageUrl} alt={food.name} height={200} style={{ marginBottom: 16 }} />
+          <Descriptions column={1} bordered size="small">
+            <Descriptions.Item label="Ad">{food.name}</Descriptions.Item>
+            <Descriptions.Item label="Marka">{food.brand ?? "Jenerik"}</Descriptions.Item>
+            <Descriptions.Item label="Barkod">{food.barcode ?? "—"}</Descriptions.Item>
+            <Descriptions.Item label="Porsiyon">{food.servingSize} {food.servingUnit}</Descriptions.Item>
+            <Descriptions.Item label="Kalori">{food.calories}</Descriptions.Item>
+            <Descriptions.Item label="Protein">{food.protein} g</Descriptions.Item>
+            <Descriptions.Item label="Karbonhidrat">{food.carbs} g</Descriptions.Item>
+            <Descriptions.Item label="Yağ">{food.fat} g</Descriptions.Item>
+            <Descriptions.Item label="Lif">{food.fiber ?? "—"} g</Descriptions.Item>
+            <Descriptions.Item label="Şeker">{food.sugar ?? "—"} g</Descriptions.Item>
+            <Descriptions.Item label="Sodyum">{food.sodium ?? "—"} mg</Descriptions.Item>
+            <Descriptions.Item label="Kategori">{categoryLabel(food.category) ?? "Sınıflandırılmadı"}</Descriptions.Item>
+            <Descriptions.Item label="Uygun Öğünler">
+              {food.mealTypes?.length ? mealTypeLabels(food.mealTypes).join(", ") : "Seçilmedi"}
+            </Descriptions.Item>
+            <Descriptions.Item label="Alerjenler">
+              {food.allergens == null ? "Doğrulanmadı" : food.allergens.length ? allergenLabels(food.allergens).join(", ") : "İçermez"}
+            </Descriptions.Item>
+            <Descriptions.Item label="Diyet">{dietLabel(food.dietTags)}</Descriptions.Item>
+            <Descriptions.Item label="Programlarda Kullanılır">{food.isClassified ? "Evet" : "Hayır (sınıflandırma eksik)"}</Descriptions.Item>
+            <Descriptions.Item label="Oluşturulma Tarihi">{dayjs(food.createdAt).format("DD MMM YYYY")}</Descriptions.Item>
+            <Descriptions.Item label="Güncellenme Tarihi">
+              {food.updatedAt ? dayjs(food.updatedAt).format("DD MMM YYYY") : "—"}
           </Descriptions.Item>
         </Descriptions>
+        </>
       )}
     </DetailDrawer>
   );

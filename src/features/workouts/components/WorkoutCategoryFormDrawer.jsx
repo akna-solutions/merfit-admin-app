@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Input, Switch } from "antd";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 
 export default function WorkoutCategoryFormDrawer({ open, category, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
@@ -39,7 +39,7 @@ export default function WorkoutCategoryFormDrawer({ open, category, submitting, 
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url", message: "Geçerli bir URL girin" }]}>
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="Kategori görseli önizlemesi" />
         </Form.Item>
         <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />

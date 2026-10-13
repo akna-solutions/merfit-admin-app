@@ -5,6 +5,7 @@ import { SectionCard, DataTable, EntityCell, StatusTag, RowActions, FilterBar } 
 import { useListQuery } from "../../../utils/useListQuery";
 import { workoutCategoryService } from "../services/workoutService";
 import WorkoutCategoryFormDrawer from "./WorkoutCategoryFormDrawer";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -54,7 +55,7 @@ export default function WorkoutCategoriesTab() {
       title: "Kategori",
       key: "name",
       width: 240,
-      render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#2F6FED" />,
+      render: (_, r) => <EntityCell avatar={previewableImageUrl(r.imageUrl)} avatarShape="square" title={r.name} subtitle={r.slug} avatarColor="#2F6FED" />,
     },
     {
       title: "Açıklama",

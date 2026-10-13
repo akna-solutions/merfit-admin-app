@@ -19,6 +19,7 @@ import {
   GENDER, FITNESS_GOAL, EXPERIENCE_LEVEL, ACTIVITY_LEVEL, TRAINING_LOCATION, PLATFORM, enumLabel,
   trainingDaysLabel,
 } from "../../../constants/apiEnums";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 // Renders AdminUserDetailDto + the per-tab sub-resources fetched alongside it
 // (see userService.js — each maps 1:1 to an AdminUserController endpoint).
@@ -256,7 +257,12 @@ export default function UserDetailDrawer({ open, user, related, loading, onClose
       ) : (
         <>
           <div className="mbfit-detail-header">
-            <Avatar size={56} style={{ backgroundColor: user.avatarColor }}>
+            <Avatar
+              size={56}
+              src={previewableImageUrl(user.profile.profileImageUrl)}
+              alt={`${user.profile.firstName} ${user.profile.lastName}`}
+              style={{ backgroundColor: user.avatarColor }}
+            >
               {user.profile.firstName.charAt(0).toUpperCase()}
             </Avatar>
             <div className="mbfit-detail-header-text">

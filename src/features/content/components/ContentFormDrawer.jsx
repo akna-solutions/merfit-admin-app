@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Input, Select, Switch, DatePicker } from "antd";
 import dayjs from "dayjs";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 import { CONTENT_TYPES } from "../data/contentMockData";
 
 // Kod değerleri API ile birebir eşleşir — yalnızca gösterilen etiketler Türkçeleştirilir.
@@ -72,7 +72,7 @@ export default function ContentFormDrawer({ open, item, submitting, onClose, onS
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="İçerik görseli önizlemesi" />
         </Form.Item>
         <Form.Item name="linkUrl" label="Bağlantı URL" rules={[{ max: 1000 }]}>
           <Input placeholder="İsteğe bağlı hedef bağlantı" />

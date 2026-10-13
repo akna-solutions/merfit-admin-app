@@ -9,6 +9,7 @@ import { exerciseService, muscleGroupService } from "../services/workoutService"
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
 import { difficultyLabel } from "../data/enumLabels";
 import ExerciseFormDrawer from "./ExerciseFormDrawer";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -69,7 +70,7 @@ export default function ExercisesTab() {
       key: "name",
       fixed: "left",
       width: 240,
-      render: (_, r) => <EntityCell title={r.name} subtitle={r.slug} avatarColor="#722ED1" />,
+      render: (_, r) => <EntityCell avatar={previewableImageUrl(r.imageUrl)} avatarShape="square" title={r.name} subtitle={r.slug} avatarColor="#722ED1" />,
     },
     {
       title: "Zorluk",

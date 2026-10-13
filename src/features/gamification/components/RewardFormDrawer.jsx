@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Input, Select, Switch } from "antd";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 
 export default function RewardFormDrawer({ open, reward, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
@@ -42,7 +42,7 @@ export default function RewardFormDrawer({ open, reward, submitting, onClose, on
           <Input placeholder="İsteğe bağlı, örn. 500 veya plus_monthly:1" />
         </Form.Item>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="Ödül görseli önizlemesi" />
         </Form.Item>
         <Form.Item name="isActive" label="Aktif" valuePropName="checked">
           <Switch />
