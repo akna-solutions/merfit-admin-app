@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Divider, Form, Input, InputNumber, Select, Space, Switch, Typography } from "antd";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 import {
   ALLERGEN_OPTIONS,
   DIET_OPTIONS,
@@ -92,7 +92,7 @@ export default function FoodFormDrawer({ open, food, submitting, onClose, onSubm
           </Form.Item>
         </Space>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url" }]}>
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="Besin görseli önizlemesi" />
         </Form.Item>
 
         <Divider>Kişisel beslenme programı</Divider>

@@ -2,6 +2,7 @@ import React from "react";
 import { Tag, Typography } from "antd";
 import { EntityCell, RowActions } from "../../../components/admin";
 import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -13,7 +14,13 @@ export function buildFoodsColumns({ onView, onEdit, onDelete }) {
       fixed: "left",
       width: 220,
       render: (_, record) => (
-        <EntityCell title={record.name} subtitle={record.brand ?? "Jenerik"} avatarColor="#22C55E" />
+        <EntityCell
+          avatar={previewableImageUrl(record.imageUrl)}
+          avatarShape="square"
+          title={record.name}
+          subtitle={record.brand ?? "Jenerik"}
+          avatarColor="#22C55E"
+        />
       ),
     },
     {

@@ -5,6 +5,7 @@ import { SectionCard, DataTable, StatusTag, RowActions, EntityCell } from "../..
 import { useListQuery } from "../../../utils/useListQuery";
 import { rewardService, REWARD_TYPE_LABELS } from "../services/gamificationService";
 import RewardFormDrawer from "./RewardFormDrawer";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -51,7 +52,7 @@ export default function RewardsTab() {
       title: "Ödül",
       key: "title",
       width: 260,
-      render: (_, r) => <EntityCell title={r.title} subtitle={r.description} avatarColor="#7C3AED" />,
+      render: (_, r) => <EntityCell avatar={previewableImageUrl(r.imageUrl)} avatarShape="square" title={r.title} subtitle={r.description} avatarColor="#7C3AED" />,
     },
     { title: "Tür", dataIndex: "rewardType", key: "rewardType", width: 130, render: (v) => <Tag>{REWARD_TYPE_LABELS[v] ?? v}</Tag> },
     { title: "Değer", dataIndex: "value", key: "value", width: 150, render: (v) => v ?? <Text type="secondary">—</Text> },

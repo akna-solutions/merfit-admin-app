@@ -7,6 +7,7 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { contentService } from "../services/contentService";
 import ContentFilterBar from "../components/ContentFilterBar";
 import ContentFormDrawer from "../components/ContentFormDrawer";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 // Kod değerleri API ile birebir eşleşir — yalnızca gösterilen etiketler Türkçeleştirilir.
 const CONTENT_TYPE_LABELS = {
@@ -69,7 +70,7 @@ export default function ContentPage() {
       title: "Başlık",
       key: "title",
       width: 260,
-      render: (_, r) => <EntityCell title={r.title ?? r.key} subtitle={r.key} avatarColor="#2F6FED" />,
+      render: (_, r) => <EntityCell avatar={previewableImageUrl(r.imageUrl)} avatarShape="square" title={r.title ?? r.key} subtitle={r.key} avatarColor="#2F6FED" />,
     },
     { title: "Tür", dataIndex: "type", key: "type", width: 130, render: (v) => <Tag>{CONTENT_TYPE_LABELS[v] ?? v}</Tag> },
     {

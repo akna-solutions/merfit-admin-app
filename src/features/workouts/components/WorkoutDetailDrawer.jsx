@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Descriptions, Tag, Table, Skeleton, Tabs, Typography } from "antd";
 import dayjs from "dayjs";
-import { DetailDrawer, StatusTag } from "../../../components/admin";
+import { DetailDrawer, StatusTag, ImageUrlPreview } from "../../../components/admin";
 import { workoutService } from "../services/workoutService";
 import { difficultyLabel } from "../data/enumLabels";
 import { AttributeScoresView } from "./AttributeScoresEditor";
@@ -11,6 +11,7 @@ const { Paragraph } = Typography;
 function OverviewTab({ workout }) {
   return (
     <>
+      <ImageUrlPreview url={workout.imageUrl} alt={workout.title} height={200} style={{ marginBottom: 16 }} />
       {workout.tagline && <Paragraph type="secondary">{workout.tagline}</Paragraph>}
       {workout.description && <Paragraph>{workout.description}</Paragraph>}
       <Descriptions column={1} bordered size="small">

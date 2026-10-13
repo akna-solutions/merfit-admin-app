@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Input, InputNumber, Select, Switch, Space } from "antd";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
 import { difficultyLabel } from "../data/enumLabels";
 
@@ -83,7 +83,7 @@ export default function ExerciseFormDrawer({ open, exercise, muscleGroups, submi
           </Form.Item>
         </Space>
         <Form.Item name="imageUrl" label="Görsel URL" rules={[{ type: "url", message: "Geçerli bir URL girin" }]}>
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="Egzersiz görseli önizlemesi" />
         </Form.Item>
         <Form.Item name="videoUrl" label="Video URL" rules={[{ type: "url", message: "Geçerli bir URL girin" }]}>
           <Input placeholder="https://..." />

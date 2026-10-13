@@ -8,6 +8,7 @@ import { notificationService } from "../services/notificationService";
 import { useApiAction } from "../hooks/useApiAction";
 import { NOTIFICATION_TYPE_LABELS, label } from "../utils/notificationLabels";
 import NotificationsFilterBar from "./NotificationsFilterBar";
+import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
@@ -30,7 +31,7 @@ export default function NotificationHistoryTab() {
       title: "Bildirim",
       key: "title",
       width: 280,
-      render: (_, r) => <EntityCell title={r.title} subtitle={r.body} avatarColor="#2F6FED" />,
+      render: (_, r) => <EntityCell avatar={previewableImageUrl(r.imageUrl)} avatarShape="square" title={r.title} subtitle={r.body} avatarColor="#2F6FED" />,
     },
     { title: "Kullanıcı", dataIndex: "userEmail", key: "userEmail", width: 200 },
     { title: "Tür", dataIndex: "type", key: "type", width: 170, render: (v) => label(NOTIFICATION_TYPE_LABELS, v) },

@@ -4,7 +4,7 @@ import {
   Typography, Empty, App,
 } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { FormDrawer } from "../../../components/admin";
+import { FormDrawer, ImageUrlInput } from "../../../components/admin";
 import { DIFFICULTY_LEVEL } from "../../../constants/apiEnums";
 import { workoutService } from "../services/workoutService";
 import { difficultyLabel } from "../data/enumLabels";
@@ -210,7 +210,7 @@ export default function WorkoutFormDrawer({
           label="Görsel URL"
           rules={[{ type: "url", message: "Geçerli bir URL girin" }]}
         >
-          <Input placeholder="https://..." />
+          <ImageUrlInput previewAlt="Antrenman görseli önizlemesi" />
         </Form.Item>
         <Space size={32}>
           <Form.Item name="isFeatured" label="Öne Çıkan" valuePropName="checked">
