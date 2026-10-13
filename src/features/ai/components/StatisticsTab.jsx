@@ -9,7 +9,7 @@ import { aiService } from "../services/aiService";
 // for filtering and matching stay in English — only the rendered text is
 // translated here). Model distribution keys are model identifiers and are
 // left untranslated.
-const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İçgörü" };
+const TYPE_LABELS = { Workout: "Antrenman", Nutrition: "Beslenme", Insight: "İçgörü", NutritionAssistant: "Beslenme Asistanı" };
 
 function DistributionList({ title, items, loading, labelMap }) {
   const total = items?.reduce((sum, i) => sum + i.count, 0) || 1;
