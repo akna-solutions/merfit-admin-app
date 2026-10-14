@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Layout, Menu, Drawer, ConfigProvider, theme as antdTheme } from "antd";
 import { darkThemeTokens, sidebarForcedDarkComponents } from "../../theme/themeTokens";
-import { LogoutOutlined, ThunderboltFilled } from "@ant-design/icons";
+import { LogoutOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   navigationItems,
