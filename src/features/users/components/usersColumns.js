@@ -8,12 +8,14 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   UndoOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 
 const { Text } = Typography;
 
 // AdminUserController only exposes status toggle (PATCH .../status),
-// soft-delete (DELETE), and restore (PATCH .../restore) — there is no
+// e-mail confirmation (PATCH .../email-confirmation), soft-delete (DELETE),
+// and restore (PATCH .../restore) — there is no
 // create/update-profile endpoint, so row actions are limited to what the
 // real API can actually do (see MBFitApi AdminUserController.cs).
 function deriveStatus(record) {
@@ -28,7 +30,7 @@ const SUBSCRIPTION_LABEL = {
   cancelled: { label: "İptal Edildi", color: "red" },
 };
 
-export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore }) {
+export function buildUsersColumns({ onView, onToggleStatus, onToggleEmailConfirmation, onDelete, onRestore }) {
   return [
     {
       title: "Ad Soyad",
@@ -67,6 +69,14 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
         const status = deriveStatus(record);
         return <Tag color={status.color}>{status.label}</Tag>;
       },
+    },
+    {
+      title: "E-posta",
+      dataIndex: "emailConfirmed",
+      key: "emailConfirmed",
+      width: 140,
+      render: (value) =>
+        value ? <Tag color="green">Doğrulanmış</Tag> : <Tag color="orange">Doğrulanmamış</Tag>,
     },
     {
       title: "Abonelik",
@@ -118,6 +128,15 @@ export function buildUsersColumns({ onView, onToggleStatus, onDelete, onRestore 
                     label: record.isActive ? "Pasifleştir" : "Aktifleştir",
                     icon: record.isActive ? <StopOutlined /> : <CheckCircleOutlined />,
                     onClick: () => onToggleStatus(record),
+                  },
+                  {
+                    key: "emailConfirmation",
+                    label: record.emailConfirmed ? "E-posta doğrulamasını kaldır" : "E-postayı doğrulanmış işaretle",
+                    icon: <MailOutlined />,
+                    confirm: record.emailConfirmed
+                      ? `${record.firstName} ${record.lastName} uygulamaya tekrar girmeden önce e-postasına gelen kodu girmek zorunda kalacak. Devam edilsin mi?`
+                      : `${record.email} doğrulanmış sayılsın mı? Kullanıcı kod girmeden uygulamaya devam edebilecek.`,
+                    onClick: () => onToggleEmailConfirmation(record),
                   },
                   {
                     key: "delete",

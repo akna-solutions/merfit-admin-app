@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { userService } from "../services/userService";
 
 // Filter shape mirrors AdminUserListRequest (MBFitApi.Business.Dtos.Admin.
-// Users.AdminUserListRequest): isActive (bool|undefined), subscriptionStatus
+// Users.AdminUserListRequest): isActive / emailConfirmed (bool|undefined), subscriptionStatus
 // ("active"|"expired"|"cancelled"|undefined), dateRange -> createdFrom/To.
 const DEFAULT_FILTERS = {
   search: "",
   isActive: undefined,
+  emailConfirmed: undefined,
   subscriptionStatus: undefined,
   dateRange: null,
 };
