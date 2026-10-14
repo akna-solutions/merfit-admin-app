@@ -3,13 +3,13 @@ import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar, DateRangeFilter } from "../../../components/admin";
 
-// Options mirror AdminUserListRequest.IsActive (bool?) and
+// Options mirror AdminUserListRequest.IsActive (bool?), .EmailConfirmed (bool?) and
 // AdminUserListRequest.SubscriptionStatus ("active"|"expired"|"cancelled"|
 // "none" for users with no subscription at all).
 export default function UsersFilterBar({ filters, onChange, onReset }) {
   return (
     <FilterBar onReset={onReset}>
-      <Col xs={24} sm={12} lg={8}>
+      <Col xs={24} sm={12} lg={6}>
         <Input
           allowClear
           placeholder="İsim, kullanıcı adı veya e-posta ile ara"
@@ -35,6 +35,20 @@ export default function UsersFilterBar({ filters, onChange, onReset }) {
       <Col xs={12} sm={6} lg={4}>
         <Select
           style={{ width: "100%" }}
+          value={filters.emailConfirmed === undefined ? "all" : String(filters.emailConfirmed)}
+          onChange={(value) =>
+            onChange({ emailConfirmed: value === "all" ? undefined : value === "true" })
+          }
+          options={[
+            { value: "all", label: "Tüm e-postalar" },
+            { value: "true", label: "Doğrulanmış" },
+            { value: "false", label: "Doğrulanmamış" },
+          ]}
+        />
+      </Col>
+      <Col xs={12} sm={6} lg={4}>
+        <Select
+          style={{ width: "100%" }}
           value={filters.subscriptionStatus ?? "all"}
           onChange={(value) =>
             onChange({ subscriptionStatus: value === "all" ? undefined : value })
@@ -48,7 +62,7 @@ export default function UsersFilterBar({ filters, onChange, onReset }) {
           ]}
         />
       </Col>
-      <Col xs={24} sm={12} lg={8}>
+      <Col xs={24} sm={12} lg={6}>
         <DateRangeFilter
           value={filters.dateRange}
           onChange={(dateRange) => onChange({ dateRange })}

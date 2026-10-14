@@ -5,6 +5,7 @@
 //   GET    /api/admin/users                     -> getUsers(params)
 //   GET    /api/admin/users/{id}                 -> getUserById(id)
 //   PATCH  /api/admin/users/{id}/status          -> updateStatus(id, { isActive, reason })
+//   PATCH  /api/admin/users/{id}/email-confirmation -> updateEmailConfirmation(id, { emailConfirmed, reason })
 //   DELETE /api/admin/users/{id}                 -> deleteUser(id)          (soft-delete)
 //   PATCH  /api/admin/users/{id}/restore         -> restoreUser(id)
 //   GET    /api/admin/users/{id}/profile         -> getProfile(id)
@@ -56,6 +57,11 @@ export const userService = {
   /** PATCH /api/admin/users/{userId}/status — AdminUpdateUserStatusRequest */
   updateStatus(id, { isActive, reason }) {
     return apiClient.patch(`/api/admin/users/${id}/status`, { isActive, reason });
+  },
+
+  /** PATCH /api/admin/users/{userId}/email-confirmation — AdminUpdateUserEmailConfirmationRequest */
+  updateEmailConfirmation(id, { emailConfirmed, reason }) {
+    return apiClient.patch(`/api/admin/users/${id}/email-confirmation`, { emailConfirmed, reason });
   },
 
   /** DELETE /api/admin/users/{userId} — soft delete */

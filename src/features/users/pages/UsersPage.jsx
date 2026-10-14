@@ -96,6 +96,17 @@ export default function UsersPage() {
     refetch();
   };
 
+  const handleToggleEmailConfirmation = async (record) => {
+    const nextConfirmed = !record.emailConfirmed;
+    await userService.updateEmailConfirmation(record.id, { emailConfirmed: nextConfirmed });
+    message.success(
+      nextConfirmed
+        ? `${record.email} doğrulanmış olarak işaretlendi.`
+        : `${record.email} için e-posta doğrulaması kaldırıldı.`,
+    );
+    refetch();
+  };
+
   const handleDelete = async (record) => {
     await userService.deleteUser(record.id);
     message.success(`${record.firstName} ${record.lastName} silindi.`);
@@ -111,6 +122,7 @@ export default function UsersPage() {
   const columns = buildUsersColumns({
     onView: handleView,
     onToggleStatus: handleToggleStatus,
+    onToggleEmailConfirmation: handleToggleEmailConfirmation,
     onDelete: handleDelete,
     onRestore: handleRestore,
   });
@@ -130,7 +142,7 @@ export default function UsersPage() {
           columns={columns}
           dataSource={rows}
           loading={loading}
-          scrollX={1100}
+          scrollX={1240}
           emptyDescription="Bu filtrelere uyan kullanıcı bulunamadı."
           onRow={(record) => ({
             className: "mbfit-row-clickable",
