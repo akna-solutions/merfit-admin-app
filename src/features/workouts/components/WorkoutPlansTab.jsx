@@ -6,7 +6,7 @@ import { SectionCard, DataTable, EntityCell, StatusTag, RowActions, FilterBar } 
 import { useListQuery } from "../../../utils/useListQuery";
 import { workoutPlanService } from "../services/workoutService";
 import { FITNESS_GOAL } from "../../../constants/apiEnums";
-import { fitnessGoalLabel } from "../data/enumLabels";
+import { fitnessGoalLabel, PRIMARY_FITNESS_GOALS } from "../data/enumLabels";
 import WorkoutPlanDetailDrawer from "./WorkoutPlanDetailDrawer";
 
 const { Text } = Typography;
@@ -121,7 +121,11 @@ export default function WorkoutPlansTab() {
             allowClear
             value={filters.goal}
             onChange={(v) => updateFilters({ goal: v })}
-            options={FITNESS_GOAL.map((g) => ({ value: g, label: fitnessGoalLabel(g) }))}
+            // Primary goals first; legacy goals stay filterable for plans created before the change.
+            options={[
+              ...PRIMARY_FITNESS_GOALS,
+              ...FITNESS_GOAL.filter((g) => !PRIMARY_FITNESS_GOALS.includes(g)),
+            ].map((g) => ({ value: g, label: fitnessGoalLabel(g) }))}
           />
         </Col>
         <Col xs={12} sm={8} lg={5}>

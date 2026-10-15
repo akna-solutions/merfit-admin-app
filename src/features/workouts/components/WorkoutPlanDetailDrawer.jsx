@@ -80,7 +80,11 @@ function DaysEditor({ planId }) {
                       showSearch
                       optionFilterProp="label"
                       options={workoutOptions.map((w) => ({ value: w.id, label: w.title }))}
-                      onChange={() => form.setFieldValue(["days", field.name, "exerciseCount"], undefined)}
+                      onChange={() => {
+                        form.setFieldValue(["days", field.name, "exerciseCount"], undefined);
+                        // The API keeps a day's cardio finisher only while its main workout stays the same.
+                        form.setFieldValue(["days", field.name, "cardioWorkoutTitle"], undefined);
+                      }}
                     />
                   </Form.Item>
                   <Form.Item
@@ -110,7 +114,13 @@ function DaysEditor({ planId }) {
                   <Form.Item noStyle shouldUpdate>
                     {({ getFieldValue }) => {
                       const count = getFieldValue(["days", field.name, "exerciseCount"]);
-                      return count == null ? null : <Tag>{count} egzersiz</Tag>;
+                      const cardio = getFieldValue(["days", field.name, "cardioWorkoutTitle"]);
+                      return (
+                        <>
+                          {count == null ? null : <Tag>{count} egzersiz</Tag>}
+                          {cardio ? <Tag color="volcano">+ Kardiyo: {cardio}</Tag> : null}
+                        </>
+                      );
                     }}
                   </Form.Item>
                   <Button type="text" danger icon={<DeleteOutlined />} onClick={() => remove(field.name)} />

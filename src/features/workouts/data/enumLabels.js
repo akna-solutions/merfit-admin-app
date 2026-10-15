@@ -13,18 +13,32 @@ export function difficultyLabel(value) {
   return DIFFICULTY_LABELS_TR[value] ?? value;
 }
 
+// Users can only pick these three goals. The other FitnessGoal values stay in
+// the enum for old records; the API treats them as BuildMuscle (Kas Geliştirme)
+// and a data migration moves current goals over, so they show as "eski" here.
+export const PRIMARY_FITNESS_GOALS = ["BuildMuscle", "GetStronger", "LoseWeight"];
+
 export const FITNESS_GOAL_LABELS_TR = {
-  LoseWeight: "Kilo Vermek",
-  BuildMuscle: "Kas Kazanmak",
-  MaintainWeight: "Kiloyu Korumak",
-  ImproveEndurance: "Dayanıklılığı Artırmak",
-  GetStronger: "Güçlenmek",
-  ImproveFitness: "Fitness Seviyesini Artırmak",
+  LoseWeight: "Yağ Kaybı",
+  BuildMuscle: "Kas Geliştirme",
+  GetStronger: "Güçlenme",
+  MaintainWeight: "Kiloyu Korumak (eski)",
+  ImproveEndurance: "Dayanıklılık (eski)",
+  ImproveFitness: "Genel Fitness (eski)",
 };
+
+export function isLegacyFitnessGoal(value) {
+  return value != null && !PRIMARY_FITNESS_GOALS.includes(value);
+}
 
 export function fitnessGoalLabel(value) {
   return FITNESS_GOAL_LABELS_TR[value] ?? value;
 }
+
+// Plan generation scores goal fit from these three only (weights per goal:
+// Kas Geliştirme 65/25/10, Güçlenme 25/65/10, Yağ Kaybı 45/25/30). The rest
+// are secondary catalog info and do not affect generated plans.
+export const PRIMARY_WORKOUT_ATTRIBUTES = ["Hypertrophy", "Strength", "Cardio"];
 
 export const WORKOUT_ATTRIBUTE_LABELS_TR = {
   Hypertrophy: "Kas Gelişimi (Hipertrofi)",
