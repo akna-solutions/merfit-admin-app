@@ -19,6 +19,7 @@ import {
   GENDER, FITNESS_GOAL, EXPERIENCE_LEVEL, ACTIVITY_LEVEL, TRAINING_LOCATION, PLATFORM, enumLabel,
   trainingDaysLabel,
 } from "../../../constants/apiEnums";
+import { fitnessGoalLabel } from "../../workouts/data/enumLabels";
 import { previewableImageUrl } from "../../../utils/imageUrl";
 
 // Renders AdminUserDetailDto + the per-tab sub-resources fetched alongside it
@@ -38,7 +39,9 @@ function ProfileTab({ user }) {
       <Descriptions.Item label="E-posta">{user.email}</Descriptions.Item>
       <Descriptions.Item label="Telefon">{user.phoneNumber || "—"}</Descriptions.Item>
       <Descriptions.Item label="Cinsiyet">{enumLabel(GENDER, profile.gender) ?? "—"}</Descriptions.Item>
-      <Descriptions.Item label="Hedef">{enumLabel(FITNESS_GOAL, profile.goal) ?? "—"}</Descriptions.Item>
+      <Descriptions.Item label="Hedef">
+        {profile.goal == null ? "—" : fitnessGoalLabel(enumLabel(FITNESS_GOAL, profile.goal) ?? profile.goal)}
+      </Descriptions.Item>
       <Descriptions.Item label="Deneyim Seviyesi">
         {enumLabel(EXPERIENCE_LEVEL, profile.experienceLevel) ?? "—"}
       </Descriptions.Item>
