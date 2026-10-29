@@ -13,6 +13,7 @@ import NotificationsPage from '../features/notifications/pages/NotificationsPage
 import SupportPage from '../features/support/pages/SupportPage';
 import ContentPage from '../features/content/pages/ContentPage';
 import CampaignsPage from '../features/campaigns/pages/CampaignsPage';
+import StorePage from '../features/store/pages/StorePage';
 import FaqPage from '../features/faq/pages/FaqPage';
 import TranslationsPage from '../features/translations/pages/TranslationsPage';
 import AnalyticsPage from '../features/analytics/pages/AnalyticsPage';
@@ -32,6 +33,7 @@ const builtPages = {
   workouts: WorkoutsPage,
   nutrition: NutritionPage,
   subscriptions: SubscriptionsPage,
+  store: StorePage,
   gamification: GamificationPage,
   notifications: NotificationsPage,
   support: SupportPage,

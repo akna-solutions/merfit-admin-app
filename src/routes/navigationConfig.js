@@ -16,6 +16,7 @@ import {
   SettingOutlined,
   SafetyCertificateOutlined,
   GiftOutlined,
+  ShopOutlined,
 } from "@ant-design/icons";
 
 // Central navigation source of truth for the admin sidebar.
@@ -61,6 +62,14 @@ export const navigationItems = [
     label: "Abonelikler",
     icon: CreditCardOutlined,
     path: "/admin/subscriptions",
+    section: "YÖNETİM",
+    enabled: true,
+  },
+  {
+    key: "store",
+    label: "MB Shop",
+    icon: ShopOutlined,
+    path: "/admin/store",
     section: "YÖNETİM",
     enabled: true,
   },
