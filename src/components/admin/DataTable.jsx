@@ -16,6 +16,7 @@ export default function DataTable({
   scrollX = 900,
   pagination,
   onRow,
+  onChange,
   emptyDescription,
   size = "middle",
 }) {
@@ -28,6 +29,7 @@ export default function DataTable({
       loading={loading}
       size={size}
       onRow={onRow}
+      onChange={onChange}
       sticky
       scroll={{ x: scrollX }}
       locale={{
