@@ -12,6 +12,7 @@ import GamificationPage from '../features/gamification/pages/GamificationPage';
 import NotificationsPage from '../features/notifications/pages/NotificationsPage';
 import SupportPage from '../features/support/pages/SupportPage';
 import ContentPage from '../features/content/pages/ContentPage';
+import CampaignsPage from '../features/campaigns/pages/CampaignsPage';
 import FaqPage from '../features/faq/pages/FaqPage';
 import TranslationsPage from '../features/translations/pages/TranslationsPage';
 import AnalyticsPage from '../features/analytics/pages/AnalyticsPage';
@@ -35,6 +36,7 @@ const builtPages = {
   notifications: NotificationsPage,
   support: SupportPage,
   content: ContentPage,
+  campaigns: CampaignsPage,
   faq: FaqPage,
   translations: TranslationsPage,
   legal: LegalPage,

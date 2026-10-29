@@ -65,7 +65,7 @@ export default function ContentFormDrawer({ open, item, submitting, onClose, onS
         <Form.Item name="type" label="Tür" rules={[{ required: true }]}>
           <Select options={CONTENT_TYPES.map((t) => ({ value: t, label: CONTENT_TYPE_LABELS[t] ?? t }))} />
         </Form.Item>
-        <Form.Item name="title" label="Başlık" rules={[{ max: 300 }]}>
+        <Form.Item name="title" label="Başlık" rules={[{ max: 200 }]}>
           <Input placeholder="Görüntülenen başlık" />
         </Form.Item>
         <Form.Item name="description" label="Açıklama" rules={[{ max: 2000 }]}>

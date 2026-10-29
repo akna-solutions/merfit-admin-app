@@ -15,6 +15,7 @@ import {
   AuditOutlined,
   SettingOutlined,
   SafetyCertificateOutlined,
+  GiftOutlined,
 } from "@ant-design/icons";
 
 // Central navigation source of truth for the admin sidebar.
@@ -92,6 +93,14 @@ export const navigationItems = [
     label: "İçerik",
     icon: FileTextOutlined,
     path: "/admin/content",
+    section: "İÇERİK",
+    enabled: true,
+  },
+  {
+    key: "campaigns",
+    label: "Kampanyalar",
+    icon: GiftOutlined,
+    path: "/admin/campaigns",
     section: "İÇERİK",
     enabled: true,
   },
