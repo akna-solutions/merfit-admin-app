@@ -1,25 +1,26 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { authService } from "../services/authService";
-
-const STORAGE_KEY = "mbfit_admin_access_token";
+import { SESSION_EXPIRED_EVENT, tokenStore } from "../../../utils/apiClient";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [accessToken, setAccessToken] = useState(() => localStorage.getItem(STORAGE_KEY));
+  const [accessToken, setAccessToken] = useState(() => tokenStore.getAccessToken());
   const [user, setUser] = useState(null);
   // "checking" covers the initial silent session restore on page load;
   // "idle" once we know whether there's a valid session or not.
   const [status, setStatus] = useState("checking");
   const [error, setError] = useState(null);
 
-  const restoreSession = useCallback(async (token) => {
+  const restoreSession = useCallback(async () => {
     try {
-      const me = await authService.me(token);
+      // Saklı oturumla çağrılır: access token'ın süresi dolmuşsa apiClient refresh token ile yeniler.
+      const me = await authService.me();
+      setAccessToken(tokenStore.getAccessToken());
       setUser(me);
       setStatus("authenticated");
     } catch {
-      localStorage.removeItem(STORAGE_KEY);
+      tokenStore.clear();
       setAccessToken(null);
       setUser(null);
       setStatus("unauthenticated");
@@ -27,8 +28,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (accessToken) {
-      restoreSession(accessToken);
+    if (accessToken || tokenStore.getRefreshToken()) {
+      restoreSession();
     } else {
       setStatus("unauthenticated");
     }
@@ -42,9 +43,8 @@ export function AuthProvider({ children }) {
     // The real /api/admin/auth/me call is what actually gates admin access
     // (role check) — login itself just proves the credentials are valid.
     const me = await authService.me(auth.accessToken);
-    if (remember) {
-      localStorage.setItem(STORAGE_KEY, auth.accessToken);
-    }
+    // "Beni hatırla" kapalıysa oturum sekme kapanana kadar sessionStorage'da tutulur.
+    tokenStore.save(auth, { remember: Boolean(remember) });
     setAccessToken(auth.accessToken);
     setUser(me);
     setStatus("authenticated");
@@ -52,11 +52,17 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
+    tokenStore.clear();
     setAccessToken(null);
     setUser(null);
     setStatus("unauthenticated");
   }, []);
+
+  // Refresh token da geçersizse (30 gün dolmuş, şifre değişmiş vb.) apiClient bu olayı yayar; giriş ekranına dönülür.
+  useEffect(() => {
+    window.addEventListener(SESSION_EXPIRED_EVENT, logout);
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, logout);
+  }, [logout]);
 
   const value = useMemo(
     () => ({
