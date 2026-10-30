@@ -4,6 +4,8 @@
 //     returns: AuthResponse { userId, email, name, accessToken, refreshToken, accessTokenExpiresAt }
 //     Note: this endpoint returns AuthResponse directly, NOT wrapped in the
 //     ApiResponse envelope the /api/admin/* endpoints use.
+//   POST /api/auth/refresh      body: { refreshToken } -> AuthResponse (yeni access + refresh token).
+//     apiClient bunu 401 alınca otomatik çağırır; refresh token tek kullanımlıktır.
 //   GET  /api/admin/auth/me     (MBFitApi.Api/Controllers/Admin/AdminAuthController.cs)
 //     header: Authorization: Bearer {accessToken}
 //     returns: ApiResponse<AdminMeResponse> -> data: { userId, email, role, lastLoginAt }
@@ -24,7 +26,10 @@ export const authService = {
     return apiClient.post("/api/auth/login", { emailOrUsername, password }, { token: null });
   },
 
-  /** GET /api/admin/auth/me */
+  /**
+   * GET /api/admin/auth/me. Token verilmezse saklı oturum kullanılır; süresi dolmuşsa apiClient
+   * refresh token ile yeniler.
+   */
   async me(accessToken) {
     const response = await apiClient.get("/api/admin/auth/me", { token: accessToken });
     return response.data;
