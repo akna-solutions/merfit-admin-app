@@ -6,6 +6,7 @@ import { userService } from "../services/userService";
 import { buildUsersColumns } from "../components/usersColumns";
 import UsersFilterBar from "../components/UsersFilterBar";
 import UserDetailDrawer from "../components/UserDetailDrawer";
+import PurgeUserModal from "../components/PurgeUserModal";
 
 const EMPTY_RELATED = {
   subscriptions: [],
@@ -41,6 +42,7 @@ export default function UsersPage() {
     related: EMPTY_RELATED,
     loading: false,
   });
+  const [purgeTarget, setPurgeTarget] = useState(null);
 
   // Assembles the User Detail drawer from every AdminUserController
   // sub-resource endpoint in parallel, mirroring how a real detail screen
@@ -119,12 +121,21 @@ export default function UsersPage() {
     refetch();
   };
 
+  // Hata modalda gösterilir; modal ancak başarıda kapanır.
+  const handlePurge = async ({ confirmEmail, reason }) => {
+    await userService.purgeUser(purgeTarget.id, { confirmEmail, reason });
+    message.success(`${purgeTarget.email} kalıcı olarak silindi.`);
+    setPurgeTarget(null);
+    refetch();
+  };
+
   const columns = buildUsersColumns({
     onView: handleView,
     onToggleStatus: handleToggleStatus,
     onToggleEmailConfirmation: handleToggleEmailConfirmation,
     onDelete: handleDelete,
     onRestore: handleRestore,
+    onPurge: setPurgeTarget,
   });
 
   return (
@@ -167,6 +178,8 @@ export default function UsersPage() {
         loading={detailState.loading}
         onClose={() => setDetailState({ open: false, user: null, related: EMPTY_RELATED, loading: false })}
       />
+
+      <PurgeUserModal user={purgeTarget} onClose={() => setPurgeTarget(null)} onSubmit={handlePurge} />
     </PageContainer>
   );
 }

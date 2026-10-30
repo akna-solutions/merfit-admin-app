@@ -7,6 +7,9 @@
 //   GET  /api/admin/auth/me     (MBFitApi.Api/Controllers/Admin/AdminAuthController.cs)
 //     header: Authorization: Bearer {accessToken}
 //     returns: ApiResponse<AdminMeResponse> -> data: { userId, email, role, lastLoginAt }
+//   POST /api/admin/auth/change-password
+//     body: AdminChangePasswordRequest { currentPassword, newPassword, confirmNewPassword }
+//     returns: ApiResponse (data yok). Başarılı olursa adminin refresh token'ları iptal edilir.
 //
 // /api/auth/login itself doesn't gate by role — it's shared with the mobile
 // app, so any valid MB Fit account can log in there. Admin-panel access is
@@ -25,5 +28,10 @@ export const authService = {
   async me(accessToken) {
     const response = await apiClient.get("/api/admin/auth/me", { token: accessToken });
     return response.data;
+  },
+
+  /** POST /api/admin/auth/change-password */
+  async changePassword({ currentPassword, newPassword, confirmNewPassword }) {
+    return apiClient.post("/api/admin/auth/change-password", { currentPassword, newPassword, confirmNewPassword });
   },
 };

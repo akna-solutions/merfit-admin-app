@@ -9,13 +9,14 @@ import {
   DeleteOutlined,
   UndoOutlined,
   MailOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 
 const { Text } = Typography;
 
 // AdminUserController only exposes status toggle (PATCH .../status),
 // e-mail confirmation (PATCH .../email-confirmation), soft-delete (DELETE),
-// and restore (PATCH .../restore) — there is no
+// restore (PATCH .../restore) and permanent delete (POST .../purge) — there is no
 // create/update-profile endpoint, so row actions are limited to what the
 // real API can actually do (see MBFitApi AdminUserController.cs).
 function deriveStatus(record) {
@@ -30,7 +31,7 @@ const SUBSCRIPTION_LABEL = {
   cancelled: { label: "İptal Edildi", color: "red" },
 };
 
-export function buildUsersColumns({ onView, onToggleStatus, onToggleEmailConfirmation, onDelete, onRestore }) {
+export function buildUsersColumns({ onView, onToggleStatus, onToggleEmailConfirmation, onDelete, onRestore, onPurge }) {
   return [
     {
       title: "Ad Soyad",
@@ -140,13 +141,21 @@ export function buildUsersColumns({ onView, onToggleStatus, onToggleEmailConfirm
                   },
                   {
                     key: "delete",
-                    label: "Sil",
+                    label: "Sil (geri alınabilir)",
                     icon: <DeleteOutlined />,
                     danger: true,
                     confirm: `${record.firstName} ${record.lastName} silinsin mi? Bu işlem hesabı kalıcı olarak silmez, yalnızca pasif duruma alır.`,
                     onClick: () => onDelete(record),
                   },
                 ]),
+            // Onay, e-postanın yeniden yazıldığı ayrı bir modalda alınır (PurgeUserModal).
+            {
+              key: "purge",
+              label: "Kalıcı olarak sil",
+              icon: <WarningOutlined />,
+              danger: true,
+              onClick: () => onPurge(record),
+            },
           ]}
         />
       ),
