@@ -8,6 +8,7 @@
 //   PATCH  /api/admin/users/{id}/email-confirmation -> updateEmailConfirmation(id, { emailConfirmed, reason })
 //   DELETE /api/admin/users/{id}                 -> deleteUser(id)          (soft-delete)
 //   PATCH  /api/admin/users/{id}/restore         -> restoreUser(id)
+//   POST   /api/admin/users/{id}/purge           -> purgeUser(id, { confirmEmail, reason })  (kalıcı silme)
 //   GET    /api/admin/users/{id}/profile         -> getProfile(id)
 //   GET    /api/admin/users/{id}/subscriptions   -> getSubscriptions(id, params)
 //   GET    /api/admin/users/{id}/workouts        -> getWorkoutSessions(id, params)
@@ -72,6 +73,14 @@ export const userService = {
   /** PATCH /api/admin/users/{userId}/restore */
   restoreUser(id) {
     return apiClient.patch(`/api/admin/users/${id}/restore`);
+  },
+
+  /**
+   * POST /api/admin/users/{userId}/purge — AdminPurgeUserRequest. Kullanıcıyı ve tüm verilerini
+   * kalıcı olarak siler (geri alınamaz); confirmEmail kullanıcının e-postasıyla eşleşmelidir.
+   */
+  purgeUser(id, { confirmEmail, reason }) {
+    return apiClient.post(`/api/admin/users/${id}/purge`, { confirmEmail, reason });
   },
 
   /** GET /api/admin/users/{userId}/profile */

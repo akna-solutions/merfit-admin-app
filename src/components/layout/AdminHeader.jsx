@@ -18,6 +18,7 @@ import {
   MoonOutlined,
   SettingOutlined,
   LogoutOutlined,
+  LockOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -47,6 +48,12 @@ function usePageTitle() {
 function buildProfileMenuItems(navigate) {
   return [
     { key: "settings", icon: <SettingOutlined />, label: "Ayarlar", onClick: () => navigate("/admin/settings") },
+    {
+      key: "change-password",
+      icon: <LockOutlined />,
+      label: "Şifremi Değiştir",
+      onClick: () => navigate("/admin/settings?tab=security"),
+    },
     { type: "divider" },
     {
       key: "sign-out",

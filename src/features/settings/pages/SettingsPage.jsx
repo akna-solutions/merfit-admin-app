@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
+import { useSearchParams } from "react-router-dom";
 import { PageHeader, PageContainer } from "../../../components/admin";
 import GeneralSettingsTab from "../components/GeneralSettingsTab";
 import AppearanceSettingsTab from "../components/AppearanceSettingsTab";
@@ -8,8 +9,14 @@ import SecuritySettingsTab from "../components/SecuritySettingsTab";
 
 // No AdminSettingsController exists in the API yet, so every tab here is
 // local mock state only — consistent with the original spec's own note
-// that no real backend work is needed at this stage.
+// that no real backend work is needed at this stage. The exception is the
+// "Güvenlik" tab's password form, which calls /api/admin/auth/change-password.
+const TABS = ["general", "appearance", "notifications", "security"];
+
 export default function SettingsPage() {
+  const [params, setParams] = useSearchParams();
+  const active = TABS.includes(params.get("tab")) ? params.get("tab") : "general";
+
   return (
     <PageContainer>
       <PageHeader
@@ -18,7 +25,8 @@ export default function SettingsPage() {
         description="Yönetici paneli tercihleri."
       />
       <Tabs
-        defaultActiveKey="general"
+        activeKey={active}
+        onChange={(key) => setParams({ tab: key }, { replace: true })}
         items={[
           { key: "general", label: "Genel", children: <GeneralSettingsTab /> },
           { key: "appearance", label: "Görünüm", children: <AppearanceSettingsTab /> },
