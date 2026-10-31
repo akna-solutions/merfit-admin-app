@@ -4,13 +4,16 @@ import { TeamOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { FormDrawer } from "../../../components/admin";
 import { notificationCampaignService, notificationTemplateService } from "../services/notificationService";
-import { NOTIFICATION_TYPE_LABELS, SEGMENT_LABELS, toOptions } from "../utils/notificationLabels";
-import { SCREEN_LABELS, screenToDataJson, dataJsonToScreen, disallowedPlaceholders, parseUserIds } from "../utils/notificationForm";
+import { NOTIFICATION_TYPE_LABELS, SEGMENT_LABELS, APP_LABELS, toOptions, typesForApp } from "../utils/notificationLabels";
+import {
+  SCREEN_LABELS, screenToDataJson, dataJsonToScreen, dataJsonToProductId, screensForApp, disallowedPlaceholders, parseUserIds,
+} from "../utils/notificationForm";
 import NotificationPreviewCard from "./NotificationPreviewCard";
 import AudienceSummary from "./AudienceSummary";
 
 /** Kampanya taslagi olusturma / duzenleme. Gonderim burada yapilmaz; ayri "Zamanla / Gonder" adimi vardir. */
-export default function CampaignFormDrawer({ open, campaign, metadata, submitting, onClose, onSubmit }) {
+/** app: "MbFit" | "MbShop" - tur ve ekran secenekleri bu uygulamaya gore daraltilir. */
+export default function CampaignFormDrawer({ open, campaign, app = "MbFit", metadata, submitting, onClose, onSubmit }) {
   const [form] = Form.useForm();
   const [templates, setTemplates] = useState([]);
   const [audience, setAudience] = useState(null);
@@ -24,6 +27,10 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
   const title = Form.useWatch("title", form);
   const body = Form.useWatch("body", form);
   const screen = Form.useWatch("screen", form);
+  const productId = Form.useWatch("productId", form);
+  const isShop = app === "MbShop";
+  const campaignTypes = typesForApp(metadata.campaignTypes?.length ? metadata.campaignTypes : ["Announcement", "Marketing", "System", "StorePromotion"], app, metadata);
+  const screens = screensForApp(metadata, app);
   const singleUserId = Form.useWatch("singleUserId", form);
   const selectedUserIds = Form.useWatch("selectedUserIds", form);
   const allowed = metadata.placeholdersByType?.[type] ?? ["firstName"];
@@ -38,13 +45,16 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
         ? {
             ...campaign,
             screen: dataJsonToScreen(campaign.dataJson),
+            productId: dataJsonToProductId(campaign.dataJson),
             expiresAtUtc: campaign.expiresAtUtc ? dayjs(campaign.expiresAtUtc) : null,
             singleUserId: campaign.segment === "SingleUser" ? campaign.userIds?.[0] : undefined,
             selectedUserIds: campaign.segment === "SelectedUsers" ? campaign.userIds?.map(String) : [],
           }
-        : { type: "Announcement", segment: "AllUsers", screen: "dashboard", selectedUserIds: [] },
+        : isShop
+          ? { type: "StorePromotion", segment: "AllUsers", screen: "store", selectedUserIds: [] }
+          : { type: "Announcement", segment: "AllUsers", screen: "dashboard", selectedUserIds: [] },
     );
-  }, [open, campaign, form]);
+  }, [open, campaign, form, isShop]);
 
   useEffect(() => {
     if (!open || !type) return;
@@ -65,13 +75,13 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
     }
     const handle = setTimeout(() => {
       notificationTemplateService
-        .preview({ type, title, body, dataJson: screenToDataJson(screen), userId: segment === "SingleUser" ? singleUserId : undefined })
+        .preview({ type, title, body, dataJson: screenToDataJson(screen, productId), userId: segment === "SingleUser" ? singleUserId : undefined })
         .then((res) => setPreview(res.data))
         .catch(() => setPreview(null));
     }, 400);
     return () => clearTimeout(handle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, type, title, body, screen, segment, singleUserId, invalid.join(",")]);
+  }, [open, type, title, body, screen, productId, segment, singleUserId, invalid.join(",")]);
 
   const userIdsFor = (values) => {
     if (values.segment === "SingleUser") return values.singleUserId ? [values.singleUserId] : [];
@@ -97,7 +107,12 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
   const applyTemplate = (templateId) => {
     const template = templates.find((t) => t.id === templateId);
     if (!template) return;
-    form.setFieldsValue({ title: template.titleTemplate, body: template.bodyTemplate, screen: dataJsonToScreen(template.dataJson) ?? form.getFieldValue("screen") });
+    form.setFieldsValue({
+      title: template.titleTemplate,
+      body: template.bodyTemplate,
+      screen: dataJsonToScreen(template.dataJson) ?? form.getFieldValue("screen"),
+      productId: dataJsonToProductId(template.dataJson) ?? form.getFieldValue("productId"),
+    });
   };
 
   const handleSubmit = () =>
@@ -110,7 +125,7 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
         notificationTemplateId: values.notificationTemplateId ?? null,
         title: values.title,
         body: values.body,
-        dataJson: screenToDataJson(values.screen),
+        dataJson: screenToDataJson(values.screen, values.productId),
         expiresAtUtc: values.expiresAtUtc ? values.expiresAtUtc.toISOString() : null,
       }),
     );
@@ -119,7 +134,7 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
     <FormDrawer
       open={open}
       width={600}
-      title={isEdit ? `"${campaign?.name}" Kampanyasını Düzenle` : "Kampanya Oluştur"}
+      title={isEdit ? `"${campaign?.name}" Kampanyasını Düzenle` : `${APP_LABELS[app]} Kampanyası Oluştur`}
       submitText={isEdit ? "Taslağı Kaydet" : "Taslak Oluştur"}
       submitting={submitting}
       onClose={onClose}
@@ -130,7 +145,7 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
           <Input placeholder="örn. Ekim yeni program duyurusu" />
         </Form.Item>
         <Form.Item name="type" label="Bildirim türü" rules={[{ required: true }]} extra="Kullanıcılar bildirim tercihlerinden türleri kapatabilir.">
-          <Select options={toOptions(NOTIFICATION_TYPE_LABELS, metadata.campaignTypes?.length ? metadata.campaignTypes : ["Announcement", "Marketing", "System"])} />
+          <Select options={toOptions(NOTIFICATION_TYPE_LABELS, campaignTypes)} />
         </Form.Item>
 
         <Divider plain>Kitle</Divider>
@@ -180,8 +195,13 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
           <Input.TextArea rows={3} showCount maxLength={500} />
         </Form.Item>
         <Form.Item name="screen" label="Dokununca açılacak ekran">
-          <Select allowClear options={(metadata.screens?.length ? metadata.screens : Object.keys(SCREEN_LABELS)).map((s) => ({ value: s, label: SCREEN_LABELS[s] ?? s }))} />
+          <Select allowClear options={screens.map((s) => ({ value: s, label: SCREEN_LABELS[s] ?? s }))} />
         </Form.Item>
+        {screen === "storeProduct" && (
+          <Form.Item name="productId" label="Ürün ID" rules={[{ required: true, message: "Açılacak ürünün ID'sini girin" }]}>
+            <InputNumber min={1} style={{ width: "100%" }} placeholder="MB Shop > Ürünler listesindeki ID" />
+          </Form.Item>
+        )}
         <Form.Item
           name="expiresAtUtc"
           label="Son geçerlilik (isteğe bağlı)"
@@ -196,6 +216,7 @@ export default function CampaignFormDrawer({ open, campaign, metadata, submittin
         title={preview?.title ?? title}
         body={preview?.body ?? body}
         screen={screen}
+        app={app}
         note={preview ? "{firstName} örnek değerle dolduruldu." : undefined}
       />
     </FormDrawer>

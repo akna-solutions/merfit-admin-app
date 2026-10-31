@@ -2,9 +2,10 @@ import React from "react";
 import { Col, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterBar, DateRangeFilter } from "../../../components/admin";
-import { NOTIFICATION_TYPE_LABELS, toOptions } from "../utils/notificationLabels";
+import { NOTIFICATION_TYPE_LABELS, toOptions, typesForApp } from "../utils/notificationLabels";
 
-export default function NotificationsFilterBar({ filters, onChange, onReset }) {
+export default function NotificationsFilterBar({ app, filters, onChange, onReset }) {
+  const types = app ? typesForApp(Object.keys(NOTIFICATION_TYPE_LABELS), app) : undefined;
   return (
     <FilterBar onReset={onReset}>
       <Col xs={24} sm={12} lg={8}>
@@ -35,7 +36,7 @@ export default function NotificationsFilterBar({ filters, onChange, onReset }) {
           placeholder="Tür"
           value={filters.type}
           onChange={(type) => onChange({ type })}
-          options={toOptions(NOTIFICATION_TYPE_LABELS)}
+          options={toOptions(NOTIFICATION_TYPE_LABELS, types)}
         />
       </Col>
       <Col xs={24} sm={12} lg={6}>

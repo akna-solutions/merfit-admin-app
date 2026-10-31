@@ -8,7 +8,7 @@ import { notificationDispatchService } from "../services/notificationService";
 import { useApiAction } from "../hooks/useApiAction";
 import DispatchDetailDrawer from "./DispatchDetailDrawer";
 import {
-  DISPATCH_STATUS_LABELS, DISPATCH_SOURCE_LABELS, DISPATCH_REASON_LABELS, STATUS_COLORS, label, toOptions,
+  DISPATCH_STATUS_LABELS, DISPATCH_SOURCE_LABELS, DISPATCH_REASON_LABELS, STATUS_COLORS, SOURCES_BY_APP, label, toOptions,
 } from "../utils/notificationLabels";
 
 const { Text } = Typography;
@@ -17,7 +17,7 @@ const { Text } = Typography;
  * Gonderim kayitlari (alici sonuclari). fixedFilters ile bir kampanya, kural veya doneme sabitlenebilir.
  * Basarisiz kayitlar tek tek yeniden denenebilir.
  */
-export default function DispatchTable({ fixedFilters = {}, showSourceFilter = false, onChanged }) {
+export default function DispatchTable({ fixedFilters = {}, showSourceFilter = false, app, onChanged }) {
   const run = useApiAction();
   const [openId, setOpenId] = useState(null);
   const defaults = { status: undefined, source: undefined, userId: undefined, search: "", ...fixedFilters };
@@ -98,7 +98,7 @@ export default function DispatchTable({ fixedFilters = {}, showSourceFilter = fa
               placeholder="Kaynak"
               value={filters.source}
               onChange={(source) => updateFilters({ source })}
-              options={toOptions(DISPATCH_SOURCE_LABELS)}
+              options={toOptions(DISPATCH_SOURCE_LABELS, app ? SOURCES_BY_APP[app] : undefined)}
             />
           </Col>
         )}

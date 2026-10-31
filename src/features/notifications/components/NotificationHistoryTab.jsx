@@ -12,14 +12,14 @@ import { previewableImageUrl } from "../../../utils/imageUrl";
 
 const { Text } = Typography;
 
-export default function NotificationHistoryTab() {
+export default function NotificationHistoryTab({ app = "MbFit" }) {
   const run = useApiAction();
   const {
     rows, total, loading, filters, page, pageSize,
     setPage, setPageSize, updateFilters, resetFilters, refetch,
   } = useListQuery(
     notificationService.getNotifications,
-    { search: "", isRead: undefined, type: undefined, dateRange: null },
+    { search: "", isRead: undefined, type: undefined, dateRange: null, app },
   );
   
   const handleDelete = async (record) => {
@@ -81,7 +81,7 @@ export default function NotificationHistoryTab() {
 
   return (
     <div className="mbfit-page" style={{ gap: 20 }}>
-      <NotificationsFilterBar filters={filters} onChange={updateFilters} onReset={resetFilters} />
+      <NotificationsFilterBar app={app} filters={filters} onChange={updateFilters} onReset={resetFilters} />
       <SectionCard>
         <DataTable
           columns={columns}

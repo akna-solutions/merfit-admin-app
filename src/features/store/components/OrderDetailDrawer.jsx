@@ -193,6 +193,9 @@ export default function OrderDetailDrawer({ orderId, onClose, onChanged }) {
         </Descriptions>
 
         <Divider titlePlacement="start">Sipariş durumu</Divider>
+        <Typography.Paragraph type="secondary" style={{ fontSize: 12, marginTop: -4 }}>
+          Sipariş veya ödeme durumu değiştiğinde müşteriye MB Shop bildirim kutusuna ve telefonuna otomatik bildirim gider (MB FIT bildirimlerinden ayrı).
+        </Typography.Paragraph>
         {order.allowedStatusTransitions.length === 0 ? (
           <Typography.Text type="secondary">Bu sipariş için başka durum geçişi yok.</Typography.Text>
         ) : (

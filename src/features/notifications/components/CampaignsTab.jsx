@@ -17,11 +17,11 @@ import CampaignDetailDrawer from "./CampaignDetailDrawer";
 const { Text } = Typography;
 const CANCELLABLE = ["Draft", "Scheduled", "Processing", "Dispatching", "Failed"];
 
-export default function CampaignsTab() {
+export default function CampaignsTab({ app = "MbFit" }) {
   const run = useApiAction();
   const { metadata } = useNotificationMetadata();
   const { rows, total, loading, filters, page, pageSize, setPage, setPageSize, updateFilters, resetFilters, refetch } =
-    useListQuery(notificationCampaignService.getCampaigns, { search: "", status: undefined });
+    useListQuery(notificationCampaignService.getCampaigns, { search: "", status: undefined, app });
   const [formState, setFormState] = useState({ open: false, campaign: null });
   const [submitting, setSubmitting] = useState(false);
   const [scheduleCampaign, setScheduleCampaign] = useState(null);
@@ -128,7 +128,7 @@ export default function CampaignsTab() {
           dataSource={rows}
           loading={loading}
           scrollX={1100}
-          emptyDescription="Henüz kampanya yok."
+          emptyDescription={app === "MbShop" ? "Henüz MB Shop kampanyası yok." : "Henüz kampanya yok."}
           onRow={(r) => ({ onClick: () => setDetailId(r.id), style: { cursor: "pointer" } })}
           pagination={{ current: page, pageSize, total, onChange: (p, s) => { setPage(p); setPageSize(s); } }}
         />
@@ -136,6 +136,7 @@ export default function CampaignsTab() {
       <CampaignFormDrawer
         open={formState.open}
         campaign={formState.campaign}
+        app={app}
         metadata={metadata}
         submitting={submitting}
         onClose={() => setFormState({ open: false, campaign: null })}
