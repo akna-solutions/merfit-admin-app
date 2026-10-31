@@ -6,16 +6,17 @@ import { useListQuery } from "../../../utils/useListQuery";
 import { notificationTemplateService } from "../services/notificationService";
 import { useApiAction } from "../hooks/useApiAction";
 import { useNotificationMetadata } from "../hooks/useNotificationMetadata";
-import { NOTIFICATION_TYPE_LABELS, label, toOptions } from "../utils/notificationLabels";
+import { NOTIFICATION_TYPE_LABELS, label, toOptions, typesForApp } from "../utils/notificationLabels";
 import TemplateFormDrawer from "./TemplateFormDrawer";
 
 const { Text } = Typography;
 
-export default function TemplatesTab() {
+export default function TemplatesTab({ app = "MbFit" }) {
   const run = useApiAction();
   const { metadata } = useNotificationMetadata();
   const { rows, total, loading, filters, page, pageSize, setPage, setPageSize, updateFilters, resetFilters, refetch } =
-    useListQuery(notificationTemplateService.getTemplates, { search: "", type: undefined, isActive: undefined });
+    useListQuery(notificationTemplateService.getTemplates, { search: "", type: undefined, isActive: undefined, app });
+  const typeOptions = toOptions(NOTIFICATION_TYPE_LABELS, typesForApp(metadata.types?.length ? metadata.types : Object.keys(NOTIFICATION_TYPE_LABELS), app, metadata));
   const [formState, setFormState] = useState({ open: false, template: null });
   const [submitting, setSubmitting] = useState(false);
 
@@ -67,7 +68,7 @@ export default function TemplatesTab() {
           <Input allowClear prefix={<SearchOutlined />} placeholder="Ad veya başlıkta ara" value={filters.search} onChange={(e) => updateFilters({ search: e.target.value })} />
         </Col>
         <Col xs={12} sm={6} lg={5}>
-          <Select allowClear style={{ width: "100%" }} placeholder="Tür" value={filters.type} onChange={(type) => updateFilters({ type })} options={toOptions(NOTIFICATION_TYPE_LABELS)} />
+          <Select allowClear style={{ width: "100%" }} placeholder="Tür" value={filters.type} onChange={(type) => updateFilters({ type })} options={typeOptions} />
         </Col>
         <Col xs={12} sm={6} lg={4}>
           <Select
@@ -93,6 +94,7 @@ export default function TemplatesTab() {
       <TemplateFormDrawer
         open={formState.open}
         template={formState.template}
+        app={app}
         metadata={metadata}
         submitting={submitting}
         onClose={() => setFormState({ open: false, template: null })}

@@ -26,18 +26,46 @@ export function describeMask(mask) {
   return WEEK_DAYS.filter((d) => (mask & (1 << d.value)) !== 0).map((d) => d.label).join(", ");
 }
 
-/** Formdaki ekran secimini API'nin bekledigi DataJson metnine cevirir. */
-export function screenToDataJson(screen) {
-  return screen ? JSON.stringify({ screen }) : null;
+/**
+ * Formdaki ekran secimini API'nin bekledigi DataJson metnine cevirir. storeProduct icin productId
+ * parametresi eklenir (diger ekranlarda yok sayilir).
+ */
+export function screenToDataJson(screen, productId) {
+  if (!screen) return null;
+  if (screen === "storeProduct" && productId) return JSON.stringify({ screen, productId: String(productId) });
+  return JSON.stringify({ screen });
 }
 
-export function dataJsonToScreen(dataJson) {
+function parseData(dataJson) {
   if (!dataJson) return undefined;
   try {
-    return JSON.parse(dataJson)?.screen ?? undefined;
+    return JSON.parse(dataJson) ?? undefined;
   } catch {
     return undefined;
   }
+}
+
+export function dataJsonToScreen(dataJson) {
+  return parseData(dataJson)?.screen ?? undefined;
+}
+
+export function dataJsonToProductId(dataJson) {
+  const id = Number(parseData(dataJson)?.productId);
+  return Number.isInteger(id) && id > 0 ? id : undefined;
+}
+
+/** MB Shop ekranlari (MerfitApi NotificationNavigation.ShopScreens). */
+export const SHOP_SCREENS = ["store", "storeOrders", "storeOrder", "storeProduct", "storeNotifications"];
+
+/**
+ * Kampanya/sablonda secilebilecek ekranlar: uygulamaya gore. storeOrder kullaniciya ozel siparis kimligi
+ * istedigi icin yalnizca otomatik siparis bildirimlerinde kullanilir, formda gosterilmez.
+ */
+export function screensForApp(metadata, app) {
+  const fromApi = metadata?.screensByApp?.[app];
+  const all = metadata?.screens?.length ? metadata.screens : Object.keys(SCREEN_LABELS);
+  const list = fromApi?.length ? fromApi : all.filter((s) => (app === "MbShop") === SHOP_SCREENS.includes(s));
+  return list.filter((s) => s !== "storeOrder");
 }
 
 /** Metindeki {alan} adlari. */
@@ -74,6 +102,11 @@ export const SCREEN_LABELS = {
   notifications: "Bildirimler",
   profile: "Profil",
   subscription: "Abonelik",
+  store: "MB Shop Ana Sayfa",
+  storeOrders: "Siparişlerim",
+  storeOrder: "Sipariş Detayı",
+  storeProduct: "Ürün Detayı",
+  storeNotifications: "MB Shop Bildirimleri",
 };
 
 const MONTHS = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];

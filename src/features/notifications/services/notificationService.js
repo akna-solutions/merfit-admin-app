@@ -20,9 +20,9 @@ function dateRangeParams(dateRange) {
 /** Uygulama ici bildirim kutusu gecmisi. */
 export const notificationService = {
   getNotifications(params = {}) {
-    const { page = 1, pageSize = 20, search, userId, isRead, type, dateRange } = params;
+    const { page = 1, pageSize = 20, search, userId, isRead, type, app, dateRange } = params;
     return apiClient.get(
-      `/api/admin/notifications${buildQuery({ page, pageSize, search, userId, isRead, type, ...dateRangeParams(dateRange) })}`,
+      `/api/admin/notifications${buildQuery({ page, pageSize, search, userId, isRead, type, app, ...dateRangeParams(dateRange) })}`,
     );
   },
   getNotificationById(id) {
@@ -47,8 +47,8 @@ export const notificationTemplateService = {
     return metadataPromise;
   },
   getTemplates(params = {}) {
-    const { page = 1, pageSize = 20, search, type, isActive } = params;
-    return apiClient.get(`/api/admin/notification-templates${buildQuery({ page, pageSize, search, type, isActive })}`);
+    const { page = 1, pageSize = 20, search, type, app, isActive } = params;
+    return apiClient.get(`/api/admin/notification-templates${buildQuery({ page, pageSize, search, type, app, isActive })}`);
   },
   createTemplate(payload) {
     return apiClient.post(`/api/admin/notification-templates`, payload);
@@ -86,8 +86,8 @@ export const notificationRuleService = {
 
 export const notificationCampaignService = {
   getCampaigns(params = {}) {
-    const { page = 1, pageSize = 20, search, status } = params;
-    return apiClient.get(`/api/admin/notification-campaigns${buildQuery({ page, pageSize, search, status })}`);
+    const { page = 1, pageSize = 20, search, status, app } = params;
+    return apiClient.get(`/api/admin/notification-campaigns${buildQuery({ page, pageSize, search, status, app })}`);
   },
   getCampaign(id) {
     return apiClient.get(`/api/admin/notification-campaigns/${id}`);
@@ -131,7 +131,7 @@ export const notificationCampaignService = {
 };
 
 export const notificationDispatchService = {
-  /** Filtreler: status, source, campaignId, ruleId, leaderboardPeriodId, userId, search (e-posta), dateRange */
+  /** Filtreler: app (MbFit | MbShop), status, source, campaignId, ruleId, leaderboardPeriodId, userId, search (e-posta), dateRange */
   getDispatches(params = {}) {
     const { page = 1, pageSize = 20, dateRange, ...rest } = params;
     return apiClient.get(`/api/admin/notification-dispatches${buildQuery({ page, pageSize, ...rest, ...dateRangeParams(dateRange) })}`);

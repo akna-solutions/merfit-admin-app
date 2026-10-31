@@ -15,7 +15,21 @@ export const NOTIFICATION_TYPE_LABELS = {
   WaterReminder: "Su Hatırlatıcısı",
   DailyMotivation: "Günlük Motivasyon",
   Announcement: "Duyuru",
+  StoreOrderUpdate: "Sipariş Durumu",
+  StorePromotion: "MB Shop Kampanyası",
 };
+
+/** Bildirimin gosterildigi uygulama bolumu (MerfitApi NotificationApp). */
+export const APP_LABELS = { MbFit: "MB FIT", MbShop: "MB Shop" };
+
+export const APP_COLORS = { MbFit: "#2F6FED", MbShop: "#F97316" };
+
+/** metadata.appByType gelmezse kullanilan esleme (MerfitApi NotificationApps ile ayni). */
+const SHOP_TYPES = ["StoreOrderUpdate", "StorePromotion"];
+export const appOfType = (type, metadata) => metadata?.appByType?.[type] ?? (SHOP_TYPES.includes(type) ? "MbShop" : "MbFit");
+
+/** Listeyi yalnizca verilen uygulamanin turlerine indirger. */
+export const typesForApp = (types, app, metadata) => (types ?? []).filter((t) => appOfType(t, metadata) === app);
 
 export const SEGMENT_LABELS = {
   AllUsers: "Tüm Kullanıcılar",
@@ -65,7 +79,10 @@ export const DISPATCH_STATUS_LABELS = {
   Cancelled: "İptal",
 };
 
-export const DISPATCH_SOURCE_LABELS = { Rule: "Kural", Campaign: "Kampanya", MonthlyReward: "Aylık Ödül" };
+export const DISPATCH_SOURCE_LABELS = { Rule: "Kural", Campaign: "Kampanya", MonthlyReward: "Aylık Ödül", StoreOrder: "Sipariş" };
+
+/** Uygulamaya gore anlamli gonderim kaynaklari. */
+export const SOURCES_BY_APP = { MbFit: ["Rule", "Campaign", "MonthlyReward"], MbShop: ["Campaign", "StoreOrder"] };
 
 export const DELIVERY_STATUS_LABELS = {
   Accepted: "Sağlayıcı Kabul Etti",
