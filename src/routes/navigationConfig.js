@@ -17,6 +17,7 @@ import {
   SafetyCertificateOutlined,
   GiftOutlined,
   ShopOutlined,
+  ExperimentOutlined,
 } from "@ant-design/icons";
 
 // Central navigation source of truth for the admin sidebar.
@@ -46,6 +47,14 @@ export const navigationItems = [
     label: "Antrenmanlar",
     icon: ThunderboltOutlined,
     path: "/admin/workouts",
+    section: "YÖNETİM",
+    enabled: true,
+  },
+  {
+    key: "workout-lab",
+    label: "Antrenman Laboratuvarı",
+    icon: ExperimentOutlined,
+    path: "/admin/workout-lab",
     section: "YÖNETİM",
     enabled: true,
   },
