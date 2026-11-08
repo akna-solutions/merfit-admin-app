@@ -110,7 +110,7 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
 
         <Row gutter={16}>
           <Col xs={24} md={12}>
-            <Form.Item label="Hedef" extra="Yalnızca güncel üç ana hedef. Boş bırakılırsa algoritma varsayılanı (Kas kazanmak) kullanılır.">
+            <Form.Item label="Hedef" extra="Yalnızca güncel üç ana hedef. Boş bırakılırsa algoritma varsayılanı (Kas Geliştirme) kullanılır.">
               <Select
                 allowClear
                 placeholder="Varsayılan"

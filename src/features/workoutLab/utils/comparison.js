@@ -2,6 +2,9 @@
 // Yalnızca kayıtta bulunan değerler kullanılır; yeni bir puan hesaplanmaz.
 import { DAY_CODES, DAY_SHORT_LABELS, CHECK_STATUS_LABELS } from "./labLabels";
 
+const POOL_SHORT = { Primary: "Birincil", AdjacentDifficulty: "Fallback-1", EquipmentFreeAnyDifficulty: "Fallback-2" };
+const poolLabel = (r) => (r?.poolStage ? POOL_SHORT[r.poolStage] ?? r.poolStage : "—");
+
 export function dayDistribution(result) {
   const set = new Set((result?.days ?? []).map((d) => d.dayOfWeek));
   return DAY_CODES.map((code) => ({ code, label: DAY_SHORT_LABELS[code], active: set.has(code) }));
@@ -48,7 +51,7 @@ export function metricRows(left, right) {
     { key: "cardio", label: "Kardiyo günü", l: left?.cardioDays ?? 0, r: right?.cardioDays ?? 0 },
     { key: "avgDuration", label: "Ortalama süre (dk)", l: left?.metrics?.averageDurationMin ?? 0, r: right?.metrics?.averageDurationMin ?? 0 },
     { key: "equipment", label: "Kullanılan ekipman", l: left?.metrics?.usedEquipmentCount ?? 0, r: right?.metrics?.usedEquipmentCount ?? 0 },
-    { key: "pool", label: "Aday havuzu", l: left?.poolStage ?? "—", r: right?.poolStage ?? "—" },
+    { key: "pool", label: "Aday havuzu", l: poolLabel(left), r: poolLabel(right) },
   ];
   return rows.map((row) => ({ ...row, changed: String(row.l) !== String(row.r) }));
 }
