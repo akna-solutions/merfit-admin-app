@@ -140,7 +140,12 @@ export default function ProgramResult({ result }) {
         <Descriptions size="small" column={{ xs: 1, sm: 2, lg: 3 }} bordered>
           <Descriptions.Item label="Plan adı">{result.planName}</Descriptions.Item>
           <Descriptions.Item label="Hedef zorluk">{difficultyLabel(result.targetDifficulty)}</Descriptions.Item>
-          <Descriptions.Item label="Gün seçimi">{result.usedPreferredDays ? "Profilde seçilen günler" : "Algoritma dağıttı"}</Descriptions.Item>
+          <Descriptions.Item label="Hedef gün sayısı">
+            {result.targetTrainingDays != null ? `${result.targetTrainingDays} gün (deneyim + hedef)` : "—"}
+          </Descriptions.Item>
+          <Descriptions.Item label="Müsait günler">
+            {result.availableDays?.length ? result.availableDays.map((d) => DAY_LABELS[d] ?? d).join(", ") : "Tüm hafta"}
+          </Descriptions.Item>
           <Descriptions.Item label="Süre tercihi">
             {result.durationPreferenceMin} dk{result.usedDefaultDuration ? " (varsayılan)" : ""} · en fazla {result.maxDurationMin} dk
           </Descriptions.Item>

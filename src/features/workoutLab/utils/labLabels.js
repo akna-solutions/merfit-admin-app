@@ -28,6 +28,7 @@ export const POOL_STAGE_LABELS = {
 };
 
 export const EQUIPMENT_RESOLUTION_LABELS = {
+  AllEquipment: "Ekipmanlı: katalogdaki tüm ekipmanlar",
   GymAllEquipment: "Spor salonu: katalogdaki tüm ekipmanlar",
   Selected: "Seçilen ekipmanlar",
   None: "Ekipman yok",
@@ -36,6 +37,8 @@ export const EQUIPMENT_RESOLUTION_LABELS = {
 export const experienceLabel = (v) => EXPERIENCE_LABELS[v] ?? v ?? "—";
 export const locationLabel = (v) => LOCATION_LABELS[v] ?? v ?? "—";
 export const dayLabel = (v) => DAY_LABELS[v] ?? v;
+/** Gün sayısını algoritma belirler; test tamamlanana kadar 0 gelir. */
+export const dayCountLabel = (n) => (n > 0 ? `${n} gün` : "gün: algoritma");
 export const ratingLabel = (v) => RATING_LABELS[v] ?? v;
 export const statusLabel = (v) => SIMULATION_STATUS_LABELS[v] ?? v;
 

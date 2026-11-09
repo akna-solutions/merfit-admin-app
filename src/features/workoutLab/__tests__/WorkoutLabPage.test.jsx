@@ -39,10 +39,10 @@ const options = {
   trainingLocations: [{ value: "Home", label: "Ev" }, { value: "Gym", label: "Spor salonu" }],
   genders: [{ value: "Male", label: "Erkek" }],
   weekDays: [],
-  trainingDaysPerWeekOptions: [2, 3, 4, 5, 6, 7],
   durationOptions: [15, 20, 30, 45, 60, 75, 90],
   equipment: [{ id: 1, name: "Dambıl", slug: "dumbbell" }],
-  defaultTrainingDaysPerWeek: 3,
+  targetTrainingDaysByExperience: { Beginner: 3, Intermediate: 4, Advanced: 5 },
+  loseWeightExtraTrainingDays: 1,
   defaultWorkoutDurationMin: 45,
   durationToleranceMin: 15,
   activeWorkoutCount: 12,
@@ -64,7 +64,7 @@ const completed = {
   isPlus: false,
   algorithmVersion: "2026.11-v1",
   createdAt: "2026-11-08T10:00:00Z",
-  profile: { trainingLocation: "Home", noEquipment: true, equipmentIds: [] },
+  profile: { trainingLocation: "Home", hasEquipment: false, trainingDays: [] },
   result: {
     algorithmVersion: "2026.11-v1",
     optionsFingerprint: "abc123",
@@ -116,11 +116,13 @@ it("form seçeneklerini ve katalog durumunu gösterir", async () => {
   expect(screen.getByText("Son algoritma sürümü: 2026.11-v1")).toBeInTheDocument();
 });
 
-it("ev + ekipman seçilmeden program üretmeye izin vermez", async () => {
+it("tek müsait günle program üretmeye izin vermez; gün sayısını algoritmanın belirlediğini gösterir", async () => {
   renderPage();
   await screen.findByText("Katalog durumu");
+  expect(screen.getByText(/bu profil için 3 gün/)).toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText("Pzt"));
   fireEvent.click(screen.getByRole("button", { name: /Programı üret/ }));
-  expect(await screen.findByText(/Ekipman seçin veya/)).toBeInTheDocument();
+  expect(await screen.findByText(/En az 2 gün seçin/)).toBeInTheDocument();
   expect(workoutLabService.createSimulation).not.toHaveBeenCalled();
 });
 
@@ -129,12 +131,12 @@ it("test oluşturur, sonucu yoklar ve programı + kontrolleri gösterir", async 
   workoutLabService.getSimulation.mockResolvedValue({ data: completed });
   renderPage();
   await screen.findByText("Katalog durumu");
-  fireEvent.click(screen.getByLabelText("Hiç ekipmanım yok"));
+  fireEvent.click(screen.getByLabelText("Ekipmansız"));
   fireEvent.click(screen.getByRole("button", { name: /Programı üret/ }));
 
   await waitFor(() => expect(workoutLabService.createSimulation).toHaveBeenCalled());
   const request = workoutLabService.createSimulation.mock.calls[0][0];
-  expect(request.profile).toMatchObject({ trainingLocation: "Home", noEquipment: true, equipmentIds: [], goal: "BuildMuscle" });
+  expect(request.profile).toMatchObject({ trainingLocation: "Home", hasEquipment: false, trainingDays: [], goal: "BuildMuscle" });
 
   expect((await screen.findAllByText("Tüm Vücut A")).length).toBeGreaterThan(0);
   expect(screen.getByText("Şınav")).toBeInTheDocument();
@@ -150,7 +152,7 @@ it("başarısız testte algoritmanın hata mesajını gösterir", async () => {
   });
   renderPage();
   await screen.findByText("Katalog durumu");
-  fireEvent.click(screen.getByLabelText("Hiç ekipmanım yok"));
+  fireEvent.click(screen.getByLabelText("Ekipmansız"));
   fireEvent.click(screen.getByRole("button", { name: /Programı üret/ }));
   expect(await screen.findByText("Uygun antrenman bulunamadı.")).toBeInTheDocument();
 });

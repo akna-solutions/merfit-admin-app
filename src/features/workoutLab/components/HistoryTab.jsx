@@ -8,7 +8,7 @@ import { workoutLabService } from "../services/workoutLabService";
 import {
   CHECK_STATUS_LABELS, EXPERIENCE_LABELS, LOCATION_LABELS, RATING_COLORS, RATING_LABELS, RATING_ORDER,
   SIMULATION_STATUS_COLORS, SIMULATION_STATUS_LABELS, experienceLabel, fitnessGoalLabel, locationLabel,
-  ratingLabel, statusLabel,
+  dayCountLabel, ratingLabel, statusLabel,
 } from "../utils/labLabels";
 import { PRIMARY_FITNESS_GOALS } from "../../workouts/data/enumLabels";
 import SimulationDetailDrawer from "./SimulationDetailDrawer";
@@ -115,7 +115,7 @@ export default function HistoryTab({ refreshKey, onEditProfile, onCompare, onRer
       render: (_, r) => (
         <Text style={{ fontSize: 13 }}>
           {fitnessGoalLabel(r.goal)} · {experienceLabel(r.experienceLevel)} · {locationLabel(r.trainingLocation)} ·{" "}
-          {r.trainingDaysPerWeek} gün · {r.workoutDurationMin ? `${r.workoutDurationMin} dk` : "vars. süre"} · {r.isPlus ? "Plus" : "Free"}
+          {dayCountLabel(r.trainingDaysPerWeek)} · {r.workoutDurationMin ? `${r.workoutDurationMin} dk` : "vars. süre"} · {r.isPlus ? "Plus" : "Free"}
         </Text>
       ),
     },
