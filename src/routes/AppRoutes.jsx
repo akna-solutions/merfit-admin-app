@@ -6,6 +6,7 @@ import ComingSoonPage from '../components/layout/ComingSoonPage';
 import { navigationItems } from './navigationConfig';
 import UsersPage from '../features/users/pages/UsersPage';
 import WorkoutsPage from '../features/workouts/pages/WorkoutsPage';
+import WorkoutLabPage from '../features/workoutLab/pages/WorkoutLabPage';
 import NutritionPage from '../features/nutrition/pages/NutritionPage';
 import SubscriptionsPage from '../features/subscriptions/pages/SubscriptionsPage';
 import GamificationPage from '../features/gamification/pages/GamificationPage';
@@ -31,6 +32,7 @@ import ProtectedRoute from '../features/auth/components/ProtectedRoute';
 const builtPages = {
   users: UsersPage,
   workouts: WorkoutsPage,
+  'workout-lab': WorkoutLabPage,
   nutrition: NutritionPage,
   subscriptions: SubscriptionsPage,
   store: StorePage,
