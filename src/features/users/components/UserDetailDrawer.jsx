@@ -51,8 +51,14 @@ function ProfileTab({ user }) {
       <Descriptions.Item label="Antrenman Ortamı">
         {enumLabel(TRAINING_LOCATION, profile.trainingLocation) ?? "—"}
       </Descriptions.Item>
-      <Descriptions.Item label="Antrenman Günleri">
-        {trainingDaysLabel(profile.preferredTrainingDays) ?? "—"}
+      <Descriptions.Item label="Ekipman">
+        {profile.hasEquipment == null ? "—" : profile.hasEquipment ? "Ekipmanlı" : "Ekipmansız"}
+      </Descriptions.Item>
+      <Descriptions.Item label="Müsait Günler">
+        {trainingDaysLabel(profile.preferredTrainingDays) ?? "Tüm hafta"}
+      </Descriptions.Item>
+      <Descriptions.Item label="Haftalık Gün (algoritma)">
+        {profile.trainingDaysPerWeek ? `${profile.trainingDaysPerWeek} gün` : "—"}
       </Descriptions.Item>
       <Descriptions.Item label="Boy">{profile.heightCm ? `${profile.heightCm} cm` : "—"}</Descriptions.Item>
       <Descriptions.Item label="Kilo">{profile.weightKg ? `${profile.weightKg} kg` : "—"}</Descriptions.Item>

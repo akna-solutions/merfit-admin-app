@@ -6,7 +6,7 @@ import { StatusTag } from "../../../components/admin";
 import ProgramResult from "./ProgramResult";
 import QualityChecklist from "./QualityChecklist";
 import EvaluationForm from "./EvaluationForm";
-import { SIMULATION_STATUS_COLORS, experienceLabel, fitnessGoalLabel, locationLabel, statusLabel } from "../utils/labLabels";
+import { SIMULATION_STATUS_COLORS, dayCountLabel, experienceLabel, fitnessGoalLabel, locationLabel, statusLabel } from "../utils/labLabels";
 
 const { Title, Text } = Typography;
 
@@ -41,7 +41,7 @@ export default function SimulationView({ simulation, loading, error, timedOut, o
           </Space>
           <Text type="secondary">
             #{s.id} · {fitnessGoalLabel(s.goal)} · {experienceLabel(s.experienceLevel)} · {locationLabel(s.trainingLocation)} ·{" "}
-            {s.trainingDaysPerWeek} gün · {s.workoutDurationMin ? `${s.workoutDurationMin} dk` : "varsayılan süre"} · {s.isPlus ? "Plus" : "Free"}
+            {dayCountLabel(s.trainingDaysPerWeek)} · {s.workoutDurationMin ? `${s.workoutDurationMin} dk` : "varsayılan süre"} · {s.isPlus ? "Plus" : "Free"}
             {" · "}
             {dayjs(s.createdAt).format("DD MMM YYYY HH:mm")}
           </Text>

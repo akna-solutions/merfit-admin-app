@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
-  Alert, Button, Checkbox, Col, Form, Input, InputNumber, Radio, Row, Select, Space, Switch, Tag, Typography,
+  Button, Checkbox, Col, Form, Input, InputNumber, Radio, Row, Select, Space, Tag, Typography,
 } from "antd";
 import { ExperimentOutlined, UndoOutlined } from "@ant-design/icons";
 import { SectionCard } from "../../../components/admin";
-import { INITIAL_FORM, applyEquipmentChange, sortDays, toRequest, validateForm } from "../utils/profileForm";
+import { INITIAL_FORM, sortDays, toRequest, validateForm } from "../utils/profileForm";
 import { DAY_CODES, DAY_SHORT_LABELS } from "../utils/labLabels";
 
 const { Text } = Typography;
@@ -12,8 +12,8 @@ const { Text } = Typography;
 const optionList = (items = []) => items.map((o) => ({ value: o.value, label: o.label }));
 
 // Onboarding cevaplarını taklit eden profil formu. Boş bırakılan alanlarda gerçek algoritmanın varsayılanları
-// kullanılır (gün sayısı, süre, hedef, deneyim). Yaş/cinsiyet/boy/kilo kaydedilir ancak antrenman algoritması
-// tarafından kullanılmaz.
+// kullanılır (süre, hedef, deneyim). Haftalık gün sayısını algoritma belirler; form yalnızca müsait günleri alır.
+// Yaş/cinsiyet/boy/kilo kaydedilir ancak antrenman algoritması tarafından kullanılmaz.
 export default function ProfileForm({ options, initialValues, submitting, onSubmit }) {
   const [values, setValues] = useState(() => ({ ...INITIAL_FORM, ...(initialValues ?? {}) }));
   const [errors, setErrors] = useState({});
@@ -27,13 +27,16 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
     });
   };
 
-  const equipmentOptions = useMemo(
-    () => (options?.equipment ?? []).map((e) => ({ value: e.id, label: e.name })),
-    [options],
-  );
+  const equipmentCount = options?.equipment?.length ?? 0;
   const isGym = values.trainingLocation === "Gym";
+  const targets = options?.targetTrainingDaysByExperience ?? { Beginner: 3, Intermediate: 4, Advanced: 5 };
+  const loseWeightExtra = options?.loseWeightExtraTrainingDays ?? 1;
+  const availableCount = sortDays(values.availableDays ?? []).length;
+  const expectedDays = Math.min(
+    6,
+    Math.max(2, (targets[values.experienceLevel ?? "Beginner"] ?? 3) + (values.goal === "LoseWeight" ? loseWeightExtra : 0)),
+  );
   const defaults = {
-    days: options?.defaultTrainingDaysPerWeek ?? 3,
     duration: options?.defaultWorkoutDurationMin ?? 45,
     tolerance: options?.durationToleranceMin ?? 15,
   };
@@ -143,55 +146,43 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
           />
         </Form.Item>
 
-        {isGym ? (
-          <Alert
-            type="info"
-            showIcon
-            style={{ marginBottom: 16 }}
-            title="Spor salonunda ekipman seçilmez."
-            description={`Mobil onboarding ile aynı şekilde katalogdaki tüm ekipmanlar (${equipmentOptions.length}) algoritmaya verilir.`}
+        <Form.Item
+          label="Ekipman"
+          extra={
+            isGym
+              ? "Spor salonu her zaman ekipmanlıdır."
+              : `Ekipmanlı: katalogdaki tüm ekipmanlar (${equipmentCount}). Ekipmansız: yalnızca vücut ağırlığı.`
+          }
+        >
+          <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            value={isGym ? true : values.hasEquipment}
+            onChange={(e) => set({ hasEquipment: e.target.value })}
+            options={[
+              { value: true, label: "Ekipmanlı" },
+              { value: false, label: "Ekipmansız", disabled: isGym },
+            ]}
           />
-        ) : (
-          <Form.Item label="Ekipmanlar" {...fieldStatus("equipmentIds")}>
-            <Space orientation="vertical" style={{ width: "100%" }}>
-              <Checkbox
-                checked={values.noEquipment}
-                onChange={(e) => setValues((prev) => applyEquipmentChange(prev, { noEquipment: e.target.checked }))}
-              >
-                Hiç ekipmanım yok
-              </Checkbox>
-              <Select
-                mode="multiple"
-                allowClear
-                showSearch
-                optionFilterProp="label"
-                placeholder={equipmentOptions.length ? "Ekipman seçin" : "Katalogda ekipman yok"}
-                disabled={values.noEquipment}
-                options={equipmentOptions}
-                value={values.equipmentIds}
-                onChange={(ids) => {
-                  setValues((prev) => applyEquipmentChange(prev, { equipmentIds: ids }));
-                  setErrors((prev) => ({ ...prev, equipmentIds: undefined }));
-                }}
-                style={{ width: "100%" }}
-              />
-            </Space>
-          </Form.Item>
-        )}
+        </Form.Item>
+
+        <Form.Item
+          label="Müsait günler"
+          extra={
+            `Gün sayısını algoritma belirler: bu profil için ${expectedDays} gün` +
+            (availableCount > 0 && availableCount < expectedDays ? ` (yalnızca ${availableCount} gün müsait, hepsi kullanılır)` : "") +
+            ". Hiçbiri işaretlenmezse tüm hafta müsait sayılır."
+          }
+          {...fieldStatus("availableDays")}
+        >
+          <Checkbox.Group
+            value={values.availableDays}
+            onChange={(days) => set({ availableDays: sortDays(days) })}
+            options={DAY_CODES.map((code) => ({ value: code, label: DAY_SHORT_LABELS[code] }))}
+          />
+        </Form.Item>
 
         <Row gutter={16}>
-          <Col xs={24} md={12}>
-            <Form.Item label="Haftalık antrenman günü" extra={`Boş bırakılırsa ${defaults.days} gün.`}>
-              <Select
-                allowClear
-                placeholder="Varsayılan"
-                disabled={values.useSpecificDays}
-                options={(options?.trainingDaysPerWeekOptions ?? [2, 3, 4, 5, 6, 7]).map((d) => ({ value: d, label: `${d} gün` }))}
-                value={values.useSpecificDays ? sortDays(values.trainingDays).length || undefined : values.trainingDaysPerWeek}
-                onChange={(v) => set({ trainingDaysPerWeek: v })}
-              />
-            </Form.Item>
-          </Col>
           <Col xs={24} md={12}>
             <Form.Item
               label="Antrenman süresi"
@@ -207,24 +198,6 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item label="Belirli günler" {...fieldStatus("trainingDays")}>
-          <Space orientation="vertical" style={{ width: "100%" }}>
-            <Switch
-              checked={values.useSpecificDays}
-              onChange={(checked) => set({ useSpecificDays: checked })}
-              checkedChildren="Belirli günler"
-              unCheckedChildren="Algoritma seçsin"
-            />
-            {values.useSpecificDays && (
-              <Checkbox.Group
-                value={values.trainingDays}
-                onChange={(days) => set({ trainingDays: sortDays(days) })}
-                options={DAY_CODES.map((code) => ({ value: code, label: DAY_SHORT_LABELS[code] }))}
-              />
-            )}
-          </Space>
-        </Form.Item>
 
         <Form.Item label="Abonelik" extra="Free kullanıcıya premium antrenmanlar yalnızca son çare olarak açılır.">
           <Radio.Group
