@@ -61,6 +61,13 @@ describe("ürün formu", () => {
     expect(validateProductPayload(payload)).toEqual([]);
   });
 
+  it("vitrin rozetini taşır; boş seçim rozeti kaldırır (null)", () => {
+    expect(productToPayload({ ...baseProduct, highlightBadge: "advantageous" }).highlightBadge).toBe("advantageous");
+    expect(productToPayload({ ...baseProduct, highlightBadge: undefined }).highlightBadge).toBeNull();
+    expect(productToFormValues({ ...baseProduct, images: [], highlightBadge: "mbfit_pick" }).highlightBadge).toBe("mbfit_pick");
+    expect(productToFormValues(null).highlightBadge).toBeNull();
+  });
+
   it("indirimli fiyat satış fiyatından düşük olmalı", () => {
     const errors = validateProductPayload(productToPayload({ ...baseProduct, discountPrice: 1000 }));
     expect(errors).toContain("İndirimli fiyat, satış fiyatından düşük olmalıdır.");

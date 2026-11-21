@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Button, Card, Col, Divider, Form, Input, InputNumber, Row, Select, Space, Switch, Typography } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { FormDrawer, ImageUrlInput } from "../../../components/admin";
-import { VARIANT_KIND_LABELS } from "../utils/storeLabels";
+import { HIGHLIGHT_BADGE_OPTIONS, VARIANT_KIND_LABELS } from "../utils/storeLabels";
 import { HEX_COLOR_PATTERN, SKU_PATTERN, VARIANT_ID_PATTERN, httpsUrlRule, productToFormValues, productToPayload, validateProductPayload } from "../utils/storeForms";
 
 const kindOptions = Object.entries(VARIANT_KIND_LABELS).map(([value, label]) => ({ value, label }));
@@ -137,6 +137,15 @@ export default function ProductFormDrawer({ open, item, categories, submitting, 
           <Col xs={12} md={8}>
             <Form.Item name="isFeatured" label="Öne çıkan" valuePropName="checked">
               <Switch />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={16}>
+            <Form.Item
+              name="highlightBadge"
+              label="Vitrin rozeti"
+              extra="Ürün görselinin köşesinde gösterilir. Yeni, Çok Satan, Son N Ürün, Kargo Bedava ve Yüksek Puanlı rozetleri gerçek veriden otomatik eklenir."
+            >
+              <Select allowClear placeholder="Rozet yok" options={HIGHLIGHT_BADGE_OPTIONS} />
             </Form.Item>
           </Col>
         </Row>
