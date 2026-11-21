@@ -76,3 +76,46 @@ export function describeActor(changedBy) {
   if (kind === "system") return "Sistem";
   return changedBy;
 }
+
+// Ürün yorumları (MerfitApi ProductReviewEnums).
+export const REVIEW_STATUS_LABELS = {
+  Published: "Yayında",
+  Hidden: "Gizlendi",
+  Deleted: "Silindi",
+};
+
+export const REVIEW_STATUS_COLORS = {
+  published: "green",
+  hidden: "orange",
+  deleted: "default",
+};
+
+export const REPORT_REASON_LABELS = {
+  Spam: "Spam",
+  Offensive: "Hakaret / saldırgan içerik",
+  Misleading: "Yanıltıcı bilgi",
+  Irrelevant: "Alakasız içerik",
+  Other: "Diğer",
+};
+
+export const REPORT_STATUS_LABELS = {
+  Open: "Açık",
+  Resolved: "Çözüldü",
+  Dismissed: "Kapatıldı",
+};
+
+export const REPORT_STATUS_COLORS = {
+  open: "red",
+  resolved: "green",
+  dismissed: "default",
+};
+
+export const REVIEW_HISTORY_LABELS = {
+  CREATED: "Kullanıcı yorumu yazdı",
+  EDITED_BY_USER: "Kullanıcı yorumu düzenledi",
+  DELETED_BY_USER: "Kullanıcı yorumu sildi",
+  STORE_REVIEW_HIDDEN: "Yorum gizlendi",
+  STORE_REVIEW_PUBLISHED: "Yorum yeniden yayınlandı",
+  STORE_REVIEW_DELETED: "Yorum silindi",
+  STORE_REVIEW_REPORTS_DISMISSED: "Raporlar kapatıldı",
+};
