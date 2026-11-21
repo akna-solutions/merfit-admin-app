@@ -192,3 +192,15 @@ export function orderFiltersToQuery({ dateRange, ...filters }) {
     to: to ? to.endOf("day").toISOString() : undefined,
   };
 }
+
+/** Yorum filtrelerini AdminProductReviewListRequest sorgusuna çevirir ("all" seçimleri gönderilmez). */
+export function reviewFiltersToQuery({ reportedOnly, verifiedPurchase, rating, status, productId, ...filters }) {
+  return {
+    ...filters,
+    productId: productId ?? undefined,
+    rating: rating && rating !== "all" ? rating : undefined,
+    status: status && status !== "all" ? status : undefined,
+    reportedOnly: reportedOnly ? true : undefined,
+    verifiedPurchase: verifiedPurchase === "yes" ? true : verifiedPurchase === "no" ? false : undefined,
+  };
+}

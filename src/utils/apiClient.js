@@ -169,8 +169,24 @@ async function parse(response) {
   return payload;
 }
 
+// Kimlik gerektiren ikili içerik (örn. yorum fotoğrafı): <img> Authorization başlığı gönderemediği için
+// görsel fetch ile alınır ve çağıran taraf URL.createObjectURL ile gösterir.
+async function requestBlob(path) {
+  const sentAccessToken = tokenStore.getAccessToken();
+  let response = await send(path, { method: "GET" });
+  if (response.status === 401 && tokenStore.getRefreshToken()) {
+    const renewed = tokenStore.getAccessToken() !== sentAccessToken || (await refreshSession());
+    if (renewed) response = await send(path, { method: "GET" });
+  }
+  if (!response.ok) {
+    await parse(response); // ApiResponse hata gövdesini Error'a çevirip fırlatır
+  }
+  return response.blob();
+}
+
 export const apiClient = {
   get: (path, opts) => request(path, { ...opts, method: "GET" }),
+  getBlob: (path) => requestBlob(path),
   post: (path, body, opts) => request(path, { ...opts, method: "POST", body }),
   put: (path, body, opts) => request(path, { ...opts, method: "PUT", body }),
   patch: (path, body, opts) => request(path, { ...opts, method: "PATCH", body }),

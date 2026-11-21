@@ -97,3 +97,32 @@ export const storeOrderService = {
     return apiClient.patch(`${BASE}/orders/${id}/payment-status`, { paymentStatus, paymentReference, note });
   },
 };
+
+export const storeReviewService = {
+  /** GET /api/admin/store/reviews — AdminProductReviewListRequest */
+  getReviews(params = {}) {
+    const { page = 1, pageSize = 20, search, productId, userId, rating, status, reportedOnly, verifiedPurchase, sortBy, sortDirection } = params;
+    return apiClient.get(
+      `${BASE}/reviews${buildQuery({ page, pageSize, search, productId, userId, rating, status, reportedOnly, verifiedPurchase, sortBy, sortDirection })}`,
+    );
+  },
+  getReview(id) {
+    return apiClient.get(`${BASE}/reviews/${id}`);
+  },
+  /** PATCH /api/admin/store/reviews/{id}/status — { status: "Hidden" | "Published", note }; geçersiz geçiş 409. */
+  updateStatus(id, { status, note }) {
+    return apiClient.patch(`${BASE}/reviews/${id}/status`, { status, note });
+  },
+  /** Yorumu siler (geri alınamaz; kayıt ve geçmiş saklanır). */
+  deleteReview(id, { note } = {}) {
+    return apiClient.post(`${BASE}/reviews/${id}/delete`, { note });
+  },
+  /** Açık raporları kapatır; yorum yayında kalır. */
+  dismissReports(id, { note } = {}) {
+    return apiClient.post(`${BASE}/reviews/${id}/reports/dismiss`, { note });
+  },
+  /** Yorum fotoğrafı (Blob). */
+  getImage(reviewId, imageId) {
+    return apiClient.getBlob(`${BASE}/reviews/${reviewId}/images/${imageId}`);
+  },
+};

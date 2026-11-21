@@ -6,9 +6,10 @@ import { useStoreCategories } from "../hooks/useStoreCategories";
 import CategoriesTab from "../components/CategoriesTab";
 import OrdersTab from "../components/OrdersTab";
 import ProductsTab from "../components/ProductsTab";
+import ReviewsTab from "../components/ReviewsTab";
 import StoreCampaignsTab from "../components/StoreCampaignsTab";
 
-const TABS = ["orders", "products", "categories", "campaigns"];
+const TABS = ["orders", "products", "reviews", "categories", "campaigns"];
 
 export default function StorePage() {
   const [params, setParams] = useSearchParams();
@@ -20,7 +21,7 @@ export default function StorePage() {
       <PageHeader
         crumbs={[{ label: "Panel", path: "/admin" }, { label: "MB Shop" }]}
         title="MB Shop"
-        description="Mobil uygulamadaki mağazanın siparişlerini, ürünlerini, stoklarını, kategorilerini ve kampanyalarını yönetin."
+        description="Mobil uygulamadaki mağazanın siparişlerini, ürünlerini, stoklarını, ürün yorumlarını, kategorilerini ve kampanyalarını yönetin."
       />
       <Tabs
         activeKey={active}
@@ -29,6 +30,7 @@ export default function StorePage() {
         items={[
           { key: "orders", label: "Siparişler", children: <OrdersTab /> },
           { key: "products", label: "Ürünler", children: <ProductsTab categories={categories} /> },
+          { key: "reviews", label: "Yorumlar", children: <ReviewsTab /> },
           { key: "categories", label: "Kategoriler", children: <CategoriesTab categories={categories} onCategoriesChanged={reload} /> },
           { key: "campaigns", label: "Kampanyalar", children: <StoreCampaignsTab /> },
         ]}
