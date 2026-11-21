@@ -52,6 +52,7 @@ export function metricRows(left, right) {
     { key: "avgDuration", label: "Ortalama süre (dk)", l: left?.metrics?.averageDurationMin ?? 0, r: right?.metrics?.averageDurationMin ?? 0 },
     { key: "equipment", label: "Kullanılan ekipman", l: left?.metrics?.usedEquipmentCount ?? 0, r: right?.metrics?.usedEquipmentCount ?? 0 },
     { key: "pool", label: "Aday havuzu", l: poolLabel(left), r: poolLabel(right) },
+    { key: "stepGoal", label: "Günlük adım hedefi", l: left?.stepGoal?.dailyGoal ?? "—", r: right?.stepGoal?.dailyGoal ?? "—" },
   ];
   return rows.map((row) => ({ ...row, changed: String(row.l) !== String(row.r) }));
 }

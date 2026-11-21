@@ -2,10 +2,12 @@ import React from "react";
 import { Alert, Col, Collapse, Descriptions, Row, Space, Table, Tag, Typography } from "antd";
 import {
   AimOutlined, CalendarOutlined, ClockCircleOutlined, FireOutlined, OrderedListOutlined, RiseOutlined, ToolOutlined,
+  FlagOutlined,
 } from "@ant-design/icons";
 import { MetricCard, SectionCard, EmptyState } from "../../../components/admin";
 import {
-  DAY_LABELS, EQUIPMENT_RESOLUTION_LABELS, POOL_STAGE_LABELS, difficultyLabel, experienceLabel, fitnessGoalLabel, repsLabel,
+  DAY_LABELS, EQUIPMENT_RESOLUTION_LABELS, POOL_STAGE_LABELS, activityLevelLabel, difficultyLabel, experienceLabel,
+  fitnessGoalLabel, repsLabel, stepsLabel,
 } from "../utils/labLabels";
 
 const { Text } = Typography;
@@ -84,6 +86,43 @@ function DayContent({ day }) {
   );
 }
 
+// Uygulamanın bu profile otomatik vereceği günlük adım hedefi (gerçek kullanıcılarla aynı kural; kullanıcı değiştiremez).
+// Bu alan eklenmeden önce üretilmiş testlerde yoktur.
+function StepGoalSection({ stepGoal }) {
+  if (!stepGoal) {
+    return (
+      <SectionCard title="Günlük adım hedefi">
+        <Text type="secondary" data-testid="lab-step-goal-missing">
+          Bu test adım hedefi eklenmeden önce üretildi. Görmek için testi tekrar çalıştırın.
+        </Text>
+      </SectionCard>
+    );
+  }
+  return (
+    <SectionCard title="Günlük adım hedefi">
+      <Descriptions size="small" column={{ xs: 1, sm: 2, lg: 3 }} bordered>
+        <Descriptions.Item label="Hedef">
+          <Text strong data-testid="lab-step-goal-value">{stepsLabel(stepGoal.dailyGoal)} adım</Text>
+        </Descriptions.Item>
+        <Descriptions.Item label="Aktivite seviyesi">
+          {stepGoal.activityLevel ? activityLevelLabel(stepGoal.activityLevel) : "Seçilmedi (varsayılan)"}
+        </Descriptions.Item>
+        <Descriptions.Item label="Sınırlar">
+          {stepsLabel(stepGoal.minDailyGoal)} – {stepsLabel(stepGoal.maxDailyGoal)} adım
+        </Descriptions.Item>
+      </Descriptions>
+      <Text type="secondary" style={{ display: "block", marginTop: 8 }} data-testid="lab-step-goal-reason">
+        {stepGoal.reason}
+      </Text>
+      <Text type="secondary" style={{ display: "block", marginTop: 4, fontSize: 12 }}>
+        Kural: aktivite seviyesine göre taban (hareketsiz 6.000 · hafif 7.500 · orta 9.000 · çok 10.000 · aşırı 11.000;
+        seçilmezse {stepsLabel(stepGoal.defaultDailyGoal)}), yağ kaybında +1.500, 60+ yaşta −1.000, 65+ yaşta en fazla 8.000;
+        500'e yuvarlanır. Kullanıcı uygulamada bu hedefi değiştiremez.
+      </Text>
+    </SectionCard>
+  );
+}
+
 // MerfitCustomerApi'nin gerçek WorkoutPlanGenerator ile ürettiği sonucun anlık görüntüsü.
 // Yalnızca ResultJson'da bulunan alanlar gösterilir.
 export default function ProgramResult({ result }) {
@@ -119,6 +158,11 @@ export default function ProgramResult({ result }) {
         <Col xs={12} md={8} xl={6}>
           <MetricCard title="Toplam set" value={m.totalSets ?? 0} icon={<OrderedListOutlined />} />
         </Col>
+        {result.stepGoal && (
+          <Col xs={12} md={8} xl={6}>
+            <MetricCard title="Günlük adım hedefi" value={stepsLabel(result.stepGoal.dailyGoal)} suffix="adım" icon={<FlagOutlined />} />
+          </Col>
+        )}
       </Row>
 
       {(fallbackUsed || result.premiumLastResortUsed || result.cardioDominantMainDaysFallback) && (
@@ -170,6 +214,8 @@ export default function ProgramResult({ result }) {
         )}
         {result.summary && <Text type="secondary" style={{ display: "block", marginTop: 8 }}>{result.summary}</Text>}
       </SectionCard>
+
+      <StepGoalSection stepGoal={result.stepGoal} />
 
       <SectionCard title="Günler" bodyPadding={days.length ? 0 : undefined}>
         {days.length === 0 ? (

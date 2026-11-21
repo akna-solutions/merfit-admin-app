@@ -3,6 +3,8 @@
 // - Spor salonu her zaman ekipmanlıdır.
 // - Haftalık gün sayısı seçilmez; algoritma deneyim ve hedefe göre belirler. Kullanıcı yalnızca müsait günleri
 //   seçer: hiç gün işaretlenmezse tüm hafta müsait kabul edilir, işaretlenirse en az 2 gün olmalıdır.
+// - Aktivite seviyesi antrenman algoritmasını etkilemez; uygulamanın otomatik verdiği günlük adım hedefi
+//   (aktivite seviyesi + hedef + yaş) buna göre hesaplanır.
 // Boş bırakılan alanlarda algoritmanın varsayılanları kullanılır.
 import { DAY_CODES } from "./labLabels";
 
@@ -13,6 +15,7 @@ export const INITIAL_FORM = {
   heightCm: null,
   weightKg: null,
   targetWeightKg: null,
+  activityLevel: undefined,
   goal: "BuildMuscle",
   experienceLevel: "Beginner",
   trainingLocation: "Home",
@@ -47,6 +50,7 @@ export function toRequest(values) {
       heightCm: orNull(values.heightCm),
       weightKg: orNull(values.weightKg),
       targetWeightKg: orNull(values.targetWeightKg),
+      activityLevel: orNull(values.activityLevel),
       goal: orNull(values.goal),
       experienceLevel: orNull(values.experienceLevel),
       trainingLocation: values.trainingLocation,
@@ -75,6 +79,7 @@ export function fromProfile(profile = {}, name = "") {
     heightCm: profile.heightCm ?? null,
     weightKg: profile.weightKg ?? null,
     targetWeightKg: profile.targetWeightKg ?? null,
+    activityLevel: profile.activityLevel ?? undefined,
     goal: profile.goal ?? undefined,
     experienceLevel: profile.experienceLevel ?? undefined,
     trainingLocation: profile.trainingLocation ?? "Home",

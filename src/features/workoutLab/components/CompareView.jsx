@@ -11,7 +11,7 @@ const { Text } = Typography;
 const CHECK_COLORS = { Passed: "green", Warning: "gold", Failed: "red" };
 
 const PROFILE_FIELD_LABELS = {
-  age: "Yaş", gender: "Cinsiyet", heightCm: "Boy", weightKg: "Kilo", targetWeightKg: "Hedef kilo", goal: "Hedef",
+  age: "Yaş", gender: "Cinsiyet", heightCm: "Boy", weightKg: "Kilo", targetWeightKg: "Hedef kilo", activityLevel: "Aktivite seviyesi", goal: "Hedef",
   experienceLevel: "Deneyim", trainingLocation: "Yer", hasEquipment: "Ekipmanlı/ekipmansız", equipmentIds: "Ekipman",
   noEquipment: "Ekipmansız", trainingDaysPerWeek: "Gün sayısı", trainingDays: "Müsait günler", workoutDurationMin: "Süre",
   isPlus: "Plus",

@@ -4,6 +4,13 @@ export { fitnessGoalLabel, difficultyLabel } from "../../workouts/data/enumLabel
 export const EXPERIENCE_LABELS = { Beginner: "Başlangıç", Intermediate: "Orta", Advanced: "İleri" };
 export const LOCATION_LABELS = { Home: "Ev", Gym: "Spor salonu", Outdoor: "Açık alan" };
 export const GENDER_LABELS = { Male: "Erkek", Female: "Kadın" };
+export const ACTIVITY_LEVEL_LABELS = {
+  Sedentary: "Hareketsiz",
+  LightlyActive: "Hafif aktif",
+  ModeratelyActive: "Orta aktif",
+  VeryActive: "Çok aktif",
+  ExtraActive: "Aşırı aktif",
+};
 
 export const DAY_CODES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const DAY_LABELS = {
@@ -35,6 +42,9 @@ export const EQUIPMENT_RESOLUTION_LABELS = {
 };
 
 export const experienceLabel = (v) => EXPERIENCE_LABELS[v] ?? v ?? "—";
+export const activityLevelLabel = (v) => ACTIVITY_LEVEL_LABELS[v] ?? v ?? "—";
+/** 7500 -> "7.500" */
+export const stepsLabel = (n) => (n == null ? "—" : Number(n).toLocaleString("tr-TR"));
 export const locationLabel = (v) => LOCATION_LABELS[v] ?? v ?? "—";
 export const dayLabel = (v) => DAY_LABELS[v] ?? v;
 /** Gün sayısını algoritma belirler; test tamamlanana kadar 0 gelir. */
