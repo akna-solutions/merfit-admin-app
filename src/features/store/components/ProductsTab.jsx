@@ -6,7 +6,7 @@ import { previewableImageUrl } from "../../../utils/imageUrl";
 import { useApiAction } from "../../notifications/hooks/useApiAction";
 import { useSafeListQuery } from "../hooks/useSafeListQuery";
 import { storeProductService } from "../services/storeService";
-import { formatMoney } from "../utils/storeLabels";
+import { HIGHLIGHT_BADGE_LABELS, formatMoney } from "../utils/storeLabels";
 import ListError from "./ListError";
 import ProductFormDrawer from "./ProductFormDrawer";
 import StockAdjustModal from "./StockAdjustModal";
@@ -132,6 +132,7 @@ export default function ProductsTab({ categories }) {
         <Space size={4} wrap>
           <StatusTag status={r.isActive ? "active" : "inactive"}>{r.isActive ? "Satışta" : "Pasif"}</StatusTag>
           {r.isFeatured && <Tag color="gold">Öne çıkan</Tag>}
+          {r.highlightBadge && HIGHLIGHT_BADGE_LABELS[r.highlightBadge] && <Tag color="blue">{HIGHLIGHT_BADGE_LABELS[r.highlightBadge]}</Tag>}
         </Space>
       ),
     },

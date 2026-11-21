@@ -55,7 +55,7 @@ export function categoryToPayload(values) {
 
 export function productToFormValues(item) {
   if (!item) {
-    return { isActive: true, isFeatured: false, sortOrder: 0, stockQuantity: 0, features: [], specs: [], variants: [], imageUrls: [] };
+    return { isActive: true, isFeatured: false, highlightBadge: null, sortOrder: 0, stockQuantity: 0, features: [], specs: [], variants: [], imageUrls: [] };
   }
   const images = [...(item.images ?? [])].sort((a, b) => Number(b.isPrimary) - Number(a.isPrimary) || a.sortOrder - b.sortOrder);
   return {
@@ -70,6 +70,7 @@ export function productToFormValues(item) {
     stockQuantity: item.stockQuantity,
     isActive: item.isActive,
     isFeatured: item.isFeatured,
+    highlightBadge: item.highlightBadge ?? null,
     sortOrder: item.sortOrder ?? 0,
     features: item.features ?? [],
     specs: (item.specs ?? []).map((s) => ({ label: s.label, value: s.value })),
@@ -100,6 +101,8 @@ export function productToPayload(values) {
     stockQuantity: Number(values.stockQuantity ?? 0),
     isActive: Boolean(values.isActive),
     isFeatured: Boolean(values.isFeatured),
+    // Boş değer rozeti kaldırır (API null kabul eder).
+    highlightBadge: values.highlightBadge || null,
     sortOrder: Number(values.sortOrder ?? 0),
     features: (values.features ?? []).map((f) => String(f ?? "").trim()).filter(Boolean),
     specs: (values.specs ?? [])

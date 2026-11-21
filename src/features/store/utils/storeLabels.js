@@ -119,3 +119,12 @@ export const REVIEW_HISTORY_LABELS = {
   STORE_REVIEW_DELETED: "Yorum silindi",
   STORE_REVIEW_REPORTS_DISMISSED: "Raporlar kapatıldı",
 };
+
+// Elle atanabilen vitrin rozetleri (MerfitApi AdminProductBadges ile birebir). Yeni, Çok Satan, Son N Ürün,
+// Kargo Bedava ve Yüksek Puanlı rozetleri gerçek veriden otomatik hesaplanır; buradan atanamaz.
+export const HIGHLIGHT_BADGE_LABELS = {
+  advantageous: "Avantajlı Ürün",
+  mbfit_pick: "MBFit Seçimi",
+};
+
+export const HIGHLIGHT_BADGE_OPTIONS = Object.entries(HIGHLIGHT_BADGE_LABELS).map(([value, label]) => ({ value, label }));
