@@ -75,7 +75,7 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
 
         <Text strong>Temel bilgiler</Text>
         <Text type="secondary" style={{ display: "block", marginBottom: 12 }}>
-          Kayıt amaçlıdır; mevcut antrenman algoritması bu alanları kullanmaz.
+          Antrenman algoritması bu alanları kullanmaz. Yaş ve aktivite seviyesi, hedefle birlikte günlük adım hedefini belirler.
         </Text>
         <Row gutter={16}>
           <Col xs={12} md={4}>
@@ -107,6 +107,24 @@ export default function ProfileForm({ options, initialValues, submitting, onSubm
           <Col xs={8} md={5}>
             <Form.Item label="Hedef kilo (kg)">
               <InputNumber min={30} max={300} style={{ width: "100%" }} value={values.targetWeightKg} onChange={(v) => set({ targetWeightKg: v })} />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col xs={24} md={12}>
+            <Form.Item
+              label="Aktivite seviyesi"
+              extra="Günlük adım hedefi buna göre hesaplanır. Boş bırakılırsa varsayılan adım hedefi kullanılır."
+            >
+              <Select
+                allowClear
+                placeholder="Seçilmedi"
+                options={optionList(options?.activityLevels)}
+                value={values.activityLevel}
+                onChange={(v) => set({ activityLevel: v })}
+                data-testid="lab-activity-level"
+              />
             </Form.Item>
           </Col>
         </Row>

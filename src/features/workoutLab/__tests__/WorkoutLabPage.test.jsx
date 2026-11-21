@@ -38,6 +38,7 @@ const options = {
   experienceLevels: [{ value: "Beginner", label: "Başlangıç" }],
   trainingLocations: [{ value: "Home", label: "Ev" }, { value: "Gym", label: "Spor salonu" }],
   genders: [{ value: "Male", label: "Erkek" }],
+  activityLevels: [{ value: "Sedentary", label: "Hareketsiz" }],
   weekDays: [],
   durationOptions: [15, 20, 30, 45, 60, 75, 90],
   equipment: [{ id: 1, name: "Dambıl", slug: "dumbbell" }],
@@ -89,6 +90,15 @@ const completed = {
       },
     ],
     metrics: { totalExercises: 1, totalSets: 3, averageDurationMin: 40, usedEquipmentCount: 0, muscleGroups: [] },
+    stepGoal: {
+      dailyGoal: 7500,
+      reason: "Hedefin aktivite seviyene ve kilo verme hedefine göre otomatik belirlendi.",
+      activityLevel: "Sedentary",
+      usedDefault: false,
+      defaultDailyGoal: 8000,
+      minDailyGoal: 5000,
+      maxDailyGoal: 12500,
+    },
   },
   qualityChecks: [
     { code: "DuplicateExercises", title: "Tekrarlanan egzersiz", status: "Passed", message: "Tekrar yok.", rule: "Aynı egzersiz bir kez." },
@@ -143,6 +153,19 @@ it("test oluşturur, sonucu yoklar ve programı + kontrolleri gösterir", async 
   expect(screen.getByText("Kalite kontrolleri")).toBeInTheDocument();
   expect(within(screen.getByTestId("check-DuplicateExercises")).getByText("Başarılı")).toBeInTheDocument();
   expect(screen.getByText("Değerlendirme")).toBeInTheDocument();
+  expect(screen.getByTestId("lab-step-goal-value")).toHaveTextContent("7.500 adım");
+  expect(screen.getByTestId("lab-step-goal-reason")).toHaveTextContent(/aktivite seviyene/);
+});
+
+it("adım hedefi eklenmeden önceki testlerde tekrar çalıştırma notu gösterir", async () => {
+  const { stepGoal, ...oldResult } = completed.result;
+  workoutLabService.createSimulation.mockResolvedValue({ data: { ...completed, status: "Pending", result: null } });
+  workoutLabService.getSimulation.mockResolvedValue({ data: { ...completed, result: oldResult } });
+  renderPage();
+  await screen.findByText("Katalog durumu");
+  fireEvent.click(screen.getByRole("button", { name: /Programı üret/ }));
+  expect(await screen.findByTestId("lab-step-goal-missing")).toBeInTheDocument();
+  expect(screen.queryByTestId("lab-step-goal-value")).not.toBeInTheDocument();
 });
 
 it("başarısız testte algoritmanın hata mesajını gösterir", async () => {

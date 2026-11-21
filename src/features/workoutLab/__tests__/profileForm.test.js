@@ -24,6 +24,13 @@ describe("profileForm", () => {
     expect(req.profile).not.toHaveProperty("equipmentIds");
   });
 
+  it("aktivite seviyesini gönderir ve kayıtlı profilden geri yükler (adım hedefi için)", () => {
+    expect(toRequest({ ...INITIAL_FORM }).profile.activityLevel).toBeNull();
+    expect(toRequest({ ...INITIAL_FORM, activityLevel: "VeryActive" }).profile.activityLevel).toBe("VeryActive");
+    expect(fromProfile({ activityLevel: "Sedentary" }).activityLevel).toBe("Sedentary");
+    expect(fromProfile({}).activityLevel).toBeUndefined();
+  });
+
   it("boş alanları null gönderir (algoritma varsayılanları)", () => {
     const req = toRequest({ ...INITIAL_FORM, goal: undefined, workoutDurationMin: undefined, name: "  " });
     expect(req.name).toBeNull();
@@ -32,7 +39,7 @@ describe("profileForm", () => {
 
   it("kayıtlı profil forma geri yüklenir ve aynı isteği üretir", () => {
     const profile = {
-      age: 30, gender: "Female", heightCm: 170, weightKg: 65, targetWeightKg: 60, goal: "LoseWeight",
+      age: 30, gender: "Female", heightCm: 170, weightKg: 65, targetWeightKg: 60, activityLevel: "LightlyActive", goal: "LoseWeight",
       experienceLevel: "Advanced", trainingLocation: "Home", hasEquipment: false,
       trainingDays: ["Wed", "Mon"], workoutDurationMin: 20, isPlus: true,
     };
